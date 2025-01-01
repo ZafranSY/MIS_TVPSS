@@ -6,7 +6,7 @@
   <packaging>war</packaging>
   <version>0.0.1-SNAPSHOT</version>
   <name>MIS_TVPSS Maven Webapp</name>
-   <url>http://maven.apache.org</url>
+    <url>http://maven.apache.org</url>
     <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>8</maven.compiler.source>
@@ -14,7 +14,7 @@
   </properties>
 
   <dependencies>
-      <!-- Spring Core and ORM -->
+    <!-- Spring Core and ORM -->
     <dependency>
         <groupId>org.springframework</groupId>
         <artifactId>spring-context</artifactId>
@@ -31,6 +31,20 @@
         <version>5.3.30</version>
     </dependency>
 
+    <!-- JSTL Core -->
+    <dependency>
+        <groupId>javax.servlet</groupId>
+        <artifactId>jstl</artifactId>
+        <version>1.2</version>
+    </dependency>
+
+    <!-- Servlet API -->
+    <dependency>
+        <groupId>javax.servlet</groupId>
+        <artifactId>javax.servlet-api</artifactId>
+        <version>4.0.1</version>
+        <scope>provided</scope>
+    </dependency>
     <!-- Hibernate Core -->
     <dependency>
         <groupId>org.hibernate</groupId>
@@ -45,52 +59,20 @@
         <version>8.0.33</version>
     </dependency>
 
-
-    <!-- Thymeleaf Dependency -->
+    <!-- Spring Security -->
     <dependency>
-        <groupId>org.thymeleaf</groupId>
-        <artifactId>thymeleaf</artifactId>
-        <version>3.1.1.RELEASE</version>
+        <groupId>org.springframework.security</groupId>
+        <artifactId>spring-security-web</artifactId>
+        <version>5.3.13.RELEASE</version>
     </dependency>
-
-    <!-- Thymeleaf Spring Integration -->
     <dependency>
-        <groupId>org.thymeleaf</groupId>
-        <artifactId>thymeleaf-spring5</artifactId>
-        <version>3.1.1.RELEASE</version>
+        <groupId>org.springframework.security</groupId>
+        <artifactId>spring-security-config</artifactId>
+        <version>5.3.13.RELEASE</version>
     </dependency>
-
-    <!-- Servlet API Dependency -->
-    <dependency>
-        <groupId>javax.servlet</groupId>
-        <artifactId>javax.servlet-api</artifactId>
-        <version>4.0.1</version>
-        <scope>provided</scope>
-    </dependency>
-    
-    <dependency>
-    <groupId>mysql</groupId>
-    <artifactId>mysql-connector-java</artifactId>
-    <version>8.0.33</version>
-</dependency>
-
-<!-- spring-security-web -->
-	<dependency>
-		<groupId>org.springframework.security</groupId>
-		<artifactId>spring-security-web</artifactId>
-		<version>5.3.13.RELEASE</version>
-	</dependency>
+</dependencies>
 
 
-	<!-- spring-security-config -->
-	<dependency>
-		<groupId>org.springframework.security</groupId>
-		<artifactId>spring-security-config</artifactId>
-		<version>5.3.13.RELEASE</version>
-	</dependency>
-
-
-  </dependencies>
   <build>
     <finalName>MIS_TVPSS</finalName>
   </build>
