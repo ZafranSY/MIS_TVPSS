@@ -33,7 +33,7 @@
             position: relative;
             text-align: center;
             color: white;
-            background: url('https://via.placeholder.com/1200x500') no-repeat center center/cover;
+         background: url('/images/student.jpg') no-repeat center center/cover;
             height: 500px;
         }
 
