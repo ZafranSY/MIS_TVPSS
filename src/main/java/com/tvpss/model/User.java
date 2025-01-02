@@ -110,4 +110,6 @@ public class User implements Serializable {
     public void setUpdatedAt(String updatedAt) {
         this.updatedAt = updatedAt;
     }
+
+	
 }

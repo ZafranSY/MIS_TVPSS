@@ -11,19 +11,17 @@ import javax.sql.DataSource;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 import java.util.Properties;
-
 @Configuration
 @EnableTransactionManagement
-@ComponentScan(basePackages = {"com.example.service", "com.example.entity"})
 public class HibernateConfig {
 
     @Bean
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://localhost:3306/tvpss"); // Update if default port is used
+        dataSource.setUrl("jdbc:mysql://localhost:3306/tvpss");
         dataSource.setUsername("root");
-        dataSource.setPassword(""); // Replace with your MySQL password
+        dataSource.setPassword("");
         return dataSource;
     }
 
@@ -31,18 +29,19 @@ public class HibernateConfig {
     public LocalSessionFactoryBean sessionFactory() {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource(dataSource());
-        sessionFactory.setPackagesToScan("com.example.entity");
+        sessionFactory.setPackagesToScan("com.tvpss.model");
         Properties hibernateProperties = new Properties();
-        hibernateProperties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL8Dialect");
-        hibernateProperties.setProperty("hibernate.show_sql", "true");
-        hibernateProperties.setProperty("hibernate.hbm2ddl.auto", "update");
+        hibernateProperties.put("hibernate.dialect", "org.hibernate.dialect.MySQL8Dialect");
+        hibernateProperties.put("hibernate.show_sql", "true");
+        hibernateProperties.put("hibernate.format_sql", "true");
         sessionFactory.setHibernateProperties(hibernateProperties);
         return sessionFactory;
     }
 
     @Bean
-    public HibernateTransactionManager transactionManager(LocalSessionFactoryBean sessionFactory) {
-        return new HibernateTransactionManager(sessionFactory.getObject());
+    public HibernateTransactionManager transactionManager() {
+        HibernateTransactionManager transactionManager = new HibernateTransactionManager();
+        transactionManager.setSessionFactory(sessionFactory().getObject());
+        return transactionManager;
     }
 }
-
