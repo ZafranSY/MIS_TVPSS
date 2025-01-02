@@ -137,7 +137,7 @@
         <h2>Grow with TVPSS</h2>
         <div class="feature-list">
             <div class="feature-item">
-                <img src="../Images/student.jpg" alt="Feature 1">
+                <img src="Images/student.jpg" alt="Feature 1">
                 <h3>Innovative Programs</h3>
                 <p>Encouraging students to develop skills in journalism, hosting, and production.</p>
             </div>
