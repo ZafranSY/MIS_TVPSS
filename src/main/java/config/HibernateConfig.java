@@ -21,7 +21,7 @@ public class HibernateConfig {
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://localhost:3306/springdb"); // Update if default port is used
+        dataSource.setUrl("jdbc:mysql://localhost:3306/tvpss"); // Update if default port is used
         dataSource.setUsername("root");
         dataSource.setPassword(""); // Replace with your MySQL password
         return dataSource;
