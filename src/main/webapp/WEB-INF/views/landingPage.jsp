@@ -30,12 +30,35 @@
         }
 
         .banner {
-            position: relative;
-            text-align: center;
-            color: white;
-         background: url('/images/student.jpg') no-repeat center center/cover;
-            height: 500px;
-        }
+    position: relative;
+    text-align: center;
+    color: white;
+    background: url('/MIS_TVPSS/Images/student.jpg') no-repeat center center/cover;
+    height: 500px;
+    overflow: hidden;
+}
+
+.banner::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: inherit; /* Use the same background as the .banner */
+    filter: blur(10px); /* Adjust blur intensity */
+    z-index: 0;
+    transform: scale(1.1); /* Slightly enlarge to cover edges caused by blur */
+}
+
+.banner-content {
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    z-index: 1; /* Ensure content is above the blur effect */
+}
 
         .banner-content {
             position: absolute;

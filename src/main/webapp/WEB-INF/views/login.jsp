@@ -76,8 +76,9 @@
         .forgot-password:hover {
             text-decoration: underline;
         }
-        .error-message{}
+        .error-message{
         color:red;
+        margin:5px;
         }
     </style>
 </head>
