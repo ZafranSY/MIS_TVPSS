@@ -16,7 +16,7 @@
     <context:annotation-config />
     <context:component-scan base-package="config" />
     
-<mvc:resources mapping="/images/**" location="/images/" />
+<mvc:resources mapping="/images/**" location="classpath:/images/" />
 <mvc:default-servlet-handler />
 <bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
     <property name="sessionFactory" ref="sessionFactory" />
