@@ -87,14 +87,15 @@
         <img src="https://via.placeholder.com/50" alt="JTVPSS Logo">
         <h1>JTVPSS Login</h1>
         <form name="Login" method="post" action="authenticate">
-            <div class="form-group">
-                <input type="text" name="username" placeholder="Tenant ID" required />
-            </div>
-            <div class="form-group">
-                <input type="password" name="password" placeholder="Password" required />
-            </div>
-            <button type="submit" class="login-button">Login</button>
-        </form>
+    <div class="form-group">
+        <input type="email" name="email" placeholder="Email" required />
+    </div>
+    <div class="form-group">
+        <input type="password" name="password" placeholder="Password" required />
+    </div>
+    <button type="submit" class="login-button">Login</button>
+</form>
+
           <c:if test="${not empty errorMessage}">
             <div class="error-message">${errorMessage}</div>
         </c:if>

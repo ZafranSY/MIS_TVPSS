@@ -4,42 +4,43 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "users")
+@Table(name = "user") // Matches the table name
 public class User implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
+    @Column(name = "UserID") // Matches the primary key column name
     private Long userId;
 
-    @Column(name = "username", nullable = false, unique = true)
-    private String username;
+    @Column(name = "Name", nullable = false) // Matches the 'Name' column
+    private String name;
 
-    @Column(name = "password", nullable = false)
-    private String password;
-
-    @Column(name = "role", nullable = false)
-    private String role; // Role could be 'Student', 'Teacher', or 'Admin'
-
-    @Column(name = "email", unique = true)
+    @Column(name = "Email", nullable = false, unique = true) // Matches the 'Email' column
     private String email;
 
-    @Column(name = "status", nullable = false)
-    private String status = "active"; // Default to 'active'
+    @Column(name = "Password", nullable = false) // Matches the 'Password' column
+    private String password;
 
-    @Column(name = "created_at", updatable = false)
+    @Column(name = "Role", nullable = false) // Matches the 'Role' column
+    private int role;
+
+    @Column(name = "Status", nullable = false) // Matches the 'Status' column
+    private String status = "active";
+
+    @Column(name = "CreatedAt", updatable = false) // Matches the 'CreatedAt' column
     private String createdAt;
 
-    @Column(name = "updated_at")
+    @Column(name = "UpdatedAt") // Matches the 'UpdatedAt' column
     private String updatedAt;
 
+    // Constructors, Getters, and Setters
     public User() {}
 
-    public User(String username, String password, String role, String email, String status, String createdAt, String updatedAt) {
-        this.username = username;
+    public User(String name, String email, String password, int role, String status, String createdAt, String updatedAt) {
+        this.name = name;
+        this.email = email;
         this.password = password;
         this.role = role;
-        this.email = email;
         this.status = status;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
@@ -55,13 +56,7 @@ public class User implements Serializable {
         this.userId = userId;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
+    
 
     public String getPassword() {
         return password;
@@ -71,11 +66,11 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    public String getRole() {
+    public int getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(int role) {
         this.role = role;
     }
 

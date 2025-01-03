@@ -1,6 +1,7 @@
 package com.tvpss.controller;
 
 import com.tvpss.model.User;
+import com.tvpss.model.UserRoles;
 import com.tvpss.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,31 +21,32 @@ public class LoginController {
     public String loginPage() {
         return "login"; // Display login.jsp
     }
-
     @PostMapping("/authenticate")
-    public ModelAndView authenticateUser(@RequestParam("username") String username,
+    public ModelAndView authenticateUser(@RequestParam("email") String email,
                                          @RequestParam("password") String password) {
         ModelAndView modelAndView = new ModelAndView();
-        User user = userService.authenticateUser(username, password);
+        User user = userService.authenticateUser(email, password);
 
         if (user != null) {
             switch (user.getRole()) {
-                case "Admin":
-                    modelAndView.setViewName("adminPage");
-                    modelAndView.addObject("message", "Welcome Admin!");
+                case UserRoles.STATE_ADMIN:
+                    modelAndView.setViewName("/adminstate/dashboard");
+                    modelAndView.addObject("message", "Welcome Teacher!");                    break;
+                case UserRoles.ADMIN_SCHOOL:
+                    modelAndView.setViewName("redirect:/adminschool/dashboard");
+
                     break;
-                case "Teacher":
+                case UserRoles.TEACHER:
                     modelAndView.setViewName("teacherPage");
                     modelAndView.addObject("message", "Welcome Teacher!");
                     break;
-                case "Student":
+                case UserRoles.STUDENT:
                     modelAndView.setViewName("studentPage");
                     modelAndView.addObject("message", "Welcome Student!");
                     break;
                 default:
-                	modelAndView.setViewName("login");
+                    modelAndView.setViewName("login");
                     modelAndView.addObject("errorMessage", "Invalid role.");
-                    
             }
         } else {
             modelAndView.setViewName("login");
@@ -53,4 +55,5 @@ public class LoginController {
 
         return modelAndView;
     }
+
 }

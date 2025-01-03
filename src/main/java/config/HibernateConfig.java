@@ -23,6 +23,7 @@ public class HibernateConfig {
         dataSource.setUsername("root");
         dataSource.setPassword("");
         return dataSource;
+        
     }
 
     @Bean
@@ -44,4 +45,5 @@ public class HibernateConfig {
         transactionManager.setSessionFactory(sessionFactory().getObject());
         return transactionManager;
     }
+    
 }

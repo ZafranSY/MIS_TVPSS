@@ -22,8 +22,8 @@ public class UserService {
      * @return User object if credentials are valid, otherwise null
      */
     @Transactional
-    public User authenticateUser(String username, String password) {
-        return userDAO.findByUsernameAndPassword(username, password);
+    public User authenticateUser(String email, String password) {
+        return userDAO.findByEmailAndPassword(email, password);
     }
 
     /**
@@ -33,7 +33,7 @@ public class UserService {
      * @return Count of users with the specified role
      */
     @Transactional
-    public long countUsersByRole(String role) {
+    public long countUsersByRole(int role) {
         return userDAO.countUsersByRole(role);
     }
 
@@ -44,8 +44,8 @@ public class UserService {
      * @return User object if found, otherwise null
      */
     @Transactional
-    public User findUserByUsername(String username) {
-        return userDAO.findByUsername(username);
+    public User findUserByUsername(String email) {
+        return userDAO.findByEmail(email);
     }
 
     /**
@@ -77,4 +77,9 @@ public class UserService {
     public List<User> findAllUsers() {
         return userDAO.findAllUsers();
     }
+    @Transactional
+    public List<User> findUsersByRole(int role) {
+        return userDAO.findByRole(role);
+    }
+
 }

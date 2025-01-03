@@ -15,7 +15,7 @@ public class UserDAO {
     private SessionFactory sessionFactory;
 
     @Transactional
-    public long countUsersByRole(String role) {
+    public long countUsersByRole(int role) {
         return sessionFactory.getCurrentSession()
                 .createQuery("select count(u) from User u where u.role = :role", Long.class)
                 .setParameter("role", role)
@@ -35,35 +35,38 @@ public class UserDAO {
     }
 
     @Transactional
-    public User findByUsername(String username) {
+    public User findByEmail(String email) {
         return sessionFactory.getCurrentSession()
-                .createQuery("from User where username = :username", User.class)
-                .setParameter("username", username)
+                .createQuery("from User where email = :email", User.class)
+                .setParameter("email", email)
                 .uniqueResult();
     }
 
     @Transactional
-    public void deleteByUsername(String username) {
-        User user = findByUsername(username);
+    public void deleteByUsername(String email) {
+        User user = findByEmail(email);
         if (user != null) {
             sessionFactory.getCurrentSession().delete(user);
         }
     }
 
     @Transactional
-    public List<User> findByRole(String role) {
+    public List<User> findByRole(int role) {
         return sessionFactory.getCurrentSession()
                 .createQuery("from User where role = :role", User.class)
                 .setParameter("role", role)
                 .list();
     }
+
     @Transactional
-    public User findByUsernameAndPassword(String username, String password) {
-        return sessionFactory.getCurrentSession()
-                .createQuery("from User where username = :username and password = :password", User.class)
-                .setParameter("username", username)
-                .setParameter("password", password)
-                .uniqueResult();
+    public User findByEmailAndPassword(String email, String password) {
+    	return sessionFactory.getCurrentSession()
+    	        .createQuery("from User where email = :email and password = :password", User.class)
+    	        .setParameter("email", email)
+    	        .setParameter("password", password)
+    	        .uniqueResult();
+
     }
+
 
 }
