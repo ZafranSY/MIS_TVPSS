@@ -1,9 +1,0 @@
-config\HibernateConfig.class
-com\tvpss\controller\LoginController.class
-com\tvpss\model\UserRoles.class
-config\package-info.class
-com\tvpss\controller\WelcomeController.class
-com\tvpss\service\UserService.class
-com\tvpss\model\User.class
-com\tvpss\repository\UserDAO.class
-com\tvpss\entity\package-info.class

@@ -33,7 +33,7 @@
     position: relative;
     text-align: center;
     color: white;
-    background: url('../resources/Images/student.jpg') no-repeat center center/cover;
+    background: url("/MIS_TVPSS/resources/images/student.jpg") no-repeat center center/cover;
     height: 500px;
     overflow: hidden;
 }
@@ -160,7 +160,7 @@
         <h2>Grow with TVPSS</h2>
         <div class="feature-list">
             <div class="feature-item">
-<img src="<c:url value='../../resources/Images/student.jpg' />" alt="Student">
+        <img src="/MIS_TVPSS/resources/images/student.jpg" alt="Student">
                 <h3>Innovative Programs</h3>
                 <p>Encouraging students to develop skills in journalism, hosting, and production.</p>
             </div>

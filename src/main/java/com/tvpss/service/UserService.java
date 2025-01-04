@@ -82,4 +82,10 @@ public class UserService {
         return userDAO.findByRole(role);
     }
 
+    @Transactional
+    public long getUserCountByRole(int role) {
+        return userDAO.countUsersByRole(role);
+    }
+    
+
 }

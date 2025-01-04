@@ -14,6 +14,8 @@
         <%@ include file="adSchoolSidebar.jsp" %>
 
     <!-- Main Content -->
+    <h1>${{pendingApplicants}}</h1>
+    <h1>${{pageTitle}}</h1>
     <main class="main-content">
         <!-- Header -->
 
