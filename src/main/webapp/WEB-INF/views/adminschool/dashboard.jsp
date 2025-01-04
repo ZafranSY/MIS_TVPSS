@@ -55,7 +55,6 @@
         </section>
     </main>
 </div>
-<script src="/MIS_TVPSS/resources/js/adSchoolDashboard.js"></script>
 
 </body>
 </html>

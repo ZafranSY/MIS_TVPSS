@@ -21,7 +21,19 @@
             <a href="#" class="menu-item active">
                 <span class="icon">🏠</span> Dashboard
             </a>
+              <a href="#" class="menu-item">
+                <span class="icon">📄</span> Manage User
+            </a>
             <a href="#" class="menu-item">
+                <span class="icon">📄</span> Crew Applicants
+            </a>
+              <a href="#" class="menu-item">
+                <span class="icon">📄</span> Crew Task
+            </a>
+              <a href="#" class="menu-item">
+                <span class="icon">📄</span> Program Planning
+            </a>
+              <a href="#" class="menu-item">
                 <span class="icon">📄</span> Reports
             </a>
             <a href="#" class="menu-item">
