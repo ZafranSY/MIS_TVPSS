@@ -84,7 +84,7 @@
 </head>
 <body>
     <div class="login-container">
-        <img src="https://via.placeholder.com/50" alt="JTVPSS Logo">
+        <img src="/MIS_TVPSS/resources/images/house.png" alt="JTVPSS Logo">
         <h1>JTVPSS Login</h1>
         <form name="Login" method="post" action="authenticate">
     <div class="form-group">

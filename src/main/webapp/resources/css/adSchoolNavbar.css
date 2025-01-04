@@ -1,5 +1,3 @@
-@charset "UTF-8";
-
 /* Sidebar Styles */
 .sidebar {
   background: #ffffff;
@@ -54,6 +52,15 @@
   flex-direction: column;
   gap: 15px;
   padding-top: 20px;
+  flex: 1; /* Take up available space */
+}
+
+.menu-bottom {
+  margin-top: auto; /* Push Help and Logout to the bottom */
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom:20px;
 }
 
 .menu-item {
@@ -83,11 +90,6 @@
   transform: scale(1.2);
 }
 
-.menu-item.help,
-.menu-item.logout {
-  display: none; /* Hidden by default for <600px */
-}
-
 /* Responsive Sidebar */
 @media (max-width: 600px) {
   .menu-toggle {
@@ -100,21 +102,17 @@
     width: 100%;
     top: 0;
   }
-  .sidebar-logo {
-    margin-left: 40px;
-    margin-top: 10px;
-  }
 
   .sidebar.open {
     transform: translateY(0);
   }
 
-  .menu-item.help,
-  .menu-item.logout {
-    display: flex; /* Show Help and Log Out below Settings */
+  .menu-bottom {
+    margin-top: 0; /* Remove spacing for smaller screens */
   }
 
-  .menu-item.help {
-    margin-top: 10px;
+  .menu-item.help,
+  .menu-item.logout {
+    display: flex;
   }
 }
