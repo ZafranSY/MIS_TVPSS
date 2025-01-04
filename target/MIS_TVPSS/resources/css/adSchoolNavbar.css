@@ -1,0 +1,120 @@
+@charset "UTF-8";
+
+/* Sidebar Styles */
+.sidebar {
+  background: #ffffff;
+  border-right: 1px solid #cbd5e1;
+  position: fixed;
+  height: 100%;
+  width: 256px;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease-in-out;
+  transform: translateX(0);
+  z-index: 1000;
+}
+
+.menu-toggle {
+  display: none;
+  font-size: 24px;
+  background: #4caf50;
+  color: white;
+  padding: 10px;
+  cursor: pointer;
+  text-align: center;
+  border-radius: 5px;
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 1100;
+}
+
+.sidebar-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding-top: 60px; /* Prevent overlapping with the logo */
+}
+
+.sidebar-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 20px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: white;
+  z-index: 1050;
+}
+
+.sidebar-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding-top: 20px;
+}
+
+.menu-item {
+  text-decoration: none;
+  color: #6b7280;
+  padding: 12px 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: background-color 0.3s, color 0.3s, transform 0.2s;
+}
+
+.menu-item.active,
+.menu-item:hover {
+  background: #4caf50;
+  color: #ffffff;
+}
+
+.menu-item .icon {
+  font-size: 18px;
+  transition: transform 0.3s;
+}
+
+.menu-item:hover .icon {
+  transform: scale(1.2);
+}
+
+.menu-item.help,
+.menu-item.logout {
+  display: none; /* Hidden by default for <600px */
+}
+
+/* Responsive Sidebar */
+@media (max-width: 600px) {
+  .menu-toggle {
+    display: block;
+  }
+
+  .sidebar {
+    transform: translateY(-100%);
+    position: absolute;
+    width: 100%;
+    top: 0;
+  }
+  .sidebar-logo {
+    margin-left: 40px;
+    margin-top: 10px;
+  }
+
+  .sidebar.open {
+    transform: translateY(0);
+  }
+
+  .menu-item.help,
+  .menu-item.logout {
+    display: flex; /* Show Help and Log Out below Settings */
+  }
+
+  .menu-item.help {
+    margin-top: 10px;
+  }
+}

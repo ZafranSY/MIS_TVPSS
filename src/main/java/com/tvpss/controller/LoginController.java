@@ -31,9 +31,11 @@ public class LoginController {
             switch (user.getRole()) {
                 case UserRoles.STATE_ADMIN:
                     modelAndView.setViewName("/adminstate/dashboard");
-                    modelAndView.addObject("message", "Welcome Teacher!");                    break;
+                    modelAndView.addObject("message", "Welcome Teacher!");                    
+                    break;
                 case UserRoles.ADMIN_SCHOOL:
-                    modelAndView.setViewName("redirect:/adminschool/dashboard");
+                	 modelAndView.setViewName("/adminschool/dashboard");
+                     modelAndView.addObject("message", "Welcome Teacher!");   
 
                     break;
                 case UserRoles.TEACHER:
