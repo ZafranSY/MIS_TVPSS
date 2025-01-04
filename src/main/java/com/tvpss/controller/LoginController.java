@@ -36,6 +36,7 @@ public class LoginController {
                 case UserRoles.ADMIN_SCHOOL:
                 	 modelAndView.setViewName("/adminschool/dashboard");
                      modelAndView.addObject("message", "Welcome Teacher!");   
+                     
 
                     break;
                 case UserRoles.TEACHER:
