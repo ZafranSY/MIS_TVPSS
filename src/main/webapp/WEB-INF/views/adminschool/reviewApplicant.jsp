@@ -22,6 +22,7 @@
                 <c:forEach var="applicant" items="${pendingApplicants}">
                     <tr>
                         <td>${applicant.crewID}</td>
+                        <td>${applicant.user.getUserId()}</td>
 
                         <td>${applicant.role}</td>
                         <td>${applicant.applicationStatus}</td>

@@ -10,7 +10,7 @@ public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "UserID") // Matches the primary key column name
-    private Long userId;
+    private int userId;
 
     @Column(name = "Name", nullable = false) // Matches the 'Name' column
     private String name;
@@ -48,11 +48,11 @@ public class User implements Serializable {
 
     // Getters and Setters
 
-    public Long getUserId() {
+    public int getUserId() {
         return userId;
     }
 
-    public void setUserId(Long userId) {
+    public void setUserId(int userId) {
         this.userId = userId;
     }
 
