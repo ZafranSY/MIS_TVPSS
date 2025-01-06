@@ -38,6 +38,8 @@ CREATE TABLE Crew (
     UserID INT UNIQUE NOT NULL,
     Role VARCHAR(255) NOT NULL,
     ApplicationStatus ENUM('Pending', 'Approved', 'Rejected') NOT NULL,
+    SchoolName VARCHAR(255),
+    Address VARCHAR(255),
     FOREIGN KEY (UserID) REFERENCES User(UserID) ON DELETE CASCADE
 );
 
@@ -118,12 +120,18 @@ VALUES
 ('Alice Admin', 'alice.admin@example.com', 'password123', 1),
 ('Bob SchoolAdmin', 'bob.admin@example.com', 'password123', 2),
 ('Charlie Teacher', 'charlie.teacher@example.com', 'password123', 3),
-('David Student', 'david.student@example.com', 'password123', 4);
+('David Student', 'david.student@example.com', 'password123', 4),
+('Henry Student', 'henry.student@example.com', 'password123', 4),
+('Isla Student', 'isla.student@example.com', 'password123', 4),
+('Jack Student', 'jack.student@example.com', 'password123', 4);
 
--- Assign a Crew Role to a Student
-INSERT INTO Crew (UserID, Role, ApplicationStatus)
+-- Assign a Crew Role to Students
+INSERT INTO Crew (UserID, Role, ApplicationStatus, SchoolName, Address)
 VALUES 
-(4, 'Host', 'Approved');
+(4, 'Student', 'Pending', 'Springfield High', '101 Elm St, Springfield'),
+(6, 'Student', 'Pending', 'Riverdale Academy', '202 Oak St, Riverdale'),
+(7, 'Student', 'Pending', 'Sunnydale High', '303 Pine St, Sunnydale'),
+(8, 'Student', 'Pending', 'Evergreen College', '404 Maple St, Evergreen');
 
 -- Insert Studio
 INSERT INTO Studio (Name, Location, Status)
@@ -163,11 +171,3 @@ VALUES
 INSERT INTO AuditLog (UserID, Action)
 VALUES 
 (3, 'Created Program: Media Workshop');
-
-ALTER TABLE Crew ADD COLUMN SchoolName VARCHAR(255);
-ALTER TABLE Crew ADD COLUMN Address VARCHAR(255);
-
-UPDATE Crew
-SET SchoolName = 'High School A', Address = '123 Main St'
-WHERE CrewID = 1;
-
