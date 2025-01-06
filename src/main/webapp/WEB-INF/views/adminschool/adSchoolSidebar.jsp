@@ -18,13 +18,13 @@
             <span>Management System</span>
         </div>
         <nav class="sidebar-menu">
-            <a href="#" class="menu-item active">
+            <a href="/MIS_TVPSS/adminschool/dashboard" class="menu-item active">
                 <span class="icon">🏠</span> Dashboard
             </a>
               <a href="#" class="menu-item">
                 <span class="icon">📄</span> Manage User
             </a>
-            <a href="#" class="menu-item">
+            <a href="/MIS_TVPSS/adminschool/reviewApplicant" class="menu-item">
                 <span class="icon">📄</span> Crew Applicants
             </a>
               <a href="#" class="menu-item">
@@ -46,6 +46,25 @@
         </nav>
     </div>
 </aside>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        // Get the current path of the URL
+        const currentPath = window.location.pathname;
+
+        // Select all menu items
+        const menuItems = document.querySelectorAll(".menu-item");
+
+        // Add 'active' class to the matching menu item
+        menuItems.forEach(item => {
+            // Match the exact URL path, avoiding partial matches
+            if (item.href.endsWith(currentPath)) {
+                item.classList.add("active");
+            } else {
+                item.classList.remove("active");
+            }
+        });
+    });
+</script>
 
 </body>
 </html>
