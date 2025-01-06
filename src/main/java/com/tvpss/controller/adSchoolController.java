@@ -1,6 +1,11 @@
 package com.tvpss.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import org.springframework.http.MediaType;
+
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -58,5 +63,26 @@ public class adSchoolController {
 
 	    return "adminschool/reviewApplicant";
 	}
+	@GetMapping(value = "/adminschool/getApplicantDetails", produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public Map<String, Object> getApplicantDetails(@RequestParam("crewID") int crewID) {
+	    Crew crew = crewService.getApplicantDetails(crewID);
+	    Map<String, Object> response = new HashMap<>();
+
+	    if (crew != null) {
+	        response.put("name", crew.getUser().getName());
+	        response.put("email", crew.getUser().getEmail());
+	        response.put("role", crew.getRole());
+	        response.put("address", crew.getAddress());
+	        response.put("schoolName", crew.getSchoolName());
+	        response.put("applicationStatus", crew.getApplicationStatus());
+	    } else {
+	        response.put("error", "Crew not found");
+	    }
+
+	    return response;
+	}
+
+
 
 }
