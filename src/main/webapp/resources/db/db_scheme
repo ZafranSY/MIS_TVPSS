@@ -109,6 +109,24 @@ CREATE TABLE AuditLog (
     ActionDate DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (UserID) REFERENCES User(UserID) ON DELETE CASCADE
 );
+-- Add District Table (PPD)
+CREATE TABLE District (
+    DistrictID INT AUTO_INCREMENT PRIMARY KEY,
+    Name VARCHAR(255) NOT NULL
+);
+
+-- Add School Table
+CREATE TABLE School (
+    SchoolID INT AUTO_INCREMENT PRIMARY KEY,
+    DistrictID INT NOT NULL,
+    Name VARCHAR(255) NOT NULL,
+    Address VARCHAR(255),
+    FOREIGN KEY (DistrictID) REFERENCES District(DistrictID) ON DELETE CASCADE
+);
+
+-- Add SchoolID to User Table
+ALTER TABLE User ADD COLUMN SchoolID INT;
+ALTER TABLE User ADD FOREIGN KEY (SchoolID) REFERENCES School(SchoolID) ON DELETE SET NULL;
 
 -- Sample Data Insertion
 
@@ -163,3 +181,18 @@ VALUES
 INSERT INTO AuditLog (UserID, Action)
 VALUES 
 (3, 'Created Program: Media Workshop');
+
+-- Insert Districts
+INSERT INTO District (Name) VALUES ('District A'), ('District B');
+
+-- Insert Schools
+INSERT INTO School (DistrictID, Name, Address)
+VALUES
+(1, 'High School A', '123 Main St'),
+(2, 'High School B', '456 Elm St');
+
+-- Update User Table with School Information
+UPDATE User
+SET SchoolID = 1
+WHERE Name = 'Bob SchoolAdmin';
+
