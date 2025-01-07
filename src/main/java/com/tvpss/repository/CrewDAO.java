@@ -18,11 +18,15 @@ public class CrewDAO {
     private EntityManager entityManager;
 
     public List<Crew> findByApplicationStatus(String status) {
-        String query = "SELECT c FROM Crew c WHERE c.applicationStatus = :status";
+        String query = "SELECT c FROM Crew c " +
+                       "JOIN FETCH c.user u " +
+                       "WHERE c.applicationStatus = :status";
         return entityManager.createQuery(query, Crew.class)
                 .setParameter("status", status)
                 .getResultList();
     }
+
+
 
 
     public void updateApplicationStatus(int crewID, String newStatus) {
