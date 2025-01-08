@@ -30,5 +30,9 @@ public class CrewService {
     public Crew getApplicantDetails(int crewID) {
         return crewRepository.findCrewById(crewID);
     }
+    public Crew getCrewValidationByUserID(int userID)
+    {
+    	return crewRepository.findCrewbyUserID(userID);
+    }
     
 }

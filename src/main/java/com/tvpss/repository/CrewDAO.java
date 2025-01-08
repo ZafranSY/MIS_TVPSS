@@ -3,6 +3,7 @@ package com.tvpss.repository;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
@@ -52,5 +53,18 @@ public class CrewDAO {
         String query = "SELECT * FROM Crew";
         return entityManager.createQuery(query, Crew.class).getResultList();
     }
+    public Crew findCrewbyUserID(int userID) {
+        String query = "SELECT c FROM Crew c WHERE c.user.userId = :userID";
+        try {
+            return entityManager.createQuery(query, Crew.class)
+                    .setParameter("userID", userID)
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            // Return null if no result is found
+            return null;
+        }
+    }
+
+
 
 }

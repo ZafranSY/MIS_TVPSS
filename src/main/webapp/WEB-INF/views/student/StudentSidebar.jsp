@@ -22,7 +22,7 @@
                 <span class="icon">🏠</span> Dashboard
             </a>
            
-              <a href="#" class="menu-item">
+              <a href="/MIS_TVPSS/student/crewTask" class="menu-item">
                 <span class="icon">📄</span> Crew Task
             </a>
               <a href="#" class="menu-item">

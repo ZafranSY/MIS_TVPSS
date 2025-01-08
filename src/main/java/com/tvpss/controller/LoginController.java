@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
+import javax.servlet.http.HttpSession;
 @Controller
 @RequestMapping("/")
 public class LoginController {
@@ -25,10 +25,13 @@ public class LoginController {
     @PostMapping("/authenticate")
     public String authenticateUser(@RequestParam("email") String email,
                                     @RequestParam("password") String password,
+                                    HttpSession session,
                                     RedirectAttributes redirectAttributes) {
         User user = userService.authenticateUser(email, password);
 
-        if (user != null) {
+        if (user != null) {        
+        	session.setAttribute("userID", user.getUserId());
+
             switch (user.getRole()) {
                 case UserRoles.STATE_ADMIN:
                     redirectAttributes.addFlashAttribute("message", "Welcome State Admin!");

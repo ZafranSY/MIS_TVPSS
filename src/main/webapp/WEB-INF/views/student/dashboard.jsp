@@ -8,6 +8,6 @@
 </head>
 <body>
          <%@ include file="StudentSidebar.jsp" %>
- 
+ <h1>hahah</h1>
 </body>
 </html>
