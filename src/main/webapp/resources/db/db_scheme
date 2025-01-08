@@ -171,3 +171,13 @@ VALUES
 INSERT INTO AuditLog (UserID, Action)
 VALUES 
 (3, 'Created Program: Media Workshop');
+CREATE TABLE CrewTask (
+    TaskID INT AUTO_INCREMENT PRIMARY KEY,             -- Primary key for the task
+    CrewID INT NOT NULL,                               -- Foreign key to the Crew table
+    TaskTitle VARCHAR(255) NOT NULL,                  -- Title of the task
+    TaskDescription TEXT,                             -- Description of the task
+    TaskDueDate DATE,                                  -- Due date for the task
+    TaskStatus VARCHAR(50) DEFAULT 'Pending',         -- Status of the task, managed by button (e.g., 'Pending', 'Completed')
+    IsOverdue BOOLEAN DEFAULT FALSE,                  -- Flag to indicate overdue tasks
+    FOREIGN KEY (CrewID) REFERENCES Crew(CrewID) ON DELETE CASCADE -- Cascade delete if Crew is removed
+);
