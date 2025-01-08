@@ -12,11 +12,22 @@
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
+    <servlet>
+    	<description>
+    	</description>
+    	<display-name>studentController</display-name>
+    	<servlet-name>studentController</servlet-name>
+    	<servlet-class>com.tvpss.controller.studentController</servlet-class>
+    </servlet>
    
 
     <servlet-mapping>
         <servlet-name>myFrontController</servlet-name>
         <url-pattern>/</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+    	<servlet-name>studentController</servlet-name>
+    	<url-pattern>/studentController</url-pattern>
     </servlet-mapping>
     
 </web-app>
