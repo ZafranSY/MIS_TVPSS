@@ -22,4 +22,6 @@ public class studentController
  {
 	 return "student/dashboard";
  }
+ 
+ @GetMapping("/student/crewTask")
 }
