@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>UC007 Review Applicant</title>
-    <link rel="stylesheet" href="/MIS_TVPSS/resources/css/reviewApplicant.css">
+    <link rel="stylesheet" href="/MIS_TVPSS/resources/css/crewTask.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
@@ -19,11 +19,14 @@
                     <span>ID: 32450</span>
                 </div>
             </header>
-
+             <div class="upcoming-overdue-task">
+                    <h3>Upcoming or Overdue Task</h3>
+                  
+                </div>
             <section class="review-applicant">
                 <div class="applicant-list">
-                    <h3>Applicants</h3>
-                    <ul id="applicant-list">
+                    <h3>Task Tittle</h3>
+                   <ul id="applicant-list">
                         <c:forEach var="applicant" items="{pendingApplicants}">
                             <li class="applicant-item" data-crew-id="{applicant.crewID}">
                                 <img src="/MIS_TVPSS/resources/images/default-profile.png" alt="Profile">
@@ -39,8 +42,8 @@
             <h2 class="applicant-name" id="name-display">Clean the Lab</h2>
         </div>
         <div class="info-section">
-            <p><i class="fa fa-id-card"></i> <strong>IC Number:</strong> <span id="icNumber-display">-</span></p>
-            <p><i class="fa fa-envelope"></i> <strong>Email:</strong> <span id="email-display">-</span></p>
+            <p><i class="fa fa-id-card"></i> <strong> Description :</strong> <span id="icNumber-display">-</span></p>
+            <p><i class="fa fa-envelope"></i> <strong>Deadline :</strong> <span id="email-display">-</span></p>
             <p><i class="fa fa-briefcase"></i> <strong>Position:</strong> <span id="position-display">-</span></p>
             <p><i class="fa fa-map-marker"></i> <strong>Address:</strong> <span id="address-display">-</span></p>
             <p><i class="fa fa-check-circle"></i> <strong>Application Status:</strong>
