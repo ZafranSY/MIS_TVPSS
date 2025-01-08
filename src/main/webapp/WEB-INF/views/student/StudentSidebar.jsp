@@ -18,7 +18,7 @@
             <span>Management System</span>
         </div>
         <nav class="sidebar-menu">
-            <a href="/MIS_TVPSS/adminschool/dashboard" class="menu-item active">
+            <a href="/MIS_TVPSS/student/dashboard" class="menu-item active">
                 <span class="icon">🏠</span> Dashboard
             </a>
            

@@ -5,6 +5,7 @@
     <title>Crew Tasks</title>
 </head>
 <body>
+ <%@ include file="StudentSidebar.jsp" %>
     <h1>Welcome to Crew Tasks!</h1>
     <p>Here are your tasks:</p>
     <!-- List tasks here -->
