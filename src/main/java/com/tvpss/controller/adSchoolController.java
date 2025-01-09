@@ -3,8 +3,12 @@ package com.tvpss.controller;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.springframework.http.MediaType;
 
+import javax.transaction.Transactional;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,6 +85,23 @@ public class adSchoolController {
 	    }
 
 	    return response;
+	}
+	@PostMapping("/adminschool/updateApplicationStatus")
+    @Transactional
+    public ResponseEntity<String> updateApplicationStatus(@RequestParam("crewID") int crewID,
+                                                          @RequestParam("status") String status) {
+        try {
+            crewService.updateApplicationStatus(crewID, status);
+            return ResponseEntity.ok("Application status updated successfully.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                                 .body("Failed to update application status.");
+        }
+    }
+	@GetMapping("/adminschool/crewTask")
+	public String showCrewtask()
+	{
+		return "adminschool/crewTask";
 	}
 
 
