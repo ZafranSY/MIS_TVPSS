@@ -63,6 +63,9 @@ public class adSchoolController {
 
 		 List<Crew> pendingApplicants = crewService.getPendingApplicants();
 		    model.addAttribute("pendingApplicants", pendingApplicants);
+		    
+		 List<Crew> ApprovedApplicansts = crewService.getApprovedApplicant();
+		 model.addAttribute("ApprovedApplicants", ApprovedApplicansts);
 		    model.addAttribute("pageTitle", "Welcome Admin School!");
 
 	    return "adminschool/reviewApplicant";

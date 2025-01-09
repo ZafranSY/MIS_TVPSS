@@ -19,6 +19,10 @@ public class CrewService {
     public List<Crew> getPendingApplicants() {
         return crewRepository.findByApplicationStatus("Pending");
     }
+    public List<Crew> getApprovedApplicant()
+    {
+    	return crewRepository.findByApplicationStatus("Approved");
+    }
 
 //    // Update application status
 //    public void updateApplicationStatus(int crewID, String status) {
