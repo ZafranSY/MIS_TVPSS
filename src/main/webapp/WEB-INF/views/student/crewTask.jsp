@@ -44,19 +44,9 @@
         <div class="info-section">
             <p><i class="fa fa-id-card"></i> <strong> Description :</strong> <span id="icNumber-display">-</span></p>
             <p><i class="fa fa-envelope"></i> <strong>Deadline :</strong> <span id="email-display">-</span></p>
-            <p><i class="fa fa-briefcase"></i> <strong>Position:</strong> <span id="position-display">-</span></p>
-            <p><i class="fa fa-map-marker"></i> <strong>Address:</strong> <span id="address-display">-</span></p>
-            <p><i class="fa fa-check-circle"></i> <strong>Application Status:</strong>
-                <select id="applicationStatus" name="applicationStatus">
-                    <option value="Pending" selected>Pending</option>
-                    <option value="Approved">Approved</option>
-                    <option value="Rejected">Rejected</option>
-                </select>
-            </p>
         </div>
         <div class="actions">
-            <button class="btn btn-approve"><i class="fa fa-check"></i> Approve</button>
-            <button class="btn btn-reject"><i class="fa fa-times"></i> Reject</button>
+            <button class="btn btn-approve"><i class="fa fa-check"></i> Complete</button>
         </div>
     </div>
 </div>
