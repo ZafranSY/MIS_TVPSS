@@ -49,18 +49,18 @@ header .user-profile {
     border-radius: 8px;
 }
 
-.applicant-list ul {
+.applicant-list ul ,.crew-list ul{
     list-style: none;
     padding: 0;
 }
 
-.applicant-list li {
+.applicant-list li , .crew-list li{
     display: flex;
     align-items: center;
     margin-bottom: 10px;
 }
 
-.applicant-list li img {
+.applicant-list li img , .crew-list li img{
     width: 40px;
     height: 40px;
     border-radius: 50%;
@@ -131,13 +131,42 @@ header .user-profile {
 }
 
 .applicant-item.active,
-.applicant-item:hover {
+.applicant-item:hover 
+{
     background-color: #d9f2d9;
 }
+.crew-item
+{
+	
+	   cursor: pointer;
+    padding: 10px;
+    margin-bottom: 5px;
+    background-color: #d9f2d9;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    transition: background-color 0.3s;
+}
 
-.applicant-item img {
+.applicant-item img 
+.crew-item img
+{
     width: 40px;
     height: 40px;
     border-radius: 50%;
     margin-right: 10px;
 }
+.crew-list
+{
+	background-color:#f9f9f9;
+	margin:10px 0;
+	padding :20px;
+}.crew-list {
+    margin-top: 20px;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Add shadow for better separation */
+}
+
+
