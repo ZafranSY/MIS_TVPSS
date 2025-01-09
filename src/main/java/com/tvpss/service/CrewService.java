@@ -2,6 +2,8 @@ package com.tvpss.service;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +20,12 @@ public class CrewService {
         return crewRepository.findByApplicationStatus("Pending");
     }
 
-
+//    // Update application status
+//    public void updateApplicationStatus(int crewID, String status) {
+//        Crew crew = crewRepository.findCrewById(crewID);
+//        crew.setApplicationStatus(status);
+//        crewRepository.save(crew);
+//    }
 
     public void approveApplicant(int crewID) {
         crewRepository.updateApplicationStatus(crewID, "Approved");
@@ -34,5 +41,8 @@ public class CrewService {
     {
     	return crewRepository.findCrewbyUserID(userID);
     }
-    
+    @Transactional
+    public void updateApplicationStatus(int crewID, String status) {
+    	crewRepository.updateApplicationStatus(crewID, status);
+    }
 }

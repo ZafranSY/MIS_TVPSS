@@ -53,9 +53,14 @@
             </p>
         </div>
         <div class="actions">
-            <button class="btn btn-approve"><i class="fa fa-check"></i> Approve</button>
-            <button class="btn btn-reject"><i class="fa fa-times"></i> Reject</button>
-        </div>
+    <button class="btn btn-approve" onclick="updateStatus('Approved')">
+        <i class="fa fa-check"></i> Approve
+    </button>
+    <button class="btn btn-reject" onclick="updateStatus('Rejected')">
+        <i class="fa fa-times"></i> Reject
+    </button>
+</div>
+
     </div>
 </div>
 
@@ -92,6 +97,28 @@
                 },
             });
         });
+        function updateStatus(status) {
+            const crewID = $(".applicant-item.active").data("crew-id");
+
+            if (!crewID) {
+                alert("Please select an applicant.");
+                return;
+            }
+
+            $.ajax({
+                url: "/MIS_TVPSS/adminschool/updateApplicationStatus",
+                method: "POST",
+                data: { crewID: crewID, status: status },
+                success: function (response) {
+                    $("#applicationStatus").val(status); // Update the dropdown to reflect the change
+                    location.reload();
+                },
+                error: function () {
+                    alert("Failed to update application status. Please try again.");
+                },
+            });
+        }
+
     </script>
 </body>
 </html>

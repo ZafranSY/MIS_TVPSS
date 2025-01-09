@@ -27,7 +27,7 @@
             <a href="/MIS_TVPSS/adminschool/reviewApplicant" class="menu-item">
                 <span class="icon">📄</span> Crew Applicants
             </a>
-              <a href="#" class="menu-item">
+              <a href="/MIS_TVPSS/adminschool/crewTask" class="menu-item">
                 <span class="icon">📄</span> Crew Task
             </a>
               <a href="#" class="menu-item">

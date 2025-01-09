@@ -30,16 +30,16 @@ public class CrewDAO {
 
 
 
-    public void updateApplicationStatus(int crewID, String newStatus) {
-        String query = "UPDATE Crew c SET c.applicationStatus = :newStatus WHERE c.crewID = :crewID";
-        int updatedCount = entityManager.createQuery(query)
-                .setParameter("newStatus", newStatus)
-                .setParameter("crewID", crewID)
-                .executeUpdate();
-        if (updatedCount == 0) {
-            System.out.println("No records updated for crewID: " + crewID);
-        }
-    }
+//    public void updateApplicationStatus(int crewID, String newStatus) {
+//        String query = "UPDATE Crew c SET c.applicationStatus = :newStatus WHERE c.crewID = :crewID";
+//        int updatedCount = entityManager.createQuery(query)
+//                .setParameter("newStatus", newStatus)
+//                .setParameter("crewID", crewID)
+//                .executeUpdate();
+//        if (updatedCount == 0) {
+//            System.out.println("No records updated for crewID: " + crewID);
+//        }
+//    }
 
     
     public Crew findCrewById(int crewID) {
@@ -65,6 +65,20 @@ public class CrewDAO {
         }
     }
 
-
+    /**
+     * Update the application status for a given Crew ID
+     * 
+     * @param crewID The ID of the Crew
+     * @param status New status to set (e.g., Approved, Rejected)
+     */
+    public void updateApplicationStatus(int crewID, String status) {
+        Crew crew = entityManager.find(Crew.class, crewID);
+        if (crew != null) {
+            crew.setApplicationStatus(status);
+            entityManager.merge(crew); // Update the entity in the database
+        } else {
+            throw new RuntimeException("Crew with ID " + crewID + " not found.");
+        }
+    }
 
 }
