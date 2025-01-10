@@ -181,3 +181,8 @@ CREATE TABLE CrewTask (
     IsOverdue BOOLEAN DEFAULT FALSE,                  -- Flag to indicate overdue tasks
     FOREIGN KEY (CrewID) REFERENCES Crew(CrewID) ON DELETE CASCADE -- Cascade delete if Crew is removed
 );
+
+ALTER TABLE Crew
+ADD Picture BLOB, -- Store the path or URL of the picture
+    ICNumber VARCHAR(20), -- To store the IC number (identity card number)
+    ReasonToJoin TEXT;    -- Store the reason to join (use TEXT for longer strings)
