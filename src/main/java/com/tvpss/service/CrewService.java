@@ -49,4 +49,16 @@ public class CrewService {
     public void updateApplicationStatus(int crewID, String status) {
     	crewRepository.updateApplicationStatus(crewID, status);
     }
+    
+    public List<Crew> getCrewsByAdminSchoolID(int adminSchoolID) {
+        return crewRepository.findByAdminSchoolID(adminSchoolID);
+    }
+    public List<Crew> getPendingApplicantsbySchool(int adminSchoolID) {
+        return crewRepository.findByApplicationStatusAndAdminSchoolId("Pending", adminSchoolID);
+    }
+
+    public List<Crew> getApprovedApplicantsbySchool(int adminSchoolID) {
+        return crewRepository.findByApplicationStatusAndAdminSchoolId("Approved", adminSchoolID);
+    }
+
 }

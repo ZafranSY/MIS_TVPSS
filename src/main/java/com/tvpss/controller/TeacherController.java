@@ -18,9 +18,9 @@ public class TeacherController {
 
 
     // Show teacher dashboard
-    @GetMapping("/dashboard")
+    @GetMapping("/teacher/dashboard")
     public String showDashboard() {
-        return "teacher/teacherDashboard";  // This maps to /WEB-INF/views/teacher/teacherDashboard.jsp
+        return "teacher/dashboard";  // This maps to /WEB-INF/views/teacher/teacherDashboard.jsp
     }
 
     // List all programs

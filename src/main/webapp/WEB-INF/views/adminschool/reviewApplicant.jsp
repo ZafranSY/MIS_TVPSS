@@ -54,6 +54,10 @@
 								<i class="fa fa-briefcase"></i> <strong>Position:</strong> <span
 									id="position-display">-</span>
 							</p>
+								<p>
+								<i class="fa fa-briefcase"></i> <strong>School:</strong> <span
+									id="school-display">-</span>
+							</p>
 							<p>
 								<i class="fa fa-map-marker"></i> <strong>Address:</strong> <span
 									id="address-display">-</span>
@@ -66,7 +70,12 @@
 									<option value="Rejected">Rejected</option>
 								</select>
 							</p>
+							
 						</div>
+<c:if test="${empty pendingApplicants}">
+    <p>No pending applicants found.</p>
+    <p>${{ pendingApplicants}}</p>
+</c:if>
 						<div class="actions">
 							<button class="btn btn-approve"
 								onclick="updateStatus('Approved')">
@@ -83,7 +92,7 @@
 			<div class="crew-list">
     <h3>Crew List</h3>
     <ul id="crew-list">
-        <c:forEach var="crew" items="${ApprovedApplicants}">
+        <c:forEach var="crew" items="${approvedApplicants}">
             <li class="crew-item" data-crew-id="${crew.crewID}">
                 <img src="/MIS_TVPSS/resources/images/default-profile.png" alt="Profile">
                 <span>${crew.user.name}</span>
@@ -117,6 +126,7 @@
                     $("#icNumber-display").text(response.icNumber || "N/A");
                     $("#email-display").text(response.email || "N/A");
                     $("#position-display").text(response.role || "N/A");
+                    $("#school-display").text(response.schoolName || "N/A");
                     $("#address-display").text(response.address || "N/A");
                     $("#applicationStatus").val(response.applicationStatus || "Pending");
                 },

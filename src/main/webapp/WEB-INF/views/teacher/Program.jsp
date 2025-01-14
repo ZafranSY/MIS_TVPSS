@@ -158,7 +158,7 @@
     <div class="main-container">
         <!-- Sidebar Section -->
         <div class="sidebar">
-            <%@ include file="/WEB-INF/views/adminschool/adSchoolSidebar.jsp" %>
+            <%@ include file="TeacherSidebar.jsp" %>
         </div>
 
         <!-- Content Section -->

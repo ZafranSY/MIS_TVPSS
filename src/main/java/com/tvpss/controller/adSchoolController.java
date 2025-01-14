@@ -17,7 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
+import javax.servlet.http.HttpSession;
 import com.tvpss.model.Crew;
 import com.tvpss.service.CrewService;
 
@@ -56,20 +56,32 @@ public class adSchoolController {
 //	}
 
 	@GetMapping("/adminschool/reviewApplicant")
-	public String reviewApplicant(
-	        @RequestParam(value = "crewID", required = false) Integer crewID,
-	        @RequestParam(value = "action", required = false) String action,
-	        Model model) {
+	public String reviewApplicant(@RequestParam(value = "crewID", required = false) Integer crewID,
+	                               @RequestParam(value = "action", required = false) String action,
+	                               HttpSession session,
+	                               Model model) {
+	    Integer adminSchoolID = (Integer) session.getAttribute("adminSchoolID");
 
-		 List<Crew> pendingApplicants = crewService.getPendingApplicants();
-		    model.addAttribute("pendingApplicants", pendingApplicants);
-		    
-		 List<Crew> ApprovedApplicansts = crewService.getApprovedApplicant();
-		 model.addAttribute("ApprovedApplicants", ApprovedApplicansts);
-		    model.addAttribute("pageTitle", "Welcome Admin School!");
+	    if (adminSchoolID != null) {
+	        // Fetch pending and approved applicants by school
+	        List<Crew> pendingApplicants = crewService.getPendingApplicantsbySchool(adminSchoolID);
+	        List<Crew> approvedApplicants = crewService.getApprovedApplicantsbySchool(adminSchoolID);
+	        
+	        if(pendingApplicants == null)
+	        {
+		        model.addAttribute("testingpendingApplicants", "pendingApplicants is null !");
 
-	    return "adminschool/reviewApplicant";
+	        }
+	        model.addAttribute("pendingApplicants", pendingApplicants);
+	        model.addAttribute("approvedApplicants", approvedApplicants);
+	        model.addAttribute("pageTitle", "Welcome Admin School!");
+	        return "adminschool/reviewApplicant";
+	    } else {
+	        model.addAttribute("error", "Unauthorized access!");
+	        return "errorPage";
+	    }
 	}
+
 	@GetMapping(value = "/adminschool/getApplicantDetails", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public Map<String, Object> getApplicantDetails(@RequestParam("crewID") int crewID) {

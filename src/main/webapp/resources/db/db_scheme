@@ -216,3 +216,39 @@ VALUES
 (8, 'Organize Film Screening', 'Set up and manage the film screening event.', '2025-01-17', 'Pending'),
 (8, 'Document Workshop Feedback', 'Collect and document feedback from workshop attendees.', '2025-01-19', 'Pending');
     
+    
+    CREATE TABLE SchoolAdmin (
+    AdminSchoolID INT AUTO_INCREMENT PRIMARY KEY, -- Unique ID for School Admin
+    UserID INT NOT NULL,                          -- Reference to User table
+    SchoolName VARCHAR(255) NOT NULL,             -- Name of the school
+    Address VARCHAR(255),                         -- Address of the school
+    FOREIGN KEY (UserID) REFERENCES User(UserID) ON DELETE CASCADE -- Cascade on delete
+);
+    INSERT INTO SchoolAdmin (UserID, SchoolName, Address)
+VALUES
+(2, 'Springfield High', '101 Elm St, Springfield'),
+(5, 'Riverdale Academy', '202 Oak St, Riverdale');
+    
+    
+    ALTER TABLE crew
+ADD CONSTRAINT FK_AdminSchoolID FOREIGN KEY (AdminSchoolID) REFERENCES schooladmin (AdminSchoolID);
+    
+    
+    UPDATE Crew
+SET AdminSchoolID = 1
+WHERE SchoolName = 'Springfield High';
+
+UPDATE Crew
+SET AdminSchoolID = 2
+WHERE SchoolName = 'Riverdale Academy';
+
+UPDATE Crew
+SET AdminSchoolID = 3
+WHERE SchoolName = 'Sunnydale High';
+
+UPDATE Crew
+SET AdminSchoolID = 4
+WHERE SchoolName = 'Evergreen College';
+
+-- Continue for other schools
+    

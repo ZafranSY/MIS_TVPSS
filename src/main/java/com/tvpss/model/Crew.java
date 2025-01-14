@@ -27,7 +27,12 @@ public class Crew {
 
     @Column(name = "Address") // New field
     private String address;
-
+    
+    @ManyToOne
+    @JoinColumn(name = "AdminSchoolID", nullable = false) // Ensure the column name matches the DB schema
+    private AdminSchool adminSchool;
+    
+    
     // Getters and Setters
     public Integer getCrewID() {
         return crewID;
@@ -75,6 +80,14 @@ public class Crew {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public AdminSchool getAdminSchool() {
+        return adminSchool;
+    }
+
+    public void setAdminSchool(AdminSchool adminSchool) {
+        this.adminSchool = adminSchool;
     }
     @Override
     public String toString() {

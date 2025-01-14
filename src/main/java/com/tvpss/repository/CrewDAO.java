@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Repository;
@@ -17,6 +18,8 @@ public class CrewDAO {
 
     @PersistenceContext
     private EntityManager entityManager;
+    
+
 
     public List<Crew> findByApplicationStatus(String status) {
         String query = "SELECT c FROM Crew c " +
@@ -80,5 +83,28 @@ public class CrewDAO {
             throw new RuntimeException("Crew with ID " + crewID + " not found.");
         }
     }
+    
+    
+    public List<Crew> findByAdminSchoolID(int adminSchoolID) {
+        String query = "SELECT c FROM Crew c WHERE c.adminSchool.adminSchoolID = :adminSchoolID";
+        return entityManager.createQuery(query, Crew.class)
+                .setParameter("adminSchoolID", adminSchoolID)
+                .getResultList();
+    }
+    public List<Crew> findByApplicationStatusAndAdminSchoolId(String status, Integer adminSchoolID) {
+        String query = "SELECT c FROM Crew c WHERE c.applicationStatus = :status AND c.adminSchool.adminSchoolID = :adminSchoolID";
+        System.out.println("Executing query:");
+        System.out.println("ApplicationStatus: " + status);
+        System.out.println("AdminSchoolID: " + adminSchoolID);
+
+        List<Crew> results = entityManager.createQuery(query, Crew.class)
+                                          .setParameter("status", status)
+                                          .setParameter("adminSchoolID", adminSchoolID)
+                                          .getResultList();
+
+        System.out.println("Query Results: " + results.size());
+        return results;
+    }
+
 
 }

@@ -1,7 +1,9 @@
 package com.tvpss.controller;
 
+import com.tvpss.model.AdminSchool;
 import com.tvpss.model.User;
 import com.tvpss.model.UserRoles;
+import com.tvpss.service.AdminSchoolService;
 import com.tvpss.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,9 +18,13 @@ public class LoginController {
 
     @Autowired
     private UserService userService;
+    
+    @Autowired 
+    private AdminSchoolService adminSchoolService;
 
     @RequestMapping("/login")
     public String loginPage() {
+    	
         return "login"; // Display login.jsp
     }
 
@@ -29,33 +35,42 @@ public class LoginController {
                                     RedirectAttributes redirectAttributes) {
         User user = userService.authenticateUser(email, password);
 
-        if (user != null) {        
-        	session.setAttribute("userID", user.getUserId());
+        if (user != null) {
+            session.setAttribute("userID", user.getUserId());
 
-            switch (user.getRole()) {
-                case UserRoles.STATE_ADMIN:
-                    redirectAttributes.addFlashAttribute("message", "Welcome State Admin!");
-                    return "redirect:/adminstate/dashboard";
-
-                case UserRoles.ADMIN_SCHOOL:
+            if (user.getRole() == UserRoles.ADMIN_SCHOOL) {
+                // Fetch the adminSchoolID based on the logged-in user's ID
+                Integer adminSchoolID = adminSchoolService.findSchoolAdminIDByUserId(user.getUserId());
+                if (adminSchoolID != null) {
+                    session.setAttribute("adminSchoolID", adminSchoolID);
                     redirectAttributes.addFlashAttribute("message", "Welcome School Admin!");
-                    return "redirect:/adminschool/reviewApplicant";
-
-                case UserRoles.TEACHER:
-                    redirectAttributes.addFlashAttribute("message", "Welcome Teacher!");
-                    return "redirect:/teacher/dashboard";
-
-                case UserRoles.STUDENT:
-                    redirectAttributes.addFlashAttribute("message", "Welcome Student!");
-                    return "redirect:/student/dashboard";
-
-                default:
-                    redirectAttributes.addFlashAttribute("errorMessage", "Invalid role.");
+                    return "redirect:/adminschool/dashboard";
+                } else {
+                    redirectAttributes.addFlashAttribute("error", "School Admin ID not found!");
                     return "redirect:/login";
+                }
             }
-        } else {
-            redirectAttributes.addFlashAttribute("errorMessage", "Invalid username or password.");
-            return "redirect:/login";
+
+            // Handle other roles (e.g., State Admin, etc.)
+            if (user.getRole() == UserRoles.STATE_ADMIN) {
+                redirectAttributes.addFlashAttribute("message", "Welcome State Admin!");
+                return "redirect:/adminstate/dashboard";
+            }
+            
+            else if (user.getRole() == UserRoles.TEACHER) {
+                redirectAttributes.addFlashAttribute("message", "Welcome State Admin!");
+                return "redirect:/teacher/dashboard";
+            }else
+            {
+            	redirectAttributes.addFlashAttribute("message", "Welcome State Admin!");
+                return "redirect:/student/dashboard";
+            }
         }
+
+        // If authentication fails
+        redirectAttributes.addFlashAttribute("error", "Invalid email or password!");
+        return "redirect:/login";
     }
+
+
 }

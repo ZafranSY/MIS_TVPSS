@@ -14,8 +14,7 @@
         <%@ include file="adSchoolSidebar.jsp" %>
 
     <!-- Main Content -->
-    <h1>${{pendingApplicants}}</h1>
-    <h1>${{pageTitle}}</h1>
+  
     <main class="main-content">
         <!-- Header -->
 
@@ -25,21 +24,22 @@
                 <div class="card-icon"><img src="<c:url value='/resources/images/numOfStudent.png' />" alt="Profile"></div>
                 <div class="card-info">
                     <span>Number of Students</span>
-                    <h2>${studentCount}</h2>
+                    <h2>${studentCount}</h2>  <h1>${{pendingApplicants}}</h1>
+    <h1>${{pageTitle}}</h1>
                 </div>
             </div>
             <div class="card">
                 <div class="card-icon"><img src="<c:url value='/resources/images/totalAchievement.png' />" alt="Profile"></div>
                 <div class="card-info">
                     <span>Total Achievement</span>
-                    <h2>${totalAchievements}</h2>
+                    <h2>${{userID}}</h2>
                 </div>
             </div>
             <div class="card">
                 <div class="card-icon"><img src="<c:url value='/resources/images/numOfCrew.png' />" alt="Profile"></div>
                 <div class="card-info">
                     <span>Number of Crew</span>
-                    <h2>${numCrew}</h2>
+                    <h2>${{adminSchoolID}}</h2>
                 </div>
             </div>
         </section>
