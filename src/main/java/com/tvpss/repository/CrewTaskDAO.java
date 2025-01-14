@@ -36,6 +36,17 @@ public class CrewTaskDAO {
 	        System.out.println("Query Results: " + results.size());
 	        return results;
 	    }
+	  public List<Crew> findAllByApplicationStatusAndAdminSchoolId(int adminSchoolID) {
+	        String query = "SELECT c FROM Crew c WHERE c.adminSchool.adminSchoolID = :adminSchoolID";
+	        System.out.println("Executing query:");
+	        System.out.println("AdminSchoolID: " + adminSchoolID);
+	        List<Crew> results = entityManager.createQuery(query, Crew.class)
+	                                          .setParameter("adminSchoolID", adminSchoolID)
+	                                          .getResultList();
+
+	        System.out.println("Query Results: " + results.size());
+	        return results;
+	    }
 	  public List<crewTask> findAllTasksByCrewID(int crewID) {
 		    String query = "SELECT t FROM crewTask t WHERE t.crew.crewID = :crewID";
 		    return entityManager.createQuery(query, crewTask.class)
@@ -51,6 +62,13 @@ public class CrewTaskDAO {
 		  
 		  return entityManager.createQuery(query, crewTask.class).setParameter("status", status).getResultList();
 	  }
+	  public crewTask findTaskByID(int taskID) {
+		    String query = "SELECT t FROM crewTask t WHERE t.taskId = :taskID";
+		    return entityManager.createQuery(query, crewTask.class)
+		                        .setParameter("taskID", taskID)
+		                        .getSingleResult();
+		}
+
 
 
 }
