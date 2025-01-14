@@ -111,6 +111,8 @@
 
             $(".applicant-item").removeClass("active");
             $(this).addClass("active");
+            console.log(`Selected Crew ID: ${crewId}`); // Debug crew ID
+
 
             $.ajax({
                 url: "/MIS_TVPSS/adminschool/getApplicantDetails",
