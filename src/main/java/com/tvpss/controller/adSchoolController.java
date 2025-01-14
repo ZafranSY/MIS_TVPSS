@@ -129,19 +129,20 @@ public class adSchoolController {
 
 		    if (adminSchoolID != null) {
 		        // Fetch pending and approved applicants by school
-		        List<Crew> pendingApplicants = crewService.getPendingApplicantsbySchool(adminSchoolID);
-		        List<Crew> approvedApplicants = crewService.getApprovedApplicantsbySchool(adminSchoolID);
+		        List<Crew> AllApplicantsbyschool = crewTaskService.getAllApplicantsbySchool(adminSchoolID);
 		        
-		        if(pendingApplicants == null)
-		        {
-			        model.addAttribute("testingpendingApplicants", "pendingApplicants is null !");
-
-		        }
-		        model.addAttribute("pendingApplicants", pendingApplicants);
-		        model.addAttribute("approvedApplicants", approvedApplicants);
+		        model.addAttribute("AllApplicantsbyschool", AllApplicantsbyschool);
 		        model.addAttribute("pageTitle", "Welcome Admin School!");
 		        
-		        
+		        if (crewID != null) {
+		            List<crewTask> pendingTasks = crewTaskService.getPendingTaskStatusbyCrewID(crewID);
+		            List<crewTask> completeTasks = crewTaskService.getCompleteTaskStatus(crewID);
+
+		            model.addAttribute("pendingTasks", pendingTasks);
+		            model.addAttribute("completeTasks", completeTasks);
+		        }
+
+		        model.addAttribute("pageTitle", "Crew Tasks");
 		        
 		        return "adminschool/crewTask";
 		    } else {
@@ -175,6 +176,26 @@ public class adSchoolController {
 
 	        return response;
 	    }
+	 @GetMapping(value = "/adminschool/getTaskDetailsByID", produces = MediaType.APPLICATION_JSON_VALUE)
+	 @ResponseBody
+	 public Map<String, Object> getTaskDetailsByID(@RequestParam("taskID") int taskID) {
+	     crewTask task = crewTaskService.getTaskByID(taskID);
+	     Map<String, Object> response = new HashMap<>();
+
+	     if (task != null) {
+	         response.put("TaskID", task.getTaskId());
+	         response.put("TaskTitle", task.getTaskTitle());
+	         response.put("TaskDescription", task.getTaskDescription());
+	         response.put("TaskDueDate", task.getTaskDueDate());
+	         response.put("TaskStatus", task.getTaskStatus());
+	         response.put("isOverdue", task.isOverdue());
+	     } else {
+	         response.put("error", "Task not found");
+	     }
+
+	     return response;
+	 }
+
 
 
 }
