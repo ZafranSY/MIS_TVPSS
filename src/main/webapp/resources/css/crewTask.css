@@ -1,7 +1,5 @@
 @charset "UTF-8";
 
-@charset "UTF-8";
-
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -38,14 +36,6 @@ header h1 {
 header .user-profile {
     text-align: right;
 }
-.upcoming-overdue-task
-{
-	background : green;
-    background-color: #f9f9f9;
-    padding: 20px;
-    margin: 20px 0;
-    border-radius: 8px;
-}
 
 .review-applicant {
     display: flex;
@@ -59,18 +49,18 @@ header .user-profile {
     border-radius: 8px;
 }
 
-.applicant-list ul {
+.applicant-list ul ,.crew-list ul{
     list-style: none;
     padding: 0;
 }
 
-.applicant-list li {
+.applicant-list li , .crew-list li{
     display: flex;
     align-items: center;
     margin-bottom: 10px;
 }
 
-.applicant-list li img {
+.applicant-list li img , .crew-list li img{
     width: 40px;
     height: 40px;
     border-radius: 50%;
@@ -141,13 +131,78 @@ header .user-profile {
 }
 
 .applicant-item.active,
-.applicant-item:hover {
+.applicant-item:hover 
+{
     background-color: #d9f2d9;
 }
+.crew-item
+{
+	
+	   cursor: pointer;
+    padding: 10px;
+    margin-bottom: 5px;
+    background-color: #d9f2d9;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    transition: background-color 0.3s;
+}
 
-.applicant-item img {
+.applicant-item img 
+.crew-item img
+{
     width: 40px;
     height: 40px;
     border-radius: 50%;
     margin-right: 10px;
 }
+.crew-list
+{
+	background-color:#f9f9f9;
+	margin:10px 0;
+	padding :20px;
+}.crew-list {
+    margin-top: 20px;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Add shadow for better separation */
+}
+/* Task item styling, similar to applicant item */
+.task-item {
+    cursor: pointer;
+    padding: 10px;
+    margin-bottom: 5px;
+    background-color: #f0f5f5; /* Light background color */
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    transition: background-color 0.3s, box-shadow 0.3s; /* Smooth hover transition */
+}
+
+/* Hover effect for task item */
+.task-item:hover {
+    background-color: #e6f7e6; /* Slightly darker green for hover */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add subtle shadow on hover */
+}
+
+/* Active/selected task item styling */
+.task-item.active {
+    background-color: #d9f2d9; /* Green background for active item */
+    border: 1px solid #4caf50; /* Add a border for emphasis */
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2); /* Slightly darker shadow for active */
+}
+
+/* Task item text styling */
+.task-item span {
+    margin-right: 10px; /* Add spacing between task title and description */
+    color: #333; /* Dark text color for readability */
+    font-size: 14px;
+}
+
+/* Optional: Add some spacing around the task list for better layout */
+.task-list {
+    margin-top: 15px;
+}
+
+
