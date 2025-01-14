@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-@Table(name = "crewTask")
+@Table(name = "crewtask")
 public class crewTask implements Serializable {
 
     @Id
@@ -32,6 +32,7 @@ public class crewTask implements Serializable {
 
     @Column(name = "IsOverdue", nullable = false)
     private boolean isOverdue = false;
+
 
     // Getters and Setters
     public int getTaskId() {

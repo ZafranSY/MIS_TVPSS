@@ -19,13 +19,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.HttpSession;
 import com.tvpss.model.Crew;
+import com.tvpss.model.crewTask;
 import com.tvpss.service.CrewService;
+import com.tvpss.service.crewTaskService;
 
 @Controller
 public class adSchoolController {
 
 	@Autowired
 	private CrewService crewService;
+	
+	@Autowired
+	private crewTaskService crewTaskService;
 
 	@GetMapping("/adminschool/dashboard")
 	public String showDashboard(Model model) {
@@ -81,6 +86,7 @@ public class adSchoolController {
 	        return "errorPage";
 	    }
 	}
+	
 
 	@GetMapping(value = "/adminschool/getApplicantDetails", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
@@ -114,11 +120,61 @@ public class adSchoolController {
         }
     }
 	@GetMapping("/adminschool/crewTask")
-	public String showCrewtask()
-	{
-		return "adminschool/crewTask";
+	public String showCrewtask(@RequestParam(value = "crewID", required = false) Integer crewID,
+            @RequestParam(value = "action", required = false) String action,
+            HttpSession session,
+            Model model) {
+		
+		 Integer adminSchoolID = (Integer) session.getAttribute("adminSchoolID");
+
+		    if (adminSchoolID != null) {
+		        // Fetch pending and approved applicants by school
+		        List<Crew> pendingApplicants = crewService.getPendingApplicantsbySchool(adminSchoolID);
+		        List<Crew> approvedApplicants = crewService.getApprovedApplicantsbySchool(adminSchoolID);
+		        
+		        if(pendingApplicants == null)
+		        {
+			        model.addAttribute("testingpendingApplicants", "pendingApplicants is null !");
+
+		        }
+		        model.addAttribute("pendingApplicants", pendingApplicants);
+		        model.addAttribute("approvedApplicants", approvedApplicants);
+		        model.addAttribute("pageTitle", "Welcome Admin School!");
+		        
+		        
+		        
+		        return "adminschool/crewTask";
+		    } else {
+		        model.addAttribute("error", "Unauthorized access!");
+		        return "errorPage";
+		    }
 	}
 
+	 @GetMapping(value = "/adminschool/getTaskDetails", produces = MediaType.APPLICATION_JSON_VALUE)
+	    @ResponseBody
+	    public Map<String, Object> getAllTaskbyCrewID(@RequestParam("crewID") int crewID) {
+	        // Fetch tasks by CrewID
+	        List<crewTask> crewTasks = crewTaskService.getAllTaskbyCrewID(crewID);
+	        
+	        Map<String, Object> response = new HashMap<>();
+
+	        if (crewTasks != null && !crewTasks.isEmpty()) {
+	            response.put("tasks", crewTasks.stream().map(task -> {
+	                Map<String, Object> taskDetails = new HashMap<>();
+	                taskDetails.put("TaskTitle", task.getTaskTitle());
+	                taskDetails.put("TaskDescription", task.getTaskDescription());
+	                taskDetails.put("TaskDueDate", task.getTaskDueDate());
+	                taskDetails.put("TaskID", task.getTaskId());
+	                taskDetails.put("TaskStatus", task.getTaskStatus());
+	                taskDetails.put("isOverdue", task.isOverdue());
+	                return taskDetails;
+	            }).toList());
+	        } else {
+	            response.put("error", "No tasks found for the given CrewID.");
+	        }
+
+	        return response;
+	    }
 
 
 }
