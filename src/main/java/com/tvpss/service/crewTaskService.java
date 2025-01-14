@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.tvpss.model.crewTask;
+import com.tvpss.model.Crew;
 import com.tvpss.repository.CrewDAO;
 import com.tvpss.repository.CrewTaskDAO;
 
@@ -23,6 +23,9 @@ public class crewTaskService {
     public List<crewTask> getApprovedApplicantsbySchool(int adminSchoolID) {
         return crewRepository.findByApplicationStatusAndAdminSchoolId("Approved", adminSchoolID);
     }
+    public List<Crew> getAllApplicantsbySchool(int adminSchoolID) {
+        return crewRepository.findAllByApplicationStatusAndAdminSchoolId( adminSchoolID);
+    }
  // Fetch tasks by CrewID
     public List<crewTask> getTasksByCrewID(int crewID) {
         return crewRepository.findAllTasksByCrewID(crewID);
@@ -39,5 +42,9 @@ public class crewTaskService {
     {
     	return crewRepository.findTaskbyStatus("Complete",crewID);
     }
+    public crewTask getTaskByID(int taskID) {
+        return crewRepository.findTaskByID(taskID);
+    }
+
     
 }
