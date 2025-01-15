@@ -3,10 +3,267 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>UC007 Review Applicant</title>
-<link rel="stylesheet"
-	href="/MIS_TVPSS/resources/css/reviewApplicant.css">
+<title>UC007 Review Applicant1</title>
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<style>
+/* Base Layout */
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background-color: #f5f7fa;
+    color: #2c3e50;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    display: flex;
+    min-height: 100vh;
+}
+
+.sidebar {
+    width: 280px;
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    background-color: white;
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.05);
+    z-index: 10;
+}
+
+/* Main content positioning */
+.content {
+    flex: 1;
+    margin-left: 280px;
+    padding: 30px;
+    background-color: #f8fafc;
+    min-height: 100vh;
+}
+
+/* Header Styling */
+header {
+    background-color: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header h1 {
+    font-size: 24px;
+    color: #1a237e;
+    margin: 0;
+}
+
+.user-profile {
+    background-color: #f1f5f9;
+    padding: 8px 15px;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+/* Review Section Layout */
+.review-applicant {
+    display: grid;
+    grid-template-columns: minmax(250px, 300px) minmax(300px, 1fr);
+    gap: 25px;
+    margin-top: 20px;
+}
+
+/* Applicant List Styling */
+.applicant-list {
+    background-color: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.applicant-list h3 {
+    color: #1a237e;
+    font-size: 18px;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #e3e8ef;
+}
+
+.applicant-list ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.applicant-item {
+    background-color: white;
+    border: 1px solid #e3e8ef;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+}
+
+.applicant-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    border-color: #4caf50;
+}
+
+.applicant-item.active {
+    background-color: #e8f5e9;
+    border-color: #4caf50;
+}
+
+.applicant-item img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 15px;
+    object-fit: cover;
+}
+
+/* Applicant Details Section */
+.applicant-details {
+    background-color: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.applicant-details h2 {
+    color: #1a237e;
+    font-size: 18px;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #e3e8ef;
+}
+
+/* Form Styling */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-weight: 600;
+    color: #1a237e;
+    margin-bottom: 8px;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #e3e8ef;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: border-color 0.3s ease;
+    background-color: white;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    border-color: #4caf50;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.1);
+}
+
+/* Button Styling */
+.actions {
+    margin-top: 30px;
+    display: flex;
+    gap: 15px;
+}
+
+.btn {
+    padding: 12px 25px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    font-size: 14px;
+}
+
+.btn-approve {
+    background-color: #4caf50;
+    color: white;
+}
+
+.btn-reject {
+    background-color: #f44336;
+    color: white;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Crew List Styling */
+.crew-list {
+    background-color: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    margin-top: 30px;
+}
+
+.crew-list h3 {
+    color: #1a237e;
+    font-size: 18px;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #e3e8ef;
+}
+
+.crew-item {
+    background-color: white;
+    border: 1px solid #e3e8ef;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+}
+
+.crew-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .review-applicant {
+        grid-template-columns: 1fr 2fr;
+    }
+    
+    .crew-list {
+        grid-column: span 2;
+    }
+}
+
+@media (max-width: 768px) {
+    .review-applicant {
+        grid-template-columns: 1fr;
+    }
+    
+    .crew-list {
+        grid-column: span 1;
+    }
+    
+    .content {
+        margin-left: 0;
+        padding: 15px;
+    }
+}
+</style>
 </head>
 <body>
 	<div class="container">
@@ -26,8 +283,7 @@
 					<ul id="applicant-list">
 						<c:forEach var="applicant" items="${pendingApplicants}">
 							<li class="applicant-item" data-crew-id="${applicant.crewID}">
-								<img src="/MIS_TVPSS/resources/images/default-profile.png"
-								alt="Profile"> <span>${applicant.user.name}</span>
+								 <span>${applicant.user.name}</span>
 							</li>
 						</c:forEach>
 					</ul>
@@ -36,8 +292,7 @@
 				<div class="applicant-details">
 					<div class="details-card">
 						<div class="profile-section">
-							<img src="/MIS_TVPSS/resources/images/default-profile.png"
-								alt="Profile Picture" class="profile-pic">
+							
 							<h2 class="applicant-name" id="name-display">Select an
 								applicant</h2>
 						</div>
