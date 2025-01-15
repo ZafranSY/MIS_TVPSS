@@ -60,5 +60,9 @@ public class CrewService {
     public List<Crew> getApprovedApplicantsbySchool(int adminSchoolID) {
         return crewRepository.findByApplicationStatusAndAdminSchoolId("Approved", adminSchoolID);
     }
+    public void deleteCrew(Integer crewId)
+    {
+    	 crewRepository.deleteCrew(crewId);
+    }
 
 }
