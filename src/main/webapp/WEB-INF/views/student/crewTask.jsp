@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>UC007 Review Applicant</title>
+    <title>UC007 Student Tasks</title>
     <link rel="stylesheet" href="/MIS_TVPSS/resources/css/crewTask.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
@@ -12,78 +12,131 @@
         <%@ include file="StudentSidebar.jsp" %>
 
         <main class="content">
-            <header>
-                <h1>Review Applicant</h1>
-                <div class="user-profile">
-                    <span>John Doe</span>
-                    <span>ID: 32450</span>
-                </div>
-            </header>
-             <div class="upcoming-overdue-task">
-                    <h3>Upcoming or Overdue Task</h3>
-                  
-                </div>
-            <section class="review-applicant">
-                <div class="applicant-list">
-                    <h3>Task Tittle</h3>
-                   <ul id="applicant-list">
-                        <c:forEach var="applicant" items="{pendingApplicants}">
-                            <li class="applicant-item" data-crew-id="{applicant.crewID}">
-                                <img src="/MIS_TVPSS/resources/images/default-profile.png" alt="Profile">
-                                <span>{applicant.user.name}</span>
+            <%@ include file="../common/header.jsp" %>
+
+            <section class="task-section">
+                <div class="task-list">
+                    <h3>Task List</h3>
+                    <ul id="task-list">
+                        <c:forEach var="task" items="${tasks}">
+                            <li class="task-item" data-task-id="${task.TaskID}">
+                                <span class="task-title">${task.TaskTitle}</span>
+                                <span class="task-description hidden">${task.TaskDescription}</span>
+                                <span class="task-deadline hidden">${task.TaskDeadline}</span>
                             </li>
                         </c:forEach>
                     </ul>
                 </div>
 
-               <div class="applicant-details">
-    <div class="details-card">
-        <div class="profile-section">
-            <h2 class="applicant-name" id="name-display">Clean the Lab</h2>
-        </div>
-        <div class="info-section">
-            <p><i class="fa fa-id-card"></i> <strong> Description :</strong> <span id="icNumber-display">-</span></p>
-            <p><i class="fa fa-envelope"></i> <strong>Deadline :</strong> <span id="email-display">-</span></p>
-        </div>
-        <div class="actions">
-            <button class="btn btn-approve"><i class="fa fa-check"></i> Complete</button>
-        </div>
-    </div>
-</div>
-
+                <div class="task-details">
+                    <h3>Task Details</h3>
+                    <div class="details-card">
+                        <h4 id="task-title">Select a Task</h4>
+                                <p><strong>Description:</strong> <span id="task-description">-</span></p>
+                                <p><strong>Due Date:</strong> <span id="task-due-date">-</span></p>
+                                <p><strong>Status:</strong> <span id="task-status">-</span></p>
+                                <p><strong>Overdue:</strong> <span id="task-overdue">-</span></p>
+                    </div>
+                </div>
             </section>
         </main>
     </div>
 
     <script>
-        $(document).on("click", ".applicant-item", function () {
-            const crewId = $(this).data("crew-id");
+    // Handle task selection
+    $(document).on("click", ".task-item", function () {
+        const taskTitle = $(this).find(".task-title").text();
+        const taskDescription = $(this).find(".task-description").text();
+        const taskDeadline = $(this).find(".task-deadline").text();
 
-            $(".applicant-item").removeClass("active");
-            $(this).addClass("active");
+        // Update task details
+        $("#task-title-display").text(taskTitle || "N/A");
+        $("#task-description-display").text(taskDescription || "N/A");
+        $("#task-deadline-display").text(taskDeadline || "N/A");
 
-            $.ajax({
-                url: "/MIS_TVPSS/adminschool/getApplicantDetails",
-                method: "GET",
-                data: { crewID: crewId },
-                success: function (response) {
-                    if (response.error) {
-                        alert(response.error);
-                        return;
-                    }
+        // Highlight selected task
+        $(".task-item").removeClass("active");
+        $(this).addClass("active");
+    });
 
-                    $("#name-display").text(response.name || "N/A");
-                    $("#icNumber-display").text(response.icNumber || "N/A");
-                    $("#email-display").text(response.email || "N/A");
-                    $("#position-display").text(response.role || "N/A");
-                    $("#address-display").text(response.address || "N/A");
-                    $("#applicationStatus").val(response.applicationStatus || "Pending");
-                },
-                error: function () {
-                    alert("Failed to fetch applicant details. Please try again.");
-                },
-            });
+    // Ensure tasks load dynamically if needed
+    $(document).ready(function () {
+        const crewId = "${sessionScope.userID}";
+
+        $.ajax({
+	        url: "/MIS_TVPSS/adminschool/getTaskDetails",
+	        method: "GET",
+	        data: { crewID: crewId },
+	     // Modify the task rendering section in your AJAX success callback
+	        success: function (response) {
+	            console.log("Tasks Response:", response);
+
+	            if (!response.tasks || response.tasks.length === 0) {
+	                console.warn(`No tasks found for Crew ID: ${crewId}`);
+	                $("#task-list").html("<li>No tasks available.</li>");
+	                return;
+	            }
+
+	            // Clear the task list
+	            $("#task-list").empty();
+	            
+	            // Render each task
+	            response.tasks.forEach(function(task) {
+	                const taskItem = document.createElement('li');
+	                taskItem.className = 'task-item';
+	                taskItem.setAttribute('data-task-id', task.TaskID);
+	                
+	                const title = document.createElement('span');
+	                title.textContent = task.TaskTitle;
+	                
+	                const desc = document.createElement('span');
+	                desc.textContent = task.TaskDescription;
+	                
+	                
+	                taskItem.appendChild(title);
+	                taskItem.appendChild(desc);
+	                
+	                $("#task-list").append(taskItem);
+	            });
+	        },
+	        error: function (xhr, status, error) {
+	            console.error("Error fetching tasks:", error);
+	        },
+	    });
+    });
+    // Handle Task Selection
+    $(document).on("click", ".task-item", function () {
+        const taskID = $(this).data("task-id");
+        console.log(`Selected Task ID: ${taskID}`); // Debug task ID
+
+        $(".task-item").removeClass("active");
+        $(this).addClass("active");
+
+        // Fetch task details dynamically
+        $.ajax({
+            url: "/MIS_TVPSS/adminschool/getTaskDetailsByID",
+            method: "GET",
+            data: { taskID },
+            success: function (response) {
+                console.log("Task Details Response:", response); // Debug response
+
+                // Populate task details
+                $("#task-title").text(response.TaskTitle || "N/A");
+                $("#task-description").text(response.TaskDescription || "N/A");
+                $("#task-due-date").text(
+                    response.TaskDueDate
+                        ? new Date(response.TaskDueDate).toLocaleDateString()
+                        : "N/A"
+                );
+                $("#task-status").text(response.TaskStatus || "N/A");
+                $("#task-overdue").text(response.isOverdue ? "Yes" : "No");
+            },
+            error: function (xhr, status, error) {
+                console.error("AJAX Error:", status, error);
+                alert("Failed to fetch task details. Please try again.");
+            },
         });
+    });
     </script>
 </body>
 </html>

@@ -141,17 +141,10 @@
 </head>
 <body>
     <div class="container">
-        <div class="sidebar">
-            <!-- Sidebar content goes here -->
-        </div>
-        
+        <%@ include file="StudentSidebar.jsp" %>
         <div class="content">
-            <header>
-                <h1>Crew Registration</h1>
-                <div class="user-profile">
-                    <!-- User profile information -->
-                </div>
-            </header>
+                        		<%@ include file="../common/header.jsp"%>
+
 
             <div class="registration-form">
                 <form action="CrewRegistrationServlet" method="POST" enctype="multipart/form-data">
