@@ -37,7 +37,9 @@ public class LoginController {
 
         if (user != null) {
             session.setAttribute("userID", user.getUserId());
-
+            session.setAttribute("username", user.getName());
+            session.setAttribute("userRole", user.getRole());
+            session.setAttribute("userEmail", user.getEmail());
             if (user.getRole() == UserRoles.ADMIN_SCHOOL) {
                 // Fetch the adminSchoolID based on the logged-in user's ID
                 Integer adminSchoolID = adminSchoolService.findSchoolAdminIDByUserId(user.getUserId());
