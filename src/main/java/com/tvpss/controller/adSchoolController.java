@@ -5,19 +5,24 @@ import java.util.List;
 import java.util.Map;
 
 import javax.transaction.Transactional;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ResponseBody;
-
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import javax.servlet.http.HttpSession;
 import com.tvpss.model.Crew;
 import com.tvpss.model.crewTask;
 import com.tvpss.service.CrewService;
@@ -180,10 +185,11 @@ public class adSchoolController {
 	    }
 	 @GetMapping(value = "/adminschool/getTaskDetailsByID", produces = MediaType.APPLICATION_JSON_VALUE)
 	 @ResponseBody
-	 public Map<String, Object> getTaskDetailsByID(@RequestParam("taskID") int taskID) {
+	 public Map<String, Object> getTaskDetailsByID(@RequestParam("taskID") int taskID,  HttpSession session) {
 	     crewTask task = crewTaskService.getTaskByID(taskID);
 	     Map<String, Object> response = new HashMap<>();
-
+	     
+	        session.setAttribute("taskId", task.getTaskId());
 	     if (task != null) {
 	         response.put("TaskID", task.getTaskId());
 	         response.put("TaskTitle", task.getTaskTitle());
@@ -203,7 +209,41 @@ public class adSchoolController {
 		    return "adminschool/addTask"; // Ensure this JSP exists and matches the path
 		}
 	 
+	 @DeleteMapping("/adminschool/deleteTask/{taskId}")
+	 @ResponseBody
+	 public ResponseEntity<String> deleteTask(@PathVariable("taskId") Integer taskId) {
+	     try {
+	         crewTaskService.deleteTask(taskId);
+	         return ResponseEntity.ok("Task deleted successfully");
+	     } catch (Exception e) {
+	         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+	                            .body("Error deleting task: " + e.getMessage());
+	     }
+	 }
 
 
+
+	 
+	// Add this configuration class
+//	 @Configuration
+//	 public class WebConfig implements WebMvcConfigurer {
+//	     @Override
+//	     public void addCorsMappings(CorsRegistry registry) {
+//	         registry.addMapping("/**")
+//	                 .allowedMethods("GET", "POST", "PUT", "DELETE");
+//	     }
+//	 }
+
+	 @Configuration
+	 public class WebConfig implements WebMvcConfigurer {
+	     @Override
+	     public void addCorsMappings(CorsRegistry registry) {
+	         registry.addMapping("/**")
+	                 .allowedMethods("GET", "POST", "PUT", "DELETE")
+	                 .allowedOrigins("http://localhost:8080") // Adjust origin as needed
+	                 .allowCredentials(true);
+	     }
+	 }
+	 
 
 }
