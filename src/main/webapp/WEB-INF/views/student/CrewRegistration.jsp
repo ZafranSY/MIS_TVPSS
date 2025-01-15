@@ -20,16 +20,52 @@
             display: flex;
             min-height: 100vh;
         }
+/* Header Styling */
+header {
+    background-color: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    margin-bottom: 30px;
+}
+
+header h1 {
+    font-size: 24px;
+    color: #1a237e;
+    margin: 0;
+}
+
 
         .sidebar {
-            width: 280px;
-            position: fixed;
-            left: 0;
-            top: 0;
-            bottom: 0;
+            width: 300px;
             background-color: white;
             box-shadow: 2px 0 8px rgba(0, 0, 0, 0.05);
-            z-index: 10;
+            padding: 20px;
+        }
+        .sidebar h2 {
+            font-size: 20px;
+            color: #1a237e;
+            margin-bottom: 20px;
+        }
+        .sidebar nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .sidebar nav ul li {
+            margin-bottom: 15px;
+        }
+        .sidebar nav ul li a {
+            text-decoration: none;
+            color: #2c3e50;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        .menu-item:hover .icon {
+  transform: scale(1.2);
+}
+        .sidebar nav ul li a:hover {
+            color: #4caf50;
         }
 
         .content {
@@ -41,22 +77,7 @@
         }
 
         /* Header */
-        header {
-            background-color: white;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-            margin-bottom: 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        header h1 {
-            font-size: 24px;
-            color: #1a237e;
-            margin: 0;
-        }
+      
 
         /* Registration Form */
         .registration-form {
