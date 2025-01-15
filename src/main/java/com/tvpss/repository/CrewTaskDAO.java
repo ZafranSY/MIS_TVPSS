@@ -68,6 +68,14 @@ public class CrewTaskDAO {
 		                        .setParameter("taskID", taskID)
 		                        .getSingleResult();
 		}
+	// CrewTaskDAO.java
+	  public void deleteTask(int taskId) {
+	      String query = "DELETE FROM crewTask t WHERE t.taskId = :taskId";
+	      entityManager.createQuery(query)
+	                  .setParameter("taskId", taskId)
+	                  .executeUpdate();
+	  }
+	 
 
 
 
