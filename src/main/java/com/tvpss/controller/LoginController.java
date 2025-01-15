@@ -73,6 +73,7 @@ public class LoginController {
         redirectAttributes.addFlashAttribute("error", "Invalid email or password!");
         return "redirect:/login";
     }
+    
 
 
 }
