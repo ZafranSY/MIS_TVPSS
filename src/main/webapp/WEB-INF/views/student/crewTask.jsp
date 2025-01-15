@@ -37,6 +37,12 @@
                                 <p><strong>Status:</strong> <span id="task-status">-</span></p>
                                 <p><strong>Overdue:</strong> <span id="task-overdue">-</span></p>
                     </div>
+                                        <div class="actions">
+                        <button class="btn btn-complete" onclick="updateStatus('Approved')">
+                            <i class="fa fa-check"></i> Complete
+                        </button>
+                        
+                    </div>
                 </div>
             </section>
         </main>
