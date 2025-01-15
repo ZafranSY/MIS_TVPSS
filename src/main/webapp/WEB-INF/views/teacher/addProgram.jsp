@@ -58,15 +58,10 @@
     <h1>Add Program</h1>
     <form:form method="post" modelAttribute="program" action="/MIS_TVPSS/teacher/saveProgram">
 
-        <!-- Teacher ID Field -->
-        <label for="teacherID">Teacher ID (UserID):</label>
-        <form:input path="teacherID" type="number" required="true" />
-        <form:errors path="teacherID" cssClass="error" />
-
         <!-- Program Title Field -->
-        <label for="title">Program Title:</label>
-        <form:input path="title" type="text" required="true" />
-        <form:errors path="title" cssClass="error" />
+        <label for="name">Program Name:</label>
+        <form:input path="name" type="text" required="true" />
+        <form:errors path="name" cssClass="error" />
 
         <!-- Description Field -->
         <label for="description">Program Description:</label>
@@ -82,6 +77,16 @@
         <label for="endDate">End Date:</label>
         <form:input path="endDate" type="date" required="true" />
         <form:errors path="endDate" cssClass="error" />
+
+        <!-- School Selection Field -->
+        <label for="school">School:</label>
+        <form:select path="school.schoolID">
+            <form:option value="" label="-- Select School --" />
+            <c:forEach var="school" items="${schools}">
+                <form:option value="${school.schoolID}">${school.name}</form:option>
+            </c:forEach>
+        </form:select>
+        <form:errors path="school.schoolID" cssClass="error" />
 
         <button type="submit">Save Program</button>
     </form:form>

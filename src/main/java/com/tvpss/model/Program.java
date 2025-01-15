@@ -10,31 +10,38 @@ public class Program {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int programID;  // Auto-incremented Primary Key
+    private int programID;
 
-    @Column(name = "TeacherID", nullable = false)
-    private int teacherID;  // ID of the teacher who created the program
-
-    @Column(name = "Title", nullable = false, length = 255)
-    private String title;  // Title of the program
+    @Column(name = "Name", nullable = false, length = 255)
+    private String name;
 
     @Column(name = "Description")
-    private String description;  // Description of the program
+    private String description;
 
-    @Temporal(TemporalType.DATE)  // Ensures the SQL column stores date only (without time)
-    @DateTimeFormat(pattern = "yyyy-MM-dd")  // Ensures Spring parses date format correctly
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "StartDate")
-    private Date startDate;  // Program start date
+    private Date startDate;
 
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "EndDate")
-    private Date endDate;  // Program end date
+    private Date endDate;
 
-    @Column(name = "posted_by", length = 255)  // New column to store the name of the logged-in user
-    private String postedBy;  // Name of the user who posted the program
+    // Foreign key reference to School entity
+    @ManyToOne
+    @JoinColumn(name = "SchoolID", nullable = false)
+    private School school;
 
-    // Getters and setters
+    // Getters and Setters
+    public School getSchool() {
+        return school;  // Returns the school reference
+    }
+
+    public void setSchool(School school) {
+        this.school = school;
+    }
+
     public int getProgramID() {
         return programID;
     }
@@ -43,20 +50,12 @@ public class Program {
         this.programID = programID;
     }
 
-    public int getTeacherID() {
-        return teacherID;
+    public String getName() {
+        return name;
     }
 
-    public void setTeacherID(int teacherID) {
-        this.teacherID = teacherID;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getDescription() {
@@ -81,26 +80,5 @@ public class Program {
 
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
-    }
-
-    public String getPostedBy() {
-        return postedBy;
-    }
-
-    public void setPostedBy(String postedBy) {
-        this.postedBy = postedBy;
-    }
-
-    @Override
-    public String toString() {
-        return "Program{" +
-                "programID=" + programID +
-                ", teacherID=" + teacherID +
-                ", title='" + title + '\'' +
-                ", description='" + description + '\'' +
-                ", startDate=" + startDate +
-                ", endDate=" + endDate +
-                ", postedBy='" + postedBy + '\'' +
-                '}';
     }
 }

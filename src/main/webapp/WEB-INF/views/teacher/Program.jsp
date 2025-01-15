@@ -164,36 +164,43 @@
         <!-- Content Section -->
         <div class="content">
             <h1>Program List</h1>
-            <table>
-<thead>
-    <tr>
-        <th>No.</th>
-        <th>Title</th>
-        <th>Description</th>
-        <th>Start Date</th>
-        <th>End Date</th>
-        <th>Posted By</th>  <!-- New column for Posted By -->
-        <th>Actions</th>
-    </tr>
-</thead>
-<tbody>
-    <c:forEach var="program" items="${programs}" varStatus="status">
+<table>
+    <thead>
         <tr>
-            <td>${status.index + 1}</td>
-            <td>${program.title}</td>
-            <td>${program.description}</td>
-            <td class="date-cell"><fmt:formatDate value="${program.startDate}" pattern="yyyy-MM-dd" /></td>
-            <td class="date-cell"><fmt:formatDate value="${program.endDate}" pattern="yyyy-MM-dd" /></td>
-            <td>${program.postedBy}</td>  <!-- Display postedBy field -->
-            <td>
-                <a href="<c:url value='/teacher/editProgram/${program.programID}' />">Edit</a> |
-                <a href="<c:url value='/teacher/deleteProgram/${program.programID}' />" onclick="return confirm('Are you sure you want to delete this program?');">Delete</a>
-            </td>
+            <th>No.</th>
+            <th>Program Name</th>
+            <th>Description</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>School</th>
+            <th>District</th>  <!-- District column -->
+            <th>Actions</th>
         </tr>
-    </c:forEach>
-</tbody>
+    </thead>
+    <tbody>
+        <c:forEach var="program" items="${programs}" varStatus="status">
+            <tr>
+                <td>${status.index + 1}</td>
+                <td>${program.name}</td>
+                <td>${program.description}</td>
+                <td><fmt:formatDate value="${program.startDate}" pattern="yyyy-MM-dd" /></td>
+                <td><fmt:formatDate value="${program.endDate}" pattern="yyyy-MM-dd" /></td>
+                <td>${program.school.name}</td>
+                <td>${program.school.district.name}</td>  <!-- Changed 'districtName' to 'name' -->
+                <td>
+                    <a href="<c:url value='/teacher/editProgram/${program.programID}' />" class="btn">Edit</a>
+                    <a href="<c:url value='/teacher/deleteProgram/${program.programID}' />" 
+                       class="btn" 
+                       style="background-color: #e74c3c;" 
+                       onclick="return confirm('Are you sure you want to delete this program?');">
+                       Delete
+                    </a>
+                </td>
+            </tr>
+        </c:forEach>
+    </tbody>
+</table>
 
-            </table>
             <!-- Add New Program Button -->
             <a href="<c:url value='/teacher/addProgram' />" class="btn btn-primary">Add New Program</a>
         </div>

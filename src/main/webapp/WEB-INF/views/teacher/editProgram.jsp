@@ -32,9 +32,9 @@
             margin-bottom: 10px;
         }
         input[type="text"],
-        input[type="number"],
         input[type="date"],
-        textarea {
+        textarea,
+        select {
             width: 100%;
             padding: 12px;
             margin-bottom: 20px;
@@ -61,15 +61,12 @@
     <!-- Form for submitting updated program details -->
     <form action="<c:url value='/teacher/updateProgram' />" method="post">
         
-        <!-- Hidden field for Program ID (required for updating in DB) -->
+        <!-- Hidden field for Program ID -->
         <input type="hidden" name="programID" value="${program.programID}">
-        
-        <!-- Hidden field for Teacher ID (if relevant) -->
-        <input type="hidden" name="teacherID" value="${program.teacherID}">
         
         <!-- Title -->
         <label for="title">Title:</label>
-        <input type="text" id="title" name="title" value="${program.title}" required>
+        <input type="text" id="title" name="name" value="${program.name}" required>
 
         <!-- Description -->
         <label for="description">Description:</label>
@@ -84,6 +81,18 @@
         <label for="endDate">End Date:</label>
         <input type="date" id="endDate" name="endDate" 
                value="<fmt:formatDate value='${program.endDate}' pattern='yyyy-MM-dd' />" required>
+
+        <!-- School Selection -->
+        <label for="school">School:</label>
+        <select id="school" name="school.schoolID" required>
+            <option value="">-- Select School --</option>
+            <c:forEach var="school" items="${schools}">
+                <option value="${school.schoolID}" 
+                        <c:if test="${school.schoolID == program.school.schoolID}">selected</c:if>>
+                    ${school.name}
+                </option>
+            </c:forEach>
+        </select>
 
         <!-- Submit Button -->
         <button type="submit">Update Program</button>
