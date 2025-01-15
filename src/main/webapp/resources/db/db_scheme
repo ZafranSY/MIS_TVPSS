@@ -251,4 +251,11 @@ SET AdminSchoolID = 4
 WHERE SchoolName = 'Evergreen College';
 
 -- Continue for other schools
+    UPDATE school
+SET DistrictID = (SELECT DistrictID FROM district WHERE Name = 'District A')
+WHERE Name = 'High School A';
+
+UPDATE school
+SET DistrictID = (SELECT DistrictID FROM district WHERE Name = 'District B')
+WHERE Name = 'High School B';
     

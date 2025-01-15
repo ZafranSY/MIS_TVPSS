@@ -264,148 +264,257 @@ header h1 {
 </head>
 <body>
 	<div class="container">
-		<%@ include file="adSchoolSidebar.jsp"%>
+    <%@ include file="adSchoolSidebar.jsp"%>
 
-		<main class="content">
-			            		<%@ include file="../common/header.jsp"%>
+    <main class="content">
+        <%@ include file="../common/header.jsp"%>
 
+        <section class="review-applicant">
+            <div class="applicant-list">
+                <h3>Applicants</h3>
+                <ul id="applicant-list">
+                    <c:forEach var="applicant" items="${pendingApplicants}">
+                        <li class="applicant-item" data-crew-id="${applicant.crewID}">
+                            <span>${applicant.user.name}</span>
+                        </li>
+                    </c:forEach>
+                </ul>
+            </div>
 
-			<section class="review-applicant">
-				<div class="applicant-list">
-					<h3>Applicants</h3>
-					<ul id="applicant-list">
-						<c:forEach var="applicant" items="${pendingApplicants}">
-							<li class="applicant-item" data-crew-id="${applicant.crewID}">
-								 <span>${applicant.user.name}</span>
-							</li>
-						</c:forEach>
-					</ul>
-				</div>
+            <div class="applicant-details">
+                <div class="details-card">
+                    <div class="profile-section">
+                        <h2 class="applicant-name" id="name-display">Select an applicant</h2>
+                    </div>
+                    <div class="info-section">
+                        <p>
+                            <i class="fa fa-id-card"></i> <strong>IC Number:</strong> 
+                            <span id="icNumber-display">-</span>
+                        </p>
+                        <p>
+                            <i class="fa fa-envelope"></i> <strong>Email:</strong> 
+                            <span id="email-display">-</span>
+                        </p>
+                        <p>
+                            <i class="fa fa-briefcase"></i> <strong>Position:</strong> 
+                            <span id="position-display">-</span>
+                        </p>
+                        <p>
+                            <i class="fa fa-briefcase"></i> <strong>School:</strong> 
+                            <span id="school-display">-</span>
+                        </p>
+                        <p>
+                            <i class="fa fa-map-marker"></i> <strong>Address:</strong> 
+                            <span id="address-display">-</span>
+                        </p>
+                        <p>
+                            <i class="fa fa-check-circle"></i> <strong>Application Status:</strong>
+                            <select id="applicationStatus" name="applicationStatus">
+                                <option value="Pending" selected>Pending</option>
+                                <option value="Approved">Approved</option>
+                                <option value="Rejected">Rejected</option>
+                            </select>
+                        </p>
+                    </div>
 
-				<div class="applicant-details">
-					<div class="details-card">
-						<div class="profile-section">
-							
-							<h2 class="applicant-name" id="name-display">Select an
-								applicant</h2>
-						</div>
-						<div class="info-section">
-							<p>
-								<i class="fa fa-id-card"></i> <strong>IC Number:</strong> <span
-									id="icNumber-display">-</span>
-							</p>
-							<p>
-								<i class="fa fa-envelope"></i> <strong>Email:</strong> <span
-									id="email-display">-</span>
-							</p>
-							<p>
-								<i class="fa fa-briefcase"></i> <strong>Position:</strong> <span
-									id="position-display">-</span>
-							</p>
-								<p>
-								<i class="fa fa-briefcase"></i> <strong>School:</strong> <span
-									id="school-display">-</span>
-							</p>
-							<p>
-								<i class="fa fa-map-marker"></i> <strong>Address:</strong> <span
-									id="address-display">-</span>
-							</p>
-							<p>
-								<i class="fa fa-check-circle"></i> <strong>Application
-									Status:</strong> <select id="applicationStatus" name="applicationStatus">
-									<option value="Pending" selected>Pending</option>
-									<option value="Approved">Approved</option>
-									<option value="Rejected">Rejected</option>
-								</select>
-							</p>
-							
-						</div>
-<c:if test="${empty pendingApplicants}">
-    <p>No pending applicants found.</p>
-    <p>${{ pendingApplicants}}</p>
-</c:if>
-						<div class="actions">
-							<button class="btn btn-approve"
-								onclick="updateStatus('Approved')">
-								<i class="fa fa-check"></i> Approve
-							</button>
-							<button class="btn btn-reject" onclick="updateStatus('Rejected')">
-								<i class="fa fa-times"></i> Reject
-							</button>
-						</div>
+                    <c:if test="${empty pendingApplicants}">
+                        <p>No pending applicants found.</p>
+                    </c:if>
 
-					</div>
-				</div>
-			</section>
-			<div class="crew-list">
-    <h3>Crew List</h3>
-    <ul id="crew-list">
-        <c:forEach var="crew" items="${approvedApplicants}">
-            <li class="crew-item" data-crew-id="${crew.crewID}">
-                <span>${crew.user.name}</span>
-            </li>
-        </c:forEach>
-    </ul>
+                    <div class="actions">
+                        <button class="btn btn-approve" onclick="updateStatus('Approved')">
+                            <i class="fa fa-check"></i> Approve
+                        </button>
+                        <button class="btn btn-reject" onclick="updateStatus('Rejected')">
+                            <i class="fa fa-times"></i> Reject
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="crew-section">
+            <div class="crew-list">
+                <h3>Crew List</h3>
+                <ul id="crew-list">
+                    <c:forEach var="crew" items="${approvedApplicants}">
+                        <li class="crew-item" data-crew-id="${crew.crewID}">
+                            <span>${crew.user.name}</span>
+                        </li>
+                    </c:forEach>
+                </ul>
+            </div>
+
+            <div class="crew-details">
+                <div class="details-card">
+                    <div class="profile-section">
+                        <h2 class="crew-name" id="crew-name-display">Select a crew member</h2>
+                    </div>
+                    <div class="info-section">
+                        <p>
+                            <i class="fa fa-id-card"></i> <strong>IC Number:</strong>
+                            <span id="crew-ic-display">-</span>
+                        </p>
+                        <p>
+                            <i class="fa fa-envelope"></i> <strong>Email:</strong>
+                            <span id="crew-email-display">-</span>
+                        </p>
+                        <p>
+                            <i class="fa fa-briefcase"></i> <strong>Position:</strong>
+                            <span id="crew-position-display">-</span>
+                        </p>
+                        <p>
+                            <i class="fa fa-building"></i> <strong>School:</strong>
+                            <span id="crew-school-display">-</span>
+                        </p>
+                        <p>
+                            <i class="fa fa-map-marker"></i> <strong>Address:</strong>
+                            <span id="crew-address-display">-</span>
+                        </p>
+                        <p>
+                            <i class="fa fa-calendar"></i> <strong>Join Date:</strong>
+                            <span id="crew-joindate-display">-</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
 </div>
 
+<style>
+.crew-section {
+    display: grid;
+    grid-template-columns: minmax(250px, 300px) minmax(300px, 1fr);
+    gap: 25px;
+    margin-top: 30px;
+}
 
-		</main>
-	</div>
+.crew-details {
+    background-color: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
 
-	<script>
-        $(document).on("click", ".applicant-item", function () {
-            const crewId = $(this).data("crew-id");
+.crew-details .details-card {
+    padding: 20px;
+}
 
-            $(".applicant-item").removeClass("active");
-            $(this).addClass("active");
-            console.log(`Selected Crew ID: ${crewId}`); // Debug crew ID
+.crew-details .profile-section h2 {
+    color: #1a237e;
+    font-size: 18px;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #e3e8ef;
+}
 
+.crew-details .info-section p {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid #e3e8ef;
+}
 
-            $.ajax({
-                url: "/MIS_TVPSS/adminschool/getApplicantDetails",
-                method: "GET",
-                data: { crewID: crewId },
-                success: function (response) {
-                    if (response.error) {
-                        alert(response.error);
-                        return;
-                    }
+.crew-details .info-section strong {
+    color: #1a237e;
+}
 
-                    $("#name-display").text(response.name || "N/A");
-                    $("#icNumber-display").text(response.icNumber || "N/A");
-                    $("#email-display").text(response.email || "N/A");
-                    $("#position-display").text(response.role || "N/A");
-                    $("#school-display").text(response.schoolName || "N/A");
-                    $("#address-display").text(response.address || "N/A");
-                    $("#applicationStatus").val(response.applicationStatus || "Pending");
-                },
-                error: function () {
-                    alert("Failed to fetch applicant details. Please try again.");
-                },
-            });
-        });
-        function updateStatus(status) {
-            const crewID = $(".applicant-item.active").data("crew-id");
+.crew-item.active {
+    background-color: #e8f5e9;
+    border-color: #4caf50;
+}
 
-            if (!crewID) {
-                alert("Please select an applicant.");
+@media (max-width: 1200px) {
+    .crew-section {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+}
+</style>
+
+<script>
+// Existing applicant click handler
+$(document).on("click", ".applicant-item", function () {
+    const crewId = $(this).data("crew-id");
+    $(".applicant-item").removeClass("active");
+    $(this).addClass("active");
+
+    $.ajax({
+        url: "/MIS_TVPSS/adminschool/getApplicantDetails",
+        method: "GET",
+        data: { crewID: crewId },
+        success: function (response) {
+            if (response.error) {
+                alert(response.error);
                 return;
             }
 
-            $.ajax({
-                url: "/MIS_TVPSS/adminschool/updateApplicationStatus",
-                method: "POST",
-                data: { crewID: crewID, status: status },
-                success: function (response) {
-                    $("#applicationStatus").val(status); // Update the dropdown to reflect the change
-                    location.reload();
-                },
-                error: function () {
-                    alert("Failed to update application status. Please try again.");
-                },
-            });
-        }
+            $("#name-display").text(response.name || "N/A");
+            $("#icNumber-display").text(response.icNumber || "N/A");
+            $("#email-display").text(response.email || "N/A");
+            $("#position-display").text(response.role || "N/A");
+            $("#school-display").text(response.schoolName || "N/A");
+            $("#address-display").text(response.address || "N/A");
+            $("#applicationStatus").val(response.applicationStatus || "Pending");
+        },
+        error: function () {
+            alert("Failed to fetch applicant details. Please try again.");
+        },
+    });
+});
 
-    </script>
+// New crew click handler
+$(document).on("click", ".crew-item", function () {
+    const crewId = $(this).data("crew-id");
+    console.log("crew memeber crewid ",crewId)
+    $(".crew-item").removeClass("active");
+    $(this).addClass("active");
+
+    $.ajax({
+        url: "/MIS_TVPSS/adminschool/getApplicantDetails",
+        method: "GET",
+        data: { crewID: crewId },
+        success: function (response) {
+            if (response.error) {
+                alert(response.error);
+                return;
+            }
+
+            $("#crew-name-display").text(response.name || "N/A");
+            $("#crew-ic-display").text(response.icNumber || "N/A");
+            $("#crew-email-display").text(response.email || "N/A");
+            $("#crew-position-display").text(response.role || "N/A");
+            $("#crew-school-display").text(response.schoolName || "N/A");
+            $("#crew-address-display").text(response.address || "N/A");
+        },
+        error: function () {
+            alert("Failed to fetch applicant details. Please try again.");
+        },
+    });
+});
+
+function updateStatus(status) {
+    const crewID = $(".applicant-item.active").data("crew-id");
+
+    if (!crewID) {
+        alert("Please select an applicant.");
+        return;
+    }
+
+    $.ajax({
+        url: "/MIS_TVPSS/adminschool/updateApplicationStatus",
+        method: "POST",
+        data: { crewID: crewID, status: status },
+        success: function (response) {
+            $("#applicationStatus").val(status);
+            location.reload();
+        },
+        error: function () {
+            alert("Failed to update application status. Please try again.");
+        },
+    });
+}
+</script>
 </body>
 </html>
