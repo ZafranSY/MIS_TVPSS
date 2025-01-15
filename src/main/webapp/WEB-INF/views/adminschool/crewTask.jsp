@@ -13,9 +13,8 @@
 
         <main class="content">
             <header>
-                <h1>Review Applicant</h1>
+                <h1>Crew Task</h1>
                 <div class="user-profile">
-                                            <p>${tasks[0].TaskTitle}</p>
                 
                     <span>John Doe</span> <span>ID: 32450</span>
                 </div>
@@ -51,8 +50,10 @@
                                     </li>
                                 </c:forEach>
                             </ul>
+                    <button class="btn btn-primary" id="addTaskButton">Add Task</button>
+                        
                         </div>
-                    </div>
+                    </div> 
                 </div>
 
                 <div class="crew-list">
@@ -68,11 +69,180 @@
                             </div>
                         </div>
                     </div>
+                    
                 </div>
+                  <!-- Modal for Add Task -->
+<!-- Keep only this one modal -->
+<div id="addTaskModal" class="modal">
+    <div class="modal-content">
+        <span class="close" id="closeModal">&times;</span>
+        <div class="modal-header">Add Task</div>
+        <div class="modal-body">
+            <form id="taskForm">
+                <div class="form-group">
+                    <label for="taskTitle">Task Title</label>
+                    <input type="text" id="taskTitle" name="taskTitle" placeholder="Enter task title" required>
+                </div>
+                <div class="form-group">
+                    <label for="taskDescription">Task Description</label>
+                    <textarea id="taskDescription" name="taskDescription" placeholder="Enter task description" rows="4"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="taskDueDate">Due Date</label>
+                    <input type="date" id="taskDueDate" name="taskDueDate">
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" id="saveTask">Save Task</button>
+            <button class="btn btn-secondary" id="cancelTask">Cancel</button>
+        </div>
+    </div>
+</div>
+
             </section>
         </main>
     </div>
+<style>
+/* Button Styles */
+.btn {
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: none;
+    font-size: 14px;
+}
 
+.btn-primary {
+    background-color: #4CAF50;
+    color: white;
+    box-shadow: 0 2px 4px rgba(76, 175, 80, 0.2);
+}
+
+.btn-primary:hover {
+    background-color: #45a049;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px rgba(76, 175, 80, 0.3);
+}
+
+.btn-secondary {
+    background-color: #f44336;
+    color: white;
+    box-shadow: 0 2px 4px rgba(244, 67, 54, 0.2);
+}
+
+.btn-secondary:hover {
+    background-color: #da190b;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px rgba(244, 67, 54, 0.3);
+}
+
+  .modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background-color: white;
+    margin: auto;
+    padding: 20px;
+    border-radius: 8px;
+    width: 50%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    position: relative;
+}
+
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    align-items: center;
+    justify-content: center;
+}
+
+.modal.show {
+    display: flex;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 500px;
+    max-width: 90%;
+    position: relative;
+}
+
+.modal-header {
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #eee;
+}
+
+.modal-body {
+    margin-bottom: 1rem;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    padding-top: 1rem;
+    border-top: 1px solid #eee;
+}
+
+.close {
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #666;
+}
+
+.close:hover {
+    color: #000;
+}
+
+</style>
    <script>
    $(document).on("click", ".applicant-item", function () {
 	    const crewId = $(this).data("crew-id") || $(this).attr("data-crew-id");
@@ -165,6 +335,55 @@
                 alert("Failed to fetch task details. Please try again.");
             },
         });
+    });
+    
+ // Remove any existing event listeners
+    const addTaskButton = document.getElementById("addTaskButton");
+    const modal = document.getElementById("addTaskModal");
+    const closeModal = document.getElementById("closeModal");
+    const cancelTask = document.getElementById("cancelTask");
+    const saveTask = document.getElementById("saveTask");
+
+    // Clean up existing listeners
+    addTaskButton.replaceWith(addTaskButton.cloneNode(true));
+    const newAddTaskButton = document.getElementById("addTaskButton");
+
+    // Add new event listeners
+    newAddTaskButton.addEventListener("click", function() {
+        modal.style.display = "flex";
+    });
+
+    closeModal.addEventListener("click", function() {
+        modal.style.display = "none";
+    });
+
+    cancelTask.addEventListener("click", function() {
+        modal.style.display = "none";
+    });
+
+    saveTask.addEventListener("click", function() {
+        const title = document.getElementById("taskTitle").value;
+        const description = document.getElementById("taskDescription").value;
+        const dueDate = document.getElementById("taskDueDate").value;
+
+        if (!title.trim()) {
+            alert("Task title is required!");
+            return;
+        }
+
+        // Here you would typically send this data to your server
+        console.log("Saving task:", { title, description, dueDate });
+
+        // Clear form and close modal
+        document.getElementById("taskForm").reset();
+        modal.style.display = "none";
+    });
+
+    // Close modal when clicking outside
+    window.addEventListener("click", function(event) {
+        if (event.target === modal) {
+            modal.style.display = "none";
+        }
     });
 </script>
 
