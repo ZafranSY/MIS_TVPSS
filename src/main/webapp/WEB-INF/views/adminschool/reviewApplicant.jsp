@@ -308,13 +308,10 @@ header h1 {
                             <span id="address-display">-</span>
                         </p>
                         <p>
-                            <i class="fa fa-check-circle"></i> <strong>Application Status:</strong>
-                            <select id="applicationStatus" name="applicationStatus">
-                                <option value="Pending" selected>Pending</option>
-                                <option value="Approved">Approved</option>
-                                <option value="Rejected">Rejected</option>
-                            </select>
+                            <i class="fa fa-calendar"></i> <strong>Reason To Join</strong>
+                            <span id="ReasonToJoin">-</span>
                         </p>
+                        
                     </div>
 
                     <c:if test="${empty pendingApplicants}">
@@ -385,52 +382,95 @@ header h1 {
 <style>
 .crew-section {
     display: grid;
-    grid-template-columns: minmax(250px, 300px) minmax(300px, 1fr);
-    gap: 25px;
-    margin-top: 30px;
+    grid-template-columns: 1fr 2fr;
+    gap: 20px;
+    margin: 20px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.crew-list {
+    background-color: #ffffff;
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.section-title {
+    font-size: 18px;
+    color: #1a237e;
+    margin-bottom: 10px;
+    border-bottom: 2px solid #e0e0e0;
+    padding-bottom: 5px;
+}
+
+.list-item {
+    padding: 10px 15px;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    color: #424242;
+}
+
+.list-item.active {
+    background-color: #e8f5e9;
+    border-color: #4caf50;
+    color: #1a237e;
+}
+
+.list-item:hover {
+    background-color: #f1f8e9;
+    border-color: #81c784;
 }
 
 .crew-details {
-    background-color: white;
+    background-color: #ffffff;
+    padding: 20px;
     border-radius: 12px;
-    padding: 20px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-.crew-details .details-card {
-    padding: 20px;
-}
-
-.crew-details .profile-section h2 {
-    color: #1a237e;
-    font-size: 18px;
+.crew-name {
+    color: #0d47a1;
+    font-size: 22px;
     margin-bottom: 20px;
+    border-bottom: 2px solid #e0e0e0;
     padding-bottom: 10px;
-    border-bottom: 2px solid #e3e8ef;
 }
 
-.crew-details .info-section p {
-    display: flex;
-    justify-content: space-between;
-    padding: 12px 0;
-    border-bottom: 1px solid #e3e8ef;
+.info-section {
+    display: grid;
+    grid-template-columns: 150px 1fr;
+    gap: 10px 20px;
 }
 
-.crew-details .info-section strong {
+.info-row {
+    display: contents;
+}
+
+.info-label {
+    font-weight: bold;
     color: #1a237e;
 }
 
-.crew-item.active {
-    background-color: #e8f5e9;
-    border-color: #4caf50;
+.info-value {
+    color: #424242;
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 768px) {
     .crew-section {
         grid-template-columns: 1fr;
-        gap: 20px;
+        gap: 15px;
+    }
+
+    .info-section {
+        grid-template-columns: 1fr;
     }
 }
+
 </style>
 
 <script>
@@ -449,14 +489,15 @@ $(document).on("click", ".applicant-item", function () {
                 alert(response.error);
                 return;
             }
+            console.log(response);
 
             $("#name-display").text(response.name || "N/A");
-            $("#icNumber-display").text(response.icNumber || "N/A");
+            $("#icNumber-display").text(response.ICNumber || "N/A");
             $("#email-display").text(response.email || "N/A");
             $("#position-display").text(response.role || "N/A");
             $("#school-display").text(response.schoolName || "N/A");
             $("#address-display").text(response.address || "N/A");
-            $("#applicationStatus").val(response.applicationStatus || "Pending");
+            $("#ReasonToJoin").text(response.ReasonToJoin || "Pending");
         },
         error: function () {
             alert("Failed to fetch applicant details. Please try again.");
@@ -482,7 +523,7 @@ $(document).on("click", ".crew-item", function () {
             }
 
             $("#crew-name-display").text(response.name || "N/A");
-            $("#crew-ic-display").text(response.icNumber || "N/A");
+            $("#crew-ic-display").text(response.ICNumber || "N/A");
             $("#crew-email-display").text(response.email || "N/A");
             $("#crew-position-display").text(response.role || "N/A");
             $("#crew-school-display").text(response.schoolName || "N/A");
