@@ -158,23 +158,29 @@
     </div>
 </aside>
 <script>
-    document.addEventListener("DOMContentLoaded", () => {
-        // Get the current path of the URL
-        const currentPath = window.location.pathname;
+document.addEventListener("DOMContentLoaded", () => {
+    // Get the current path of the URL
+    const currentPath = window.location.pathname;
 
-        // Select all menu items
-        const menuItems = document.querySelectorAll(".menu-item");
+    // Define related paths that should activate "Crew Task"
+    const crewTaskPaths = ["/MIS_TVPSS/student/crewTask", "/MIS_TVPSS/student/crewRegistration"];
 
-        // Add 'active' class to the matching menu item
-        menuItems.forEach(item => {
-            // Match the exact URL path, avoiding partial matches
-            if (item.href.endsWith(currentPath)) {
+    // Select all menu items
+    const menuItems = document.querySelectorAll(".menu-item");
+
+    // Add 'active' class to the matching menu item
+    menuItems.forEach(item => {
+        // If currentPath matches any of the crewTaskPaths, activate "Crew Task"
+        if (crewTaskPaths.some(path => item.href.endsWith(path))) {
+            if (crewTaskPaths.includes(currentPath)) {
                 item.classList.add("active");
-            } else {
-                item.classList.remove("active");
             }
-        });
+        } else {
+            item.classList.remove("active");
+        }
     });
+});
+
 </script>
 
 </body>
