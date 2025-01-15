@@ -55,6 +55,7 @@ public class studentController
  @GetMapping("/student/crewRegistration")
  public String showCrewRegistration()
  {
+	 
 	 return "student/CrewRegistration";
  }
 
