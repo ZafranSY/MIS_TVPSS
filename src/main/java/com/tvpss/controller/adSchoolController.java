@@ -101,6 +101,8 @@ public class adSchoolController {
 	        response.put("address", crew.getAddress());
 	        response.put("schoolName", crew.getSchoolName());
 	        response.put("applicationStatus", crew.getApplicationStatus());
+	        response.put("ReasonToJoin", crew.getReasonToJoin());
+	        response.put("ICNumber", crew.getICNumber());
 	    } else {
 	        response.put("error", "Crew not found");
 	    }
