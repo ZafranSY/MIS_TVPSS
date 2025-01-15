@@ -12,13 +12,8 @@
 		<%@ include file="adSchoolSidebar.jsp"%>
 
         <main class="content">
-            <header>
-                <h1>Crew Task</h1>
-                <div class="user-profile">
-                
-                    <span>John Doe</span> <span>ID: 32450</span>
-                </div>
-            </header>
+            		<%@ include file="../common/header.jsp"%>
+
 
             <section class="review-applicant">
                 <div class="applicant-list">
