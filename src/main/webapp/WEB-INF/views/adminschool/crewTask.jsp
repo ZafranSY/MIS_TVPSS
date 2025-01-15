@@ -6,6 +6,8 @@
     <title>UC007 Review Applicant</title>
     <link rel="stylesheet" href="/MIS_TVPSS/resources/css/crewTask.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://kit.fontawesome.com/2b260a5b5a.js"></script>
+    
 </head>
 <body>
     <div class="container">
@@ -53,7 +55,20 @@
 
                 <div class="crew-list">
                     <div class="task-details">
-                        <h2>Task Details</h2>
+                         <div class="task-header">
+        <h2>Task Details</h2>
+        <div class="task-actions">
+            <button class="action-button edit-button" title="Edit Task">
+                <i class="fa-solid fa-pen-to-square"></i>
+                <span>Edit</span>
+            </button>
+            <button class="action-button delete-button" title="Delete Task">
+                <i class="fa-solid fa-trash"></i>
+                <span>Delete</span>
+            </button>
+        </div>
+    </div>
+            </div>
                         <div class="details-card">
                             <div class="info-section">
                                 <p><strong>Title:</strong> <span id="task-title">-</span></p>
@@ -100,6 +115,107 @@
     </div>
 <style>
 /* Button Styles */
+/* Task Details Container */
+.task-details {
+    position: relative;
+    background-color: white;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    margin-bottom: 20px;
+}
+
+/* Remove background from details-card since parent is already white */
+.details-card {
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #e3e8ef;
+    margin-top: 20px;
+}
+
+/* Header with Action Buttons Container */
+.task-details .task-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #e3e8ef;
+}
+
+.task-details h2 {
+    color: #1a237e;
+    font-size: 18px;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Action Buttons Container */
+.task-actions {
+    display: flex;
+    gap: 10px;
+}
+
+/* Individual Action Buttons */
+.task-actions .action-button {
+    padding: 6px 12px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* Edit Button */
+.task-actions .edit-button {
+    background-color: #e3f2fd;
+    color: #1976d2;
+}
+
+.task-actions .edit-button:hover {
+    background-color: #bbdefb;
+}
+
+/* Delete Button */
+.task-actions .delete-button {
+    background-color: #fee2e2;
+    color: #dc2626;
+}
+
+.task-actions .delete-button:hover {
+    background-color: #fecaca;
+}
+.details-card
+{
+background-color: #fff;
+}
+
+/* Info Section Styling */
+.info-section p {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid #e3e8ef;
+    margin: 0;
+}
+
+.info-section p:last-child {
+    border-bottom: none;
+}
+
+.info-section strong {
+    color: #1a237e;
+    min-width: 120px;
+}
+
+.info-section span {
+    color: #4a5568;
+}
 .btn {
     padding: 8px 16px;
     border-radius: 6px;
