@@ -220,21 +220,36 @@ public class adSchoolController {
 	                            .body("Error deleting task: " + e.getMessage());
 	     }
 	 }
+	 @PostMapping("/adminschool/deleteCrew")
+	 @ResponseBody
+	 public Map<String, Object> deleteCrew(@RequestParam("crewID") Integer crewId) {
+	     Map<String, Object> response = new HashMap<>();
+	     try {
+	         // Your deletion logic here
+	         crewService.deleteCrew(crewId);
+	         response.put("success", true);
+	         response.put("message", "Crew member deleted successfully");
+	     } catch (Exception e) {
+	         response.put("success", false);
+	         response.put("message", "Failed to delete crew member: " + e.getMessage());
+	     }
+	     return response;
+	 }
 
 
 
 	 
 	// Add this configuration class
-//	 @Configuration
-//	 public class WebConfig implements WebMvcConfigurer {
-//	     @Override
-//	     public void addCorsMappings(CorsRegistry registry) {
-//	         registry.addMapping("/**")
-//	                 .allowedMethods("GET", "POST", "PUT", "DELETE");
-//	     }
-//	 }
-
 	 @Configuration
+	 public class WebConfig implements WebMvcConfigurer {
+	     @Override
+	     public void addCorsMappings(CorsRegistry registry) {
+	         registry.addMapping("/**")
+	                 .allowedMethods("GET", "POST", "PUT", "DELETE");
+	     }
+	 }
+
+/*	 @Configuration
 	 public class WebConfig implements WebMvcConfigurer {
 	     @Override
 	     public void addCorsMappings(CorsRegistry registry) {
@@ -244,6 +259,6 @@ public class adSchoolController {
 	                 .allowCredentials(true);
 	     }
 	 }
-	 
+	 */
 
 }
