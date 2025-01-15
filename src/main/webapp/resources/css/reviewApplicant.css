@@ -1,10 +1,7 @@
 @charset "UTF-8";
 
-/* General styling adjustments */
 body {
-    font-family: 'Segoe UI', Arial, sans-serif;
-    background-color: #f5f7fa;
-    color: #2c3e50;
+    font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
     display: flex;
@@ -16,175 +13,160 @@ body {
     width: 100%;
 }
 
+
 .content {
-    flex: 1;
-    margin-left: 280px;
-    padding: 30px;
-    background-color: #f8fafc;
-    min-height: 100vh;
+    width: 80%;
+    padding: 20px;
+    background-color: #ffffff;
+    position: absolute;
+    left:300px;
 }
 
-/* Header Styling */
 header {
-    background-color: white;
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-    margin-bottom: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
 }
 
 header h1 {
-    font-size: 24px;
-    color: #1a237e;
-    margin: 0;
+    color: #333;
 }
 
-.user-profile {
-    background-color: #f1f5f9;
-    padding: 8px 15px;
-    border-radius: 8px;
-    font-size: 14px;
+header .user-profile {
+    text-align: right;
 }
 
-/* Review Applicant Section */
 .review-applicant {
-    display: grid;
-    grid-template-columns: minmax(250px, 300px) 1fr;
-    gap: 25px;
-    margin-top: 20px;
+    display: flex;
+    gap: 20px;
 }
 
-.applicant-list, .applicant-details {
-    background-color: white;
-    border-radius: 12px;
+.applicant-list {
+    width: 30%;
+    background-color: #f9f9f9;
     padding: 20px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-}
-
-.applicant-list h3, .applicant-details h2 {
-    color: #1a237e;
-    font-size: 18px;
-    margin-bottom: 20px;
-    border-bottom: 2px solid #e3e8ef;
-    padding-bottom: 10px;
-}
-
-/* Applicant List Styling */
-.applicant-item {
-    background-color: white;
-    border: 1px solid #e3e8ef;
-    padding: 15px;
-    margin-bottom: 10px;
     border-radius: 8px;
+}
+
+.applicant-list ul ,.crew-list ul{
+    list-style: none;
+    padding: 0;
+}
+
+.applicant-list li , .crew-list li{
     display: flex;
     align-items: center;
-    gap: 10px;
-    transition: all 0.3s ease;
-    cursor: pointer;
+    margin-bottom: 10px;
 }
 
-.applicant-item img {
+.applicant-list li img , .crew-list li img{
     width: 40px;
     height: 40px;
     border-radius: 50%;
+    margin-right: 10px;
 }
 
-.applicant-item:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-    border-color: #4caf50;
+.applicant-details {
+    width: 70%;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
 }
 
-.applicant-item.active {
-    background-color: #e8f5e9;
-    border-color: #4caf50;
+.applicant-details h2 {
+    margin-bottom: 20px;
+    color: #4caf50;
 }
 
-/* Applicant Details Styling */
-.applicant-details .profile-section {
-    text-align: center;
-}
-
-.applicant-details img.profile-pic {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
+.form-group {
     margin-bottom: 15px;
 }
 
-.applicant-details .info-section p {
-    display: flex;
-    justify-content: space-between;
-    padding: 12px 0;
-    border-bottom: 1px solid #e3e8ef;
+.form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
 }
 
-.applicant-details .info-section strong {
-    color: #1a237e;
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
 }
 
 .actions {
     margin-top: 20px;
-    display: flex;
-    gap: 10px;
 }
 
-.actions .btn {
+.btn {
     padding: 10px 20px;
-    border-radius: 8px;
-    font-weight: bold;
-    cursor: pointer;
     border: none;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 5px;
 }
 
 .btn-approve {
     background-color: #4caf50;
-    color: white;
+    color: #fff;
 }
 
 .btn-reject {
     background-color: #f44336;
-    color: white;
+    color: #fff;
+    margin-left: 10px;
 }
-
-/* Crew List Styling */
-.crew-list {
-    margin-top: 20px;
-    background-color: white;
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-}
-
-.crew-list h3 {
-    color: #1a237e;
-    font-size: 18px;
-    margin-bottom: 20px;
-    padding-bottom: 10px;
-    border-bottom: 2px solid #e3e8ef;
-}
-
-.crew-item {
-    background-color: #e8f5e9;
-    border: 1px solid #4caf50;
-    padding: 15px;
-    margin-bottom: 10px;
-    border-radius: 8px;
+.applicant-item {
+    cursor: pointer;
+    padding: 10px;
+    margin-bottom: 5px;
+    background-color: #f0f5f5;
+    border-radius: 5px;
     display: flex;
     align-items: center;
-    gap: 10px;
-    transition: all 0.3s ease;
+    transition: background-color 0.3s;
 }
 
-.crew-item:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+.applicant-item.active,
+.applicant-item:hover 
+{
+    background-color: #d9f2d9;
+}
+.crew-item
+{
+	
+	   cursor: pointer;
+    padding: 10px;
+    margin-bottom: 5px;
+    background-color: #d9f2d9;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    transition: background-color 0.3s;
 }
 
-/* Responsive adjustments */
-@media (max-width: 1200px) {
-    .review-applicant {
-        grid-template-columns: 1fr;
-    }
+.applicant-item img 
+.crew-item img
+{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
 }
+.crew-list
+{
+	background-color:#f9f9f9;
+	margin:10px 0;
+	padding :20px;
+}.crew-list {
+    margin-top: 20px;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Add shadow for better separation */
+}
+
 
