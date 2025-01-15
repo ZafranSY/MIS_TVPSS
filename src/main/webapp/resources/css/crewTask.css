@@ -1,208 +1,206 @@
-@charset "UTF-8";
-
+/* Base Layout Improvements */
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background-color: #f5f7fa;
+    color: #2c3e50;
     margin: 0;
     padding: 0;
-    display: flex;
-    height: 100vh;
 }
 
 .container {
     display: flex;
-    width: 100%;
+    min-height: 100vh;
 }
 
+.sidebar {
+    width: 280px;
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    background-color: white;
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.05);
+    z-index: 10;
+}
 
+/* Main content positioning */
 .content {
-    width: 80%;
-    padding: 20px;
-    background-color: #ffffff;
-    position: absolute;
-    left:300px;
+    flex: 1;
+    margin-left: 280px; /* Match sidebar width */
+    padding: 30px;
+    background-color: #f8fafc;
+    min-height: 100vh;
 }
 
+/* Header Styling */
 header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
+    background-color: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    margin-bottom: 30px;
 }
 
 header h1 {
-    color: #333;
+    font-size: 24px;
+    color: #1a237e;
+    margin: 0;
 }
 
-header .user-profile {
-    text-align: right;
-}
-
-.review-applicant {
-    display: flex;
-    gap: 20px;
-}
-
-.applicant-list {
-    width: 30%;
-    background-color: #f9f9f9;
-    padding: 20px;
+.user-profile {
+    background-color: #f1f5f9;
+    padding: 8px 15px;
     border-radius: 8px;
-}
-
-.applicant-list ul ,.crew-list ul{
-    list-style: none;
-    padding: 0;
-}
-
-.applicant-list li , .crew-list li{
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-}
-
-.applicant-list li img , .crew-list li img{
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    margin-right: 10px;
-}
-
-.applicant-details {
-    width: 70%;
-    padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-}
-
-.applicant-details h2 {
-    margin-bottom: 20px;
-    color: #4caf50;
-}
-
-.form-group {
-    margin-bottom: 15px;
-}
-
-.form-group label {
-    display: block;
-    font-weight: bold;
-    margin-bottom: 5px;
-}
-
-.form-group input,
-.form-group select {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-.actions {
-    margin-top: 20px;
-}
-
-.btn {
-    padding: 10px 20px;
-    border: none;
-    cursor: pointer;
-    font-weight: bold;
-    border-radius: 5px;
-}
-
-.btn-approve {
-    background-color: #4caf50;
-    color: #fff;
-}
-
-.btn-reject {
-    background-color: #f44336;
-    color: #fff;
-    margin-left: 10px;
-}
-.applicant-item {
-    cursor: pointer;
-    padding: 10px;
-    margin-bottom: 5px;
-    background-color: #f0f5f5;
-    border-radius: 5px;
-    display: flex;
-    align-items: center;
-    transition: background-color 0.3s;
-}
-
-.applicant-item.active,
-.applicant-item:hover 
-{
-    background-color: #d9f2d9;
-}
-.crew-item
-{
-	
-	   cursor: pointer;
-    padding: 10px;
-    margin-bottom: 5px;
-    background-color: #d9f2d9;
-    border-radius: 5px;
-    display: flex;
-    align-items: center;
-    transition: background-color 0.3s;
-}
-
-.applicant-item img 
-.crew-item img
-{
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    margin-right: 10px;
-}
-.crew-list
-{
-	background-color:#f9f9f9;
-	margin:10px 0;
-	padding :20px;
-}.crew-list {
-    margin-top: 20px;
-    background-color: #f9f9f9;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Add shadow for better separation */
-}
-/* Task item styling, similar to applicant item */
-.task-item {
-    cursor: pointer;
-    padding: 10px;
-    margin-bottom: 5px;
-    background-color: #f0f5f5; /* Light background color */
-    border-radius: 5px;
-    display: flex;
-    align-items: center;
-    transition: background-color 0.3s, box-shadow 0.3s; /* Smooth hover transition */
-}
-
-/* Hover effect for task item */
-.task-item:hover {
-    background-color: #e6f7e6; /* Slightly darker green for hover */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add subtle shadow on hover */
-}
-
-/* Active/selected task item styling */
-.task-item.active {
-    background-color: #d9f2d9; /* Green background for active item */
-    border: 1px solid #4caf50; /* Add a border for emphasis */
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2); /* Slightly darker shadow for active */
-}
-
-/* Task item text styling */
-.task-item span {
-    margin-right: 10px; /* Add spacing between task title and description */
-    color: #333; /* Dark text color for readability */
     font-size: 14px;
 }
 
-/* Optional: Add some spacing around the task list for better layout */
-.task-list {
-    margin-top: 15px;
+/* Review Section Layout */
+.review-applicant {
+    display: grid;
+    grid-template-columns: 300px 1fr 300px;
+    gap: 25px;
+    margin-top: 20px;
 }
 
+/* Applicant List Styling */
+.applicant-list {
+    background-color: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
 
+.applicant-list h3 {
+    color: #1a237e;
+    font-size: 18px;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #e3e8ef;
+}
+
+.applicant-item {
+    background-color: white;
+    border: 1px solid #e3e8ef;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.applicant-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    border-color: #4caf50;
+}
+
+.applicant-item.active {
+    background-color: #e8f5e9;
+    border-color: #4caf50;
+}
+
+/* Task List Styling */
+.task-list {
+    background-color: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.task-list h3 {
+    color: #1a237e;
+    font-size: 18px;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #e3e8ef;
+}
+
+.task-item {
+    background-color: white;
+    border: 1px solid #e3e8ef;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.task-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.task-item span:first-child {
+    font-weight: 600;
+    color: #1a237e;
+}
+
+.task-item span:nth-child(2) {
+    font-size: 14px;
+    color: #64748b;
+}
+
+/* Task Details Section */
+.task-details {
+    background-color: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.task-details h2 {
+    color: #1a237e;
+    font-size: 18px;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #e3e8ef;
+}
+
+.info-section p {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid #e3e8ef;
+}
+
+.info-section strong {
+    color: #1a237e;
+}
+.review-applicant {
+    display: grid;
+    grid-template-columns: minmax(250px, 300px) minmax(300px, 1fr) minmax(250px, 300px);
+    gap: 25px;
+    margin-top: 20px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+    .review-applicant {
+        grid-template-columns: 1fr 2fr;
+    }
+    
+    .crew-list {
+        grid-column: span 2;
+    }
+}
+.task-list .addTask
+{
+	border-radius:10px;
+	background-color: #e3e8ef;
+}
+
+@media (max-width: 768px) {
+    .review-applicant {
+        grid-template-columns: 1fr;
+    }
+    
+    .crew-list {
+        grid-column: span 1;
+    }
+    
+    .content {
+        margin-left: 0;
+        padding: 15px;
+    }
+}
