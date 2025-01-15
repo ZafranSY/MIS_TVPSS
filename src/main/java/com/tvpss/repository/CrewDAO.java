@@ -105,6 +105,12 @@ public class CrewDAO {
         System.out.println("Query Results: " + results.size());
         return results;
     }
+    public void deleteCrew(Integer crewId) {  // Changed from DeleteCrew to deleteCrew
+        String query = "DELETE FROM Crew c WHERE c.crewID = :crewId";
+        entityManager.createQuery(query)
+                    .setParameter("crewId", crewId)
+                    .executeUpdate();
+    }
 
 
 }
