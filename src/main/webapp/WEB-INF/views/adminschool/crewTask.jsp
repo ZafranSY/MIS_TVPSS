@@ -496,6 +496,102 @@ background-color: #fff;
             modal.style.display = "none";
         }
     });
+ // Handle delete button click
+ $(".delete-button").click(function() {
+    const activeTask = $("#task-list .task-item.active");
+    if (!activeTask.length) {
+        alert("Please select a task to delete");
+        return;
+    }
+
+    const taskId = activeTask.data("task-id");
+    
+    if (confirm("Are you sure you want to delete this task?")) {
+        $.ajax({
+            url: `/MIS_TVPSS/adminschool/deleteTask/${taskId}`,
+            method: "DELETE",
+            beforeSend: function(xhr) {
+                // Get CSRF token from meta tag
+                var token = $("meta[name='_csrf']").attr("content");
+                var header = $("meta[name='_csrf_header']").attr("content");
+                if (token && header) {
+                    xhr.setRequestHeader(header, token);
+                }
+            },
+            contentType: 'application/json',
+            success: function() {
+                alert("Task deleted successfully");
+                activeTask.remove();
+                clearTaskDetails();
+            },
+            error: function(xhr, status, error) {
+                console.error("Error deleting task:", error);
+                alert("Failed to delete task. Please try again.");
+            }
+        });
+    }
+});
+// Clear the task details section after deletion
+function clearTaskDetails() {
+    $("#task-title").text("-");
+    $("#task-description").text("-");
+    $("#task-due-date").text("-");
+    $("#task-status").text("-");
+    $("#task-overdue").text("-");
+}
+//First, add an edit modal (similar to your add modal)
+$(".edit-button").click(function() {
+    const activeTask = $("#task-list .task-item.active");
+    if (!activeTask.length) {
+        alert("Please select a task to edit");
+        return;
+    }
+
+    // Pre-fill the modal with existing values
+    $("#taskTitle").val($("#task-title").text());
+    $("#taskDescription").val($("#task-description").text());
+    // Parse the date properly
+    const dueDate = new Date($("#task-due-date").text());
+    $("#taskDueDate").val(dueDate.toISOString().split('T')[0]);
+
+    // Show the modal
+    modal.style.display = "flex";
+    
+    // Update the save button to handle edit instead of add
+    $("#saveTask").attr("data-mode", "edit");
+    $("#saveTask").attr("data-task-id", activeTask.data("task-id"));
+});
+
+// Modify your save handler to handle both add and edit
+$("#saveTask").click(function() {
+    const mode = $(this).attr("data-mode");
+    const taskId = $(this).attr("data-task-id");
+    
+    const data = {
+        taskTitle: $("#taskTitle").val(),
+        taskDescription: $("#taskDescription").val(),
+        taskDueDate: $("#taskDueDate").val()
+    };
+
+    const url = mode === "edit" 
+        ? `/MIS_TVPSS/adminschool/updateTask/${taskId}`
+        : "/MIS_TVPSS/adminschool/addTask";
+
+    $.ajax({
+        url: url,
+        method: mode === "edit" ? "PUT" : "POST",
+        data: JSON.stringify(data),
+        contentType: "application/json",
+        success: function() {
+            modal.style.display = "none";
+            // Refresh the task list
+            loadTasks();
+        },
+        error: function(xhr, status, error) {
+            alert("Failed to save task: " + error);
+        }
+    });
+});
 </script>
 
 </body>
