@@ -195,6 +195,12 @@ public class adSchoolController {
 
 	     return response;
 	 }
+	 @GetMapping("/adminschool/addTask")
+		public String showAddTask(Model model) {
+
+		    return "adminschool/addTask"; // Ensure this JSP exists and matches the path
+		}
+	 
 
 
 
