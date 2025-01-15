@@ -347,7 +347,7 @@ header h1 {
                     <div class="profile-section">
                         <h2 class="crew-name" id="crew-name-display">Select a crew member</h2>
                         <div class="task-actions">
-                        <button class="action-button delete-button" title="Delete Task">
+                        <button class="action-button delete-button" data-crew-id="${crew.crewID}" title="Delete Task">
                 <i class="fa-solid fa-trash"></i>
                 <span>Delete</span>
             </button>
@@ -587,6 +587,53 @@ function updateStatus(status) {
         },
     });
 }
+$(".crew-section").on("click", ".delete-button", function() {
+    const activeCrew = $("#crew-list .crew-item.active");
+    const crewId = activeCrew.data("crew-id");
+    
+    if (!crewId) {
+        alert("Please select a crew member first.");
+        return;
+    }
+
+    if (confirm("Are you sure you want to delete this crew member?")) {
+        $.ajax({
+            url: "/MIS_TVPSS/adminschool/deleteCrew",  // Remove the trailing slash
+            method: "POST",
+            data: { crewID: crewId },  // Send as form data
+            beforeSend: function(xhr) {
+                // Get CSRF token from meta tag
+                var token = $("meta[name='_csrf']").attr("content");
+                var header = $("meta[name='_csrf_header']").attr("content");
+                if (token && header) {
+                    xhr.setRequestHeader(header, token);
+                }
+            },
+            success: function(response) {
+                if (response.success) {
+                    // Remove the crew item from the list
+                    activeCrew.remove();
+                    // Clear the details display
+                    $("#crew-name-display").text("Select a crew member");
+                    $("#crew-ic-display").text("-");
+                    $("#crew-email-display").text("-");
+                    $("#crew-position-display").text("-");
+                    $("#crew-school-display").text("-");
+                    $("#crew-address-display").text("-");
+                    $("#crew-joindate-display").text("-");
+                    
+                    alert("Crew member deleted successfully");
+                } else {
+                    alert(response.message || "Failed to delete crew member");
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error("Error deleting crew member:", error);
+                alert("Failed to delete crew member. Please try again.");
+            }
+        });
+    }
+});
 </script>
 </body>
 </html>
