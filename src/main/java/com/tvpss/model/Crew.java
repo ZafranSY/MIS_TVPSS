@@ -7,96 +7,113 @@ import java.io.Serializable;
 @Table(name = "Crew")
 public class Crew {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "CrewID")
-    private Integer crewID;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "CrewID")
+	private Integer crewID;
 
-    @OneToOne
-    @JoinColumn(name = "UserID", nullable = false)
-    private User user;
+	@OneToOne
+	@JoinColumn(name = "UserID", nullable = false)
+	private User user;
 
-    @Column(name = "Role")
-    private String role;
+	@Column(name = "Role")
+	private String role;
 
-    @Column(name = "ApplicationStatus")
-    private String applicationStatus;
+	@Column(name = "ApplicationStatus")
+	private String applicationStatus;
 
-    @Column(name = "SchoolName") // New field
-    private String schoolName;
+	@Column(name = "SchoolName") // New field
+	private String schoolName;
 
-    @Column(name = "Address") // New field
-    private String address;
-    
-    @ManyToOne
-    @JoinColumn(name = "AdminSchoolID", nullable = false) // Ensure the column name matches the DB schema
-    private AdminSchool adminSchool;
-    
-    
-    // Getters and Setters
-    public Integer getCrewID() {
-        return crewID;
-    }
+	@Column(name = "Address") // New field
+	private String address;
 
-    public void setCrewID(Integer crewID) {
-        this.crewID = crewID;
-    }
+	@ManyToOne
+	@JoinColumn(name = "AdminSchoolID", nullable = false) // Ensure the column name matches the DB schema
+	private AdminSchool adminSchool;
 
-    public User getUser() {
-        return user;
-    }
+	@Column(name = "ICNumber") // New field
+	private String ICNumber;
 
-    public void setUser(User user) {
-        this.user = user;
-    }
+	public String getICNumber() {
+		return ICNumber;
+	}
 
-    public String getRole() {
-        return role;
-    }
+	public void setICNumber(String iCNumber) {
+		ICNumber = iCNumber;
+	}
 
-    public void setRole(String role) {
-        this.role = role;
-    }
+	@Column(name = "ReasonToJoin") // New field
+	private String ReasonToJoin;
 
-    public String getApplicationStatus() {
-        return applicationStatus;
-    }
+	public String getReasonToJoin() {
+		return ReasonToJoin;
+	}
 
-    public void setApplicationStatus(String applicationStatus) {
-        this.applicationStatus = applicationStatus;
-    }
+	public void setReasonToJoin(String reasonToJoin) {
+		ReasonToJoin = reasonToJoin;
+	}
 
-    public String getSchoolName() {
-        return schoolName;
-    }
+	// Getters and Setters
+	public Integer getCrewID() {
+		return crewID;
+	}
 
-    public void setSchoolName(String schoolName) {
-        this.schoolName = schoolName;
-    }
+	public void setCrewID(Integer crewID) {
+		this.crewID = crewID;
+	}
 
-    public String getAddress() {
-        return address;
-    }
+	public User getUser() {
+		return user;
+	}
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
+	public void setUser(User user) {
+		this.user = user;
+	}
 
-    public AdminSchool getAdminSchool() {
-        return adminSchool;
-    }
+	public String getRole() {
+		return role;
+	}
 
-    public void setAdminSchool(AdminSchool adminSchool) {
-        this.adminSchool = adminSchool;
-    }
-    @Override
-    public String toString() {
-        return "Crew{" +
-                "crewID=" + crewID +
-                ", userID=" + (user != null ? user.getUserId() : "null") +
-                ", role='" + role + '\'' +
-                ", applicationStatus='" + applicationStatus + '\'' +
-                '}';
-    }
+	public void setRole(String role) {
+		this.role = role;
+	}
+
+	public String getApplicationStatus() {
+		return applicationStatus;
+	}
+
+	public void setApplicationStatus(String applicationStatus) {
+		this.applicationStatus = applicationStatus;
+	}
+
+	public String getSchoolName() {
+		return schoolName;
+	}
+
+	public void setSchoolName(String schoolName) {
+		this.schoolName = schoolName;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public AdminSchool getAdminSchool() {
+		return adminSchool;
+	}
+
+	public void setAdminSchool(AdminSchool adminSchool) {
+		this.adminSchool = adminSchool;
+	}
+
+	@Override
+	public String toString() {
+		return "Crew{" + "crewID=" + crewID + ", userID=" + (user != null ? user.getUserId() : "null") + ", role='"
+				+ role + '\'' + ", applicationStatus='" + applicationStatus + '\'' + '}';
+	}
 }
-
