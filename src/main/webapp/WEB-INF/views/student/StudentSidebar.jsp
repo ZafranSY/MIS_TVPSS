@@ -5,16 +5,128 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-    <link rel="stylesheet" href="/MIS_TVPSS/resources/css/adSchoolNavbar.css">
+<style>
+ * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
+        /* Sidebar Styles */
+        .sidebar {
+            background: #ffffff;
+            border-right: 1px solid #cbd5e1;
+            position: fixed;
+            height: 100vh; /* Full height to fix stretch issue */
+            width: 256px;
+            display: flex;
+            flex-direction: column;
+            z-index: 1000;
+        }
+
+        .sidebar-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 20px;
+            border-bottom: 1px solid #cbd5e1;
+            background: white;
+        }
+        
+
+        .sidebar-logo img {
+            width: 30px;
+            height: auto;
+        }
+
+        .sidebar-logo span {
+            font-size: 18px;
+            font-weight: bold;
+            color: #1a237e;
+        }
+
+        .sidebar-menu {
+            padding: 20px 0;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+.menu-bottom {
+  margin-top: auto; /* Push Help and Logout to the bottom */
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom:20px;
+}
+
+.menu-item {
+  text-decoration: none;
+  color: #6b7280;
+  padding: 12px 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: background-color 0.3s, color 0.3s, transform 0.2s;
+}
+
+.menu-item.active,
+.menu-item:hover {
+  background: #4caf50;
+  color: #ffffff;
+}
+
+.menu-item .icon {
+  font-size: 18px;
+  transition: transform 0.3s;
+}
+
+.menu-item:hover .icon {
+  transform: scale(1.2);
+}
+.menu-item.active, .menu-item:hover {
+    background: #515B92;
+    color: #FFFFFF;
+    border-radius: 8px;
+}
+
+/* Responsive Sidebar */
+@media (max-width: 600px) {
+    .menu-toggle {
+        display: block;
+    }
+
+    .sidebar {
+        transform: translateX(-100%);
+        position: fixed;
+        width: 256px;
+        top: 0;
+        left: 0;
+        height: 100%;
+        background: #ffffff;
+        z-index: 1000;
+        transition: transform 0.3s ease-in-out;
+    }
+
+    .sidebar.open {
+        transform: translateX(0);
+    }
+
+    .dashboard-container {
+        margin-left: 0; /* Remove sidebar margin for smaller screens */
+    }
+}
+</style>
 </head>
 <body>
-<div class="menu-toggle" onclick="toggleSidebar()">☰</div>
 
 <aside class="sidebar">
     <div class="sidebar-content">
         <div class="sidebar-logo">
-            <img src="/MIS_TVPSS/resources/images/house.png" style="width:30px;" alt="Logo">
+            <img src="/MIS_TVPSS/resources/images/house.png"  alt="Logo">
             <span>Management System</span>
         </div>
         <nav class="sidebar-menu">
