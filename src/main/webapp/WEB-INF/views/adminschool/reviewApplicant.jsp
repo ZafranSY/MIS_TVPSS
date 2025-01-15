@@ -346,6 +346,12 @@ header h1 {
                 <div class="details-card">
                     <div class="profile-section">
                         <h2 class="crew-name" id="crew-name-display">Select a crew member</h2>
+                        <div class="task-actions">
+                        <button class="action-button delete-button" title="Delete Task">
+                <i class="fa-solid fa-trash"></i>
+                <span>Delete</span>
+            </button>
+                        </div>
                     </div>
                     <div class="info-section">
                         <p>
@@ -380,6 +386,31 @@ header h1 {
 </div>
 
 <style>
+/* Individual Action Buttons */
+.task-actions .action-button {
+    padding: 6px 12px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* Edit Button */
+
+
+/* Delete Button */
+.task-actions .delete-button {
+    background-color: #fee2e2;
+    color: #dc2626;
+}
+
+.task-actions .delete-button:hover {
+    background-color: #fecaca;
+}
 .crew-section {
     display: grid;
     grid-template-columns: 1fr 2fr;
