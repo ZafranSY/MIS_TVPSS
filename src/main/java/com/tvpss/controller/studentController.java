@@ -52,7 +52,11 @@ public class studentController
      // Show Crew Task page if CrewID exists
      return "student/crewTask";
  }
-
+ @GetMapping("/student/crewRegistration")
+ public String showCrewRegistration()
+ {
+	 return "student/CrewRegistration";
+ }
 
 
 }
