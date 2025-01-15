@@ -49,9 +49,6 @@ header {
     border-radius: 12px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
     margin-bottom: 30px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
 }
 
 header h1 {
@@ -270,12 +267,8 @@ header h1 {
 		<%@ include file="adSchoolSidebar.jsp"%>
 
 		<main class="content">
-			<header>
-				<h1>Review Applicant</h1>
-				<div class="user-profile">
-					<span>John Doe</span> <span>ID: 32450</span>
-				</div>
-			</header>
+			            		<%@ include file="../common/header.jsp"%>
+
 
 			<section class="review-applicant">
 				<div class="applicant-list">
@@ -349,7 +342,6 @@ header h1 {
     <ul id="crew-list">
         <c:forEach var="crew" items="${approvedApplicants}">
             <li class="crew-item" data-crew-id="${crew.crewID}">
-                <img src="/MIS_TVPSS/resources/images/default-profile.png" alt="Profile">
                 <span>${crew.user.name}</span>
             </li>
         </c:forEach>
