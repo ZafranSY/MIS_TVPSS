@@ -11,19 +11,13 @@
            http://www.springframework.org/schema/mvc 
            http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
-    <!-- Enable component scanning for controllers -->
+    <!-- Enable component scanning for controllers and config -->
     <context:component-scan base-package="com.tvpss" />
-    <context:annotation-config />
     <context:component-scan base-package="config" />
     
-<mvc:resources mapping="/images/**" location="classpath:/images/" />
-<mvc:default-servlet-handler />
-<bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
-    <property name="sessionFactory" ref="sessionFactory" />
-</bean>
-
-	<mvc:resources mapping="/resources/**" location="/resources/" />
-
+    <mvc:resources mapping="/images/**" location="classpath:/images/" />
+    <mvc:default-servlet-handler />
+    
     <!-- Enable Spring MVC configuration -->
     <mvc:annotation-driven />
 
@@ -32,17 +26,4 @@
         <property name="prefix" value="/WEB-INF/views/" />
         <property name="suffix" value=".jsp" />
     </bean>
-    <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
-    <property name="dataSource" ref="dataSource" />
-    <property name="hibernateProperties">
-        <props>
-            <prop key="hibernate.dialect">org.hibernate.dialect.MySQL8Dialect</prop>
-            <prop key="hibernate.show_sql">true</prop>
-            <prop key="hibernate.format_sql">true</prop>
-        </props>
-    </property>
-    <property name="packagesToScan" value="com.tvpss.model" />
-</bean>
-    
-
 </beans>
