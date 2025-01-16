@@ -111,6 +111,10 @@ public class CrewDAO {
                     .setParameter("crewId", crewId)
                     .executeUpdate();
     }
+    public void CrewRegistration(Crew crew)
+    {
+    	entityManager.persist(crew);
+    }
 
 
 }
