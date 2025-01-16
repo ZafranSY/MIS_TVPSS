@@ -64,5 +64,10 @@ public class CrewService {
     {
     	 crewRepository.deleteCrew(crewId);
     }
+    @Transactional
+    public void CrewRegistration(Crew crew)
+    {
+    	crewRepository.CrewRegistration(crew);
+    }
 
 }
