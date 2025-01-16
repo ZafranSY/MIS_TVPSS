@@ -461,7 +461,13 @@ background-color: #fff;
 
     // Add new event listeners
     newAddTaskButton.addEventListener("click", function() {
+     const activeCrew = $("#applicant-list .applicant-item.active");
+        
+        const crewID = activeCrew.data("crew-id");
+        if(crewID != null)
         modal.style.display = "flex";
+        else
+        	alert("Select the crew first!!")
     });
 
     closeModal.addEventListener("click", function() {
@@ -476,14 +482,62 @@ background-color: #fff;
         const title = document.getElementById("taskTitle").value;
         const description = document.getElementById("taskDescription").value;
         const dueDate = document.getElementById("taskDueDate").value;
-
+        
+        const activeCrew = $("#applicant-list .applicant-item.active");
+        
+        const crewID = activeCrew.data("crew-id");
+       
+        console.log("crewId when save",crewID)
         if (!title.trim()) {
             alert("Task title is required!");
             return;
-        }
+        } if(crewID == null)
+        	{
+        	alert("please select crew first!")
+        	}
+        else
+        	{
+        	
+        	
+        const payload= {
+        		title:title,
+        		description:description,
+        		dueDate:dueDate,
+                crewID: crewID
 
+        }
+        $.ajax({
+            url: "/MIS_TVPSS/adminschool/createTask",
+            method :"POST",            
+            contentType: 'application/json', // Ensures JSON data is sent
+
+            data: JSON.stringify({ 
+                crewID: crewID, 
+                title: title, 
+                description: description, 
+                dueDate: dueDate 
+            }),
+            beforeSend: function(xhr) {
+            	var token = $("meta[name='_csrf']").attr("content");
+            	var header = $("meta[name='_csrf_header']").attr("content");
+            	if (token && header) {
+            	    xhr.setRequestHeader(header, token);
+            	}
+
+            },
+            success: function(response) {
+                alert("Task created successfully");
+                console.log(response);
+                location.reload();
+            },
+            error: function(xhr, status, error) {
+                console.error("Error creating task:", error);
+                alert("Failed to create task. Please try again.");
+            }
+        });
+        	}
         // Here you would typically send this data to your server
-        console.log("Saving task:", { title, description, dueDate });
+        console.log("Saving task:", { title, description, dueDate, crewID });
 
         // Clear form and close modal
         document.getElementById("taskForm").reset();
@@ -563,34 +617,71 @@ $(".edit-button").click(function() {
 });
 
 // Modify your save handler to handle both add and edit
+
 $("#saveTask").click(function() {
-    const mode = $(this).attr("data-mode");
-    const taskId = $(this).attr("data-task-id");
+	 const title = document.getElementById("taskTitle").value;
+     const description = document.getElementById("taskDescription").value;
+     const dueDate = document.getElementById("taskDueDate").value;
+     
+     const activeCrew = $("#task-list .task-item.active");
+     
+     const taskID = activeCrew.data("task-id");
     
-    const data = {
-        taskTitle: $("#taskTitle").val(),
-        taskDescription: $("#taskDescription").val(),
-        taskDueDate: $("#taskDueDate").val()
-    };
+     console.log("crewId when save",task)
+     if (!title.trim()) {
+         alert("Task title is required!");
+         return;
+     } if(crewID == null)
+     	{
+     	alert("please select crew first!")
+     	}
+     else
+     	{
+     	
+     	
+     const payload= {
+     		title:title,
+     		description:description,
+     		dueDate:dueDate,
+     		taskID: taskID
 
-    const url = mode === "edit" 
-        ? `/MIS_TVPSS/adminschool/updateTask/${taskId}`
-        : "/MIS_TVPSS/adminschool/addTask";
+     }
+     $.ajax({
+         url: "/MIS_TVPSS/adminschool/updateTask",
+         method :"POST",            
+         contentType: 'application/json', // Ensures JSON data is sent
 
-    $.ajax({
-        url: url,
-        method: mode === "edit" ? "PUT" : "POST",
-        data: JSON.stringify(data),
-        contentType: "application/json",
-        success: function() {
-            modal.style.display = "none";
-            // Refresh the task list
-            loadTasks();
-        },
-        error: function(xhr, status, error) {
-            alert("Failed to save task: " + error);
-        }
-    });
+         data: JSON.stringify({ 
+             crewID: taskID, 
+             title: title, 
+             description: description, 
+             dueDate: dueDate 
+         }),
+         beforeSend: function(xhr) {
+         	var token = $("meta[name='_csrf']").attr("content");
+         	var header = $("meta[name='_csrf_header']").attr("content");
+         	if (token && header) {
+         	    xhr.setRequestHeader(header, token);
+         	}
+
+         },
+         success: function(response) {
+             alert("Task created successfully");
+             console.log(response);
+             location.reload();
+         },
+         error: function(xhr, status, error) {
+             console.error("Error creating task:", error);
+             alert("Failed to create task. Please try again.");
+         }
+     });
+     	}
+     // Here you would typically send this data to your server
+     console.log("Saving task:", { title, description, dueDate, crewID });
+
+     // Clear form and close modal
+     document.getElementById("taskForm").reset();
+     modal.style.display = "none";
 });
 </script>
 
