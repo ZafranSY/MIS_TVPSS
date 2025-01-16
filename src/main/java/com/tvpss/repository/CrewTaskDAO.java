@@ -1,5 +1,6 @@
 package com.tvpss.repository;
 
+import java.sql.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -75,8 +76,27 @@ public class CrewTaskDAO {
 	                  .setParameter("taskId", taskId)
 	                  .executeUpdate();
 	  }
-	 
-
-
+	  
+	  public void createTask(String taskTitle, String taskDescription, Date taskDueDate, int crewId) {
+		    String query = "INSERT INTO crewTask (TaskTitle, TaskDescription, TaskDueDate, CrewID) VALUES (:title, :description, :dueDate, :crewID)";
+		    entityManager.createNativeQuery(query)
+		                 .setParameter("title", taskTitle)
+		                 .setParameter("description", taskDescription)
+		                 .setParameter("dueDate", taskDueDate)
+		                 .setParameter("crewID", crewId)
+		                 .executeUpdate();
+		}
+	  public void updateTask(String taskTitle, String taskDescription, Date taskDueDate, int taskId)
+	  {
+		  String query = "UPDATE crewTask SET TaskTitle =: taskTitle, TaskDescription := taskDescription, TaskDueDate := taskDueDate WHERE tasId := taskId";
+		  entityManager.createNativeQuery(query)
+          .setParameter("title", taskTitle)
+          .setParameter("description", taskDescription)
+          .setParameter("dueDate", taskDueDate)
+          .setParameter("taskId", taskId)
+          .executeUpdate();
+	  }
 
 }
+
+
