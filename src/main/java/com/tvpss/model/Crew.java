@@ -29,7 +29,7 @@ public class Crew {
 	private String address;
 
 	@ManyToOne
-	@JoinColumn(name = "AdminSchoolID", nullable = false) // Ensure the column name matches the DB schema
+	@JoinColumn(name = "AdminSchoolID", nullable = true) // Ensure the column name matches the DB schema
 	private AdminSchool adminSchool;
 
 	@Column(name = "ICNumber") // New field
