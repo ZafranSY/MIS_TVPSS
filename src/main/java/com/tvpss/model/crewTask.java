@@ -1,6 +1,9 @@
 package com.tvpss.model;
 
 import javax.persistence.*;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -24,6 +27,7 @@ public class crewTask implements Serializable {
     private String taskDescription;
 
     @Column(name = "TaskDueDate")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Temporal(TemporalType.DATE)
     private Date taskDueDate;
 
