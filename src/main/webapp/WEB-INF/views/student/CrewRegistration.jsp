@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
@@ -168,50 +169,41 @@ header h1 {
 
 
             <div class="registration-form">
-                <form action="CrewRegistrationServlet" method="POST" enctype="multipart/form-data">
+                    <form:form method="post" modelAttribute="crew" action="/MIS_TVPSS/student/crewRegistration">
+                
                     <input type="hidden" name="userID" value="${sessionScope.userID}" />
                     <input type="hidden" name="adminSchoolID" value="${sessionScope.adminSchoolID}" />
                     
-                    <div class="form-group">
-                        <label for="role">Request Role *</label>
-                        <select id="role" name="role" required>
-                            <option value="">Select a role</option>
-                            <option value="Teacher">Teacher</option>
-                            <option value="Staff">Staff</option>
-                            <option value="Student">Student</option>
-                        </select>
-                    </div>
 
                     <div class="form-group">
                         <label for="schoolName">School Name *</label>
-                        <input type="text" id="schoolName" name="schoolName" required>
+                         <form:input path="schoolName" type="text" required="true" />
+                         <form:errors path="schoolName" cssClass="error" />
                     </div>
 
                     <div class="form-group">
                         <label for="address">Address *</label>
-                        <textarea id="address" name="address" required></textarea>
+                        <form:textarea path="address" required="true" />
+                        <form:errors path="address" cssClass="error" />
+                        
                     </div>
 
                     <div class="form-group">
                         <label for="icNumber">IC Number *</label>
-                        <input type="text" id="icNumber" name="icNumber" pattern="[0-9]{12}" 
-                               title="Please enter a valid 12-digit IC number" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="picture">Profile Picture</label>
-                        <input type="file" id="picture" name="picture" accept="image/*" class="file-upload">
+                       <form:input path="ICNumber" type="text" required="true" />
+                         <form:errors path="ICNumber" cssClass="error" />
                     </div>
 
                     <div class="form-group">
                         <label for="reasonToJoin">Reason to Join *</label>
-                        <textarea id="reasonToJoin" name="reasonToJoin" required></textarea>
+                        <form:textarea path="ReasonToJoin" required="true" />
+                        <form:errors path="ReasonToJoin" cssClass="error" />
                     </div>
 
                     <div class="form-group">
                         <button type="submit" class="btn-submit">Submit Application</button>
                     </div>
-                </form>
+                </form:form>
             </div>
         </div>
     </div>
