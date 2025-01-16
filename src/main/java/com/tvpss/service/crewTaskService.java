@@ -1,5 +1,6 @@
 package com.tvpss.service;
 
+import java.sql.Date;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -50,6 +51,11 @@ public class crewTaskService {
     public void deleteTask(int taskId) {
     	crewRepository.deleteTask(taskId);
     }
+    public void CreateTask(String taskTitle, String taskDescription, Date taskDueDate, int crewId) {
+        crewRepository.createTask(taskTitle, taskDescription, taskDueDate, crewId);
+    }
+
+
 
     
 }
