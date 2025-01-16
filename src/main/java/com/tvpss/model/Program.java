@@ -5,7 +5,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.util.Date;
 
 @Entity
-@Table(name = "Program")
+@Table(name = "program")
 public class Program {
 
     @Id
