@@ -1,5 +1,7 @@
 package com.tvpss.controller;
 
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,6 +17,7 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -22,6 +25,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import com.tvpss.model.Crew;
 import com.tvpss.model.crewTask;
@@ -235,9 +239,58 @@ public class adSchoolController {
 	     }
 	     return response;
 	 }
-
-
-
+	 @PostMapping("/adminschool/createTask")
+	 @ResponseBody
+	 public Map createCrew(@RequestBody Map<String, Object> requestData) {
+	     Map<String, Object> response = new HashMap<>();
+	     
+	     try {
+	         Integer crewId = Integer.parseInt(requestData.get("crewID").toString());
+	         String title = (String) requestData.get("title");
+	         String description = (String) requestData.get("description");
+	         
+	         // Parse the string to java.util.Date first
+	         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+	         java.util.Date utilDate = dateFormat.parse((String) requestData.get("dueDate"));
+	         
+	         // Convert to java.sql.Date
+	         java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+	         
+	         crewTaskService.CreateTask(title, description, sqlDate, crewId);
+	         response.put("success", true);
+	         response.put("message", "Task created successfully");
+	     } catch (Exception e) {
+	         response.put("success", false);
+	         response.put("message", "Failed to create task: " + e.getMessage());
+	     }
+	     return response;
+	 }@PostMapping("/adminschool/updateTask")
+	 @ResponseBody
+	 public Map updateTask(@RequestBody Map<String, Object> requestData) {
+	     Map<String, Object> response = new HashMap<>();
+	     
+	     try {
+	         Integer crewId = Integer.parseInt(requestData.get("crewID").toString());
+	         String title = (String) requestData.get("title");
+	         String description = (String) requestData.get("description");
+	         
+	         // Parse the string to java.util.Date first
+	         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+	         java.util.Date utilDate = dateFormat.parse((String) requestData.get("dueDate"));
+	         
+	         // Convert to java.sql.Date
+	         java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+	         
+	         crewTaskService.CreateTask(title, description, sqlDate, crewId);
+	         response.put("success", true);
+	         response.put("message", "Task created successfully");
+	     } catch (Exception e) {
+	         response.put("success", false);
+	         response.put("message", "Failed to create task: " + e.getMessage());
+	     }
+	     return response;
+	 }
+	 
 	 
 	// Add this configuration class
 	 @Configuration
