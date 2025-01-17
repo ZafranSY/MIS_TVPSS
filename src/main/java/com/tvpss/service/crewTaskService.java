@@ -54,7 +54,9 @@ public class crewTaskService {
     public void CreateTask(String taskTitle, String taskDescription, Date taskDueDate, int crewId) {
         crewRepository.createTask(taskTitle, taskDescription, taskDueDate, crewId);
     }
-
+    public void updateTask(String taskTitle, String taskDescription, Date taskDueDate, int taskId) {
+        crewRepository.updateTask(taskTitle, taskDescription, taskDueDate, taskId);
+    }
 
 
     
