@@ -449,107 +449,67 @@ background-color: #fff;
     });
     
  // Remove any existing event listeners
-    const addTaskButton = document.getElementById("addTaskButton");
-    const modal = document.getElementById("addTaskModal");
-    const closeModal = document.getElementById("closeModal");
-    const cancelTask = document.getElementById("cancelTask");
-    const saveTask = document.getElementById("saveTask");
+// Remove any existing event listeners
+const addTaskButton = document.getElementById("addTaskButton");
+const modal = document.getElementById("addTaskModal");
+const closeModal = document.getElementById("closeModal");
+const cancelTask = document.getElementById("cancelTask");
+const saveTask = document.getElementById("saveTask");
 
-    // Clean up existing listeners
-    addTaskButton.replaceWith(addTaskButton.cloneNode(true));
-    const newAddTaskButton = document.getElementById("addTaskButton");
+// Clean up existing listeners
+addTaskButton.replaceWith(addTaskButton.cloneNode(true));
+const newAddTaskButton = document.getElementById("addTaskButton");
 
-    // Add new event listeners
-    newAddTaskButton.addEventListener("click", function() {
-     const activeCrew = $("#applicant-list .applicant-item.active");
-        
-        const crewID = activeCrew.data("crew-id");
-        if(crewID != null)
-        modal.style.display = "flex";
-        else
-        	alert("Select the crew first!!")
-    });
-
-    closeModal.addEventListener("click", function() {
-        modal.style.display = "none";
-    });
-
-    cancelTask.addEventListener("click", function() {
-        modal.style.display = "none";
-    });
-
-    saveTask.addEventListener("click", function() {
-        const title = document.getElementById("taskTitle").value;
-        const description = document.getElementById("taskDescription").value;
-        const dueDate = document.getElementById("taskDueDate").value;
-        
-        const activeCrew = $("#applicant-list .applicant-item.active");
-        
-        const crewID = activeCrew.data("crew-id");
-       
-        console.log("crewId when save",crewID)
-        if (!title.trim()) {
-            alert("Task title is required!");
-            return;
-        } if(crewID == null)
-        	{
-        	alert("please select crew first!")
-        	}
-        else
-        	{
-        	
-        	
-        const payload= {
-        		title:title,
-        		description:description,
-        		dueDate:dueDate,
-                crewID: crewID
-
-        }
-        $.ajax({
-            url: "/MIS_TVPSS/adminschool/createTask",
-            method :"POST",            
-            contentType: 'application/json', // Ensures JSON data is sent
-
-            data: JSON.stringify({ 
-                crewID: crewID, 
-                title: title, 
-                description: description, 
-                dueDate: dueDate 
-            }),
-            beforeSend: function(xhr) {
-            	var token = $("meta[name='_csrf']").attr("content");
-            	var header = $("meta[name='_csrf_header']").attr("content");
-            	if (token && header) {
-            	    xhr.setRequestHeader(header, token);
-            	}
-
-            },
-            success: function(response) {
-                alert("Task created successfully");
-                console.log(response);
-                location.reload();
-            },
-            error: function(xhr, status, error) {
-                console.error("Error creating task:", error);
-                alert("Failed to create task. Please try again.");
-            }
-        });
-        	}
-        // Here you would typically send this data to your server
-        console.log("Saving task:", { title, description, dueDate, crewID });
-
-        // Clear form and close modal
+// Add new event listeners
+newAddTaskButton.addEventListener("click", function() {
+    const activeCrew = $("#applicant-list .applicant-item.active");
+    const crewID = activeCrew.data("crew-id");
+    
+    if(crewID != null) {
+        // Reset form and set mode to 'add'
         document.getElementById("taskForm").reset();
-        modal.style.display = "none";
-    });
+        $("#saveTask").attr("data-mode", "add");
+        modal.style.display = "flex";
+    } else {
+        alert("Select the crew first!!");
+    }
+});
 
-    // Close modal when clicking outside
-    window.addEventListener("click", function(event) {
-        if (event.target === modal) {
-            modal.style.display = "none";
-        }
-    });
+closeModal.addEventListener("click", function() {
+    modal.style.display = "none";
+});
+
+cancelTask.addEventListener("click", function() {
+    modal.style.display = "none";
+});
+
+// Edit button click handler
+$(".edit-button").click(function() {
+    const activeTask = $("#task-list .task-item.active");
+    if (!activeTask.length) {
+        alert("Please select a task to edit");
+        return;
+    }
+
+    // Pre-fill the modal with existing values
+    $("#taskTitle").val($("#task-title").text());
+    $("#taskDescription").val($("#task-description").text());
+    
+    // Parse the date properly
+    const dueDateText = $("#task-due-date").text();
+    if (dueDateText && dueDateText !== "N/A") {
+        const dueDate = new Date(dueDateText);
+        $("#taskDueDate").val(dueDate.toISOString().split('T')[0]);
+    }
+
+    // Show the modal in edit mode
+    $("#saveTask").attr("data-mode", "edit");
+    $("#saveTask").attr("data-task-id", activeTask.data("task-id"));
+    modal.style.display = "flex";
+});
+
+// Combined save handler for both add and edit
+  
  // Handle delete button click
  $(".delete-button").click(function() {
     const activeTask = $("#task-list .task-item.active");
@@ -594,6 +554,7 @@ function clearTaskDetails() {
     $("#task-overdue").text("-");
 }
 //First, add an edit modal (similar to your add modal)
+// Edit button click handler
 $(".edit-button").click(function() {
     const activeTask = $("#task-list .task-item.active");
     if (!activeTask.length) {
@@ -604,84 +565,108 @@ $(".edit-button").click(function() {
     // Pre-fill the modal with existing values
     $("#taskTitle").val($("#task-title").text());
     $("#taskDescription").val($("#task-description").text());
-    // Parse the date properly
-    const dueDate = new Date($("#task-due-date").text());
-    $("#taskDueDate").val(dueDate.toISOString().split('T')[0]);
-
-    // Show the modal
-    modal.style.display = "flex";
     
-    // Update the save button to handle edit instead of add
+    // Parse the date properly
+    const dueDateText = $("#task-due-date").text();
+    if (dueDateText && dueDateText !== "N/A") {
+        const dueDate = new Date(dueDateText);
+        $("#taskDueDate").val(dueDate.toISOString().split('T')[0]);
+    }
+
+    // Show the modal in edit mode
     $("#saveTask").attr("data-mode", "edit");
     $("#saveTask").attr("data-task-id", activeTask.data("task-id"));
+    modal.style.display = "flex";
 });
 
-// Modify your save handler to handle both add and edit
-
+// Combined save handler for both add and edit
 $("#saveTask").click(function() {
-	 const title = document.getElementById("taskTitle").value;
-     const description = document.getElementById("taskDescription").value;
-     const dueDate = document.getElementById("taskDueDate").value;
-     
-     const activeCrew = $("#task-list .task-item.active");
-     
-     const taskID = activeCrew.data("task-id");
-    
-     console.log("crewId when save",task)
-     if (!title.trim()) {
-         alert("Task title is required!");
-         return;
-     } if(crewID == null)
-     	{
-     	alert("please select crew first!")
-     	}
-     else
-     	{
-     	
-     	
-     const payload= {
-     		title:title,
-     		description:description,
-     		dueDate:dueDate,
-     		taskID: taskID
+    const title = document.getElementById("taskTitle").value;
+    const description = document.getElementById("taskDescription").value;
+    const dueDate = document.getElementById("taskDueDate").value;
+    const mode = $("#saveTask").attr("data-mode");
+    console.log(title);
+    if (!title) {
+        alert("Task title is required!");
+        return;
+    }
 
-     }
-     $.ajax({
-         url: "/MIS_TVPSS/adminschool/updateTask",
-         method :"POST",            
-         contentType: 'application/json', // Ensures JSON data is sent
+    if (mode === "add") {
+        // Handle new task creation
+        const activeCrew = $("#applicant-list .applicant-item.active");
+        const crewID = activeCrew.data("crew-id");
+        
+        if (!crewID) {
+            alert("Please select crew first!");
+            return;
+        }
 
-         data: JSON.stringify({ 
-             crewID: taskID, 
-             title: title, 
-             description: description, 
-             dueDate: dueDate 
-         }),
-         beforeSend: function(xhr) {
-         	var token = $("meta[name='_csrf']").attr("content");
-         	var header = $("meta[name='_csrf_header']").attr("content");
-         	if (token && header) {
-         	    xhr.setRequestHeader(header, token);
-         	}
+        $.ajax({
+            url: "/MIS_TVPSS/adminschool/createTask",
+            method: "POST",
+            contentType: 'application/json',
+            data: JSON.stringify({ 
+                crewID: crewID, 
+                title: title, 
+                description: description, 
+                dueDate: dueDate 
+            }),
+            beforeSend: function(xhr) {
+                var token = $("meta[name='_csrf']").attr("content");
+                var header = $("meta[name='_csrf_header']").attr("content");
+                if (token && header) {
+                    xhr.setRequestHeader(header, token);
+                }
+            },
+            success: function(response) {
+                alert("Task created successfully");
+                location.reload();
+            },
+            error: function(xhr, status, error) {
+                console.error("Error creating task:", error);
+                alert("Failed to create task. Please try again.");
+            }
+        });
+    } else {
+        // Handle task update
+        const taskId = $("#saveTask").attr("data-task-id");
+        
+        if (!taskId) {
+            alert("No task selected for update!");
+            return;
+        }
 
-         },
-         success: function(response) {
-             alert("Task created successfully");
-             console.log(response);
-             location.reload();
-         },
-         error: function(xhr, status, error) {
-             console.error("Error creating task:", error);
-             alert("Failed to create task. Please try again.");
-         }
-     });
-     	}
-     // Here you would typically send this data to your server
-     console.log("Saving task:", { title, description, dueDate, crewID });
+        $.ajax({
+            url: "/MIS_TVPSS/adminschool/updateTask",
+            method: "PUT", // Changed from PUT to POST since server doesn't accept PUT
+            contentType: 'application/json',
+            data: JSON.stringify({ 
+                taskID: taskId,
+                title: title, 
+                description: description, 
+                dueDate: dueDate 
+            }),
+            beforeSend: function(xhr) {
+                var token = $("meta[name='_csrf']").attr("content");
+                var header = $("meta[name='_csrf_header']").attr("content");
+                if (token && header) {
+                    xhr.setRequestHeader(header, token);
+                }
+            },
+            success: function(response) {
+                alert("Task updated successfully");
+                location.reload();
+            },
+            error: function(xhr, status, error) {
+                console.error("Error updating task:", error);
+                alert("Failed to update task. Please try again.");
+            }
+        });
+    }
 
-     // Clear form and close modal
-     document.getElementById("taskForm").reset();
-     modal.style.display = "none";
+    // Clear form and close modal
+    document.getElementById("taskForm").reset();
+    modal.style.display = "none";
 });
 </script>
 
