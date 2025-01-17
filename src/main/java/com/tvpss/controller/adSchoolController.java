@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import com.tvpss.model.Crew;
@@ -264,43 +265,65 @@ public class adSchoolController {
 	         response.put("message", "Failed to create task: " + e.getMessage());
 	     }
 	     return response;
-	 }@PostMapping("/adminschool/updateTask")
+	 }
+	 /*@PostMapping("/adminschool/updateTask")
 	 @ResponseBody
-	 public Map updateTask(@RequestBody Map<String, Object> requestData) {
+	 public Map<String, Object> updateTask(@RequestBody Map<String, Object> requestData) {
 	     Map<String, Object> response = new HashMap<>();
-	     
+
 	     try {
-	         Integer crewId = Integer.parseInt(requestData.get("crewID").toString());
+	         Integer taskId = Integer.parseInt(requestData.get("taskID").toString());
 	         String title = (String) requestData.get("title");
 	         String description = (String) requestData.get("description");
-	         
-	         // Parse the string to java.util.Date first
+
+	         // Parse the string to java.util.Date
 	         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 	         java.util.Date utilDate = dateFormat.parse((String) requestData.get("dueDate"));
-	         
+
 	         // Convert to java.sql.Date
 	         java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+
+	         // Call your service method to update the task
+	         crewTaskService.updateTask(title, description, sqlDate, taskId);
 	         
-	         crewTaskService.CreateTask(title, description, sqlDate, crewId);
 	         response.put("success", true);
-	         response.put("message", "Task created successfully");
+	         response.put("message", "Task updated successfully");
 	     } catch (Exception e) {
 	         response.put("success", false);
-	         response.put("message", "Failed to create task: " + e.getMessage());
+	         response.put("message", "Failed to update task: " + e.getMessage());
+	         e.printStackTrace();
+	     }
+	     return response;
+	 }*/
+	 @PutMapping("/adminschool/updateTask")
+	 @ResponseBody
+	 public Map<String, Object> updateTask(@RequestBody Map<String, Object> requestData) {
+	     Map<String, Object> response = new HashMap<>();
+	     try {
+	         Integer taskId = Integer.parseInt(String.valueOf(requestData.get("taskID")));
+	         String title = (String) requestData.get("title");
+	         String description = (String) requestData.get("description");
+	         String dueDate = (String) requestData.get("dueDate");
+
+	         if (dueDate == null || dueDate.isEmpty()) {
+	             throw new IllegalArgumentException("Due date cannot be null or empty");
+	         }
+
+	         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+	         java.sql.Date sqlDate = new java.sql.Date(dateFormat.parse(dueDate).getTime());
+
+	         crewTaskService.updateTask(title, description, sqlDate, taskId);
+	         response.put("success", true);
+	         response.put("message", "Task updated successfully");
+	     } catch (Exception e) {
+	         response.put("success", false);
+	         response.put("message", "Error updating task: " + e.getMessage());
 	     }
 	     return response;
 	 }
-	 
-	 
+
 	// Add this configuration class
-	 @Configuration
-	 public class WebConfig implements WebMvcConfigurer {
-	     @Override
-	     public void addCorsMappings(CorsRegistry registry) {
-	         registry.addMapping("/**")
-	                 .allowedMethods("GET", "POST", "PUT", "DELETE");
-	     }
-	 }
+	
 
 /*	 @Configuration
 	 public class WebConfig implements WebMvcConfigurer {
