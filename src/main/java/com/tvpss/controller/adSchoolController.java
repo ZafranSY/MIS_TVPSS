@@ -28,9 +28,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import com.tvpss.model.Crew;
+import com.tvpss.model.Program;
 import com.tvpss.model.crewTask;
 import com.tvpss.service.CrewService;
+import com.tvpss.service.ProgramService;
 import com.tvpss.service.crewTaskService;
+import com.tvpss.service.ProgramService;
 
 @Controller
 public class adSchoolController {
@@ -40,6 +43,9 @@ public class adSchoolController {
 	
 	@Autowired
 	private crewTaskService crewTaskService;
+	
+	@Autowired
+	private ProgramService programService;
 
 	@GetMapping("/adminschool/dashboard")
 	public String showDashboard(Model model) {
@@ -313,5 +319,11 @@ public class adSchoolController {
 	     }
 	 }
 	 */
+	    @GetMapping("/adminschool/program")
+	    public String listPrograms(Model model) {
+	        List<Program> programs = programService.getAllPrograms();
+	        model.addAttribute("programs", programs);
+	        return "adminschool/program";  
+	    }
 
 }
