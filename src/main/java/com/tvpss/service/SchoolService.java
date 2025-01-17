@@ -16,4 +16,9 @@ public class SchoolService {
     public List<School> getAllSchools() {
         return schoolDAO.getAllSchools();  // Fetch schools from the database
     }
+
+	public List<School> getSchoolByDistrict(Long districtID) {
+		// TODO Auto-generated method stub
+		return schoolDAO.getSchoolByDistrict(districtID);
+	}
 }
