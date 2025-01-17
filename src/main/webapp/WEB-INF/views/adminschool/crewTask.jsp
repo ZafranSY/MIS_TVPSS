@@ -7,8 +7,6 @@
     <link rel="stylesheet" href="/MIS_TVPSS/resources/css/crewTask.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://kit.fontawesome.com/2b260a5b5a.js"></script>
-    <meta name="_csrf" content="${_csrf.token}"/>
-<meta name="_csrf_header" content="${_csrf.headerName}"/>
     
 </head>
 <body>
@@ -451,67 +449,107 @@ background-color: #fff;
     });
     
  // Remove any existing event listeners
-// Remove any existing event listeners
-const addTaskButton = document.getElementById("addTaskButton");
-const modal = document.getElementById("addTaskModal");
-const closeModal = document.getElementById("closeModal");
-const cancelTask = document.getElementById("cancelTask");
-const saveTask = document.getElementById("saveTask");
+    const addTaskButton = document.getElementById("addTaskButton");
+    const modal = document.getElementById("addTaskModal");
+    const closeModal = document.getElementById("closeModal");
+    const cancelTask = document.getElementById("cancelTask");
+    const saveTask = document.getElementById("saveTask");
 
-// Clean up existing listeners
-addTaskButton.replaceWith(addTaskButton.cloneNode(true));
-const newAddTaskButton = document.getElementById("addTaskButton");
+    // Clean up existing listeners
+    addTaskButton.replaceWith(addTaskButton.cloneNode(true));
+    const newAddTaskButton = document.getElementById("addTaskButton");
 
-// Add new event listeners
-newAddTaskButton.addEventListener("click", function() {
-    const activeCrew = $("#applicant-list .applicant-item.active");
-    const crewID = activeCrew.data("crew-id");
-    
-    if(crewID != null) {
-        // Reset form and set mode to 'add'
-        document.getElementById("taskForm").reset();
-        $("#saveTask").attr("data-mode", "add");
+    // Add new event listeners
+    newAddTaskButton.addEventListener("click", function() {
+     const activeCrew = $("#applicant-list .applicant-item.active");
+        
+        const crewID = activeCrew.data("crew-id");
+        if(crewID != null)
         modal.style.display = "flex";
-    } else {
-        alert("Select the crew first!!");
-    }
-});
+        else
+        	alert("Select the crew first!!")
+    });
 
-closeModal.addEventListener("click", function() {
-    modal.style.display = "none";
-});
+    closeModal.addEventListener("click", function() {
+        modal.style.display = "none";
+    });
 
-cancelTask.addEventListener("click", function() {
-    modal.style.display = "none";
-});
+    cancelTask.addEventListener("click", function() {
+        modal.style.display = "none";
+    });
 
-// Edit button click handler
-$(".edit-button").click(function() {
-    const activeTask = $("#task-list .task-item.active");
-    if (!activeTask.length) {
-        alert("Please select a task to edit");
-        return;
-    }
+    saveTask.addEventListener("click", function() {
+        const title = document.getElementById("taskTitle").value;
+        const description = document.getElementById("taskDescription").value;
+        const dueDate = document.getElementById("taskDueDate").value;
+        
+        const activeCrew = $("#applicant-list .applicant-item.active");
+        
+        const crewID = activeCrew.data("crew-id");
+       
+        console.log("crewId when save",crewID)
+        if (!title.trim()) {
+            alert("Task title is required!");
+            return;
+        } if(crewID == null)
+        	{
+        	alert("please select crew first!")
+        	}
+        else
+        	{
+        	
+        	
+        const payload= {
+        		title:title,
+        		description:description,
+        		dueDate:dueDate,
+                crewID: crewID
 
-    // Pre-fill the modal with existing values
-    $("#taskTitle").val($("#task-title").text());
-    $("#taskDescription").val($("#task-description").text());
-    
-    // Parse the date properly
-    const dueDateText = $("#task-due-date").text();
-    if (dueDateText && dueDateText !== "N/A") {
-        const dueDate = new Date(dueDateText);
-        $("#taskDueDate").val(dueDate.toISOString().split('T')[0]);
-    }
+        }
+        $.ajax({
+            url: "/MIS_TVPSS/adminschool/createTask",
+            method :"POST",            
+            contentType: 'application/json', // Ensures JSON data is sent
 
-    // Show the modal in edit mode
-    $("#saveTask").attr("data-mode", "edit");
-    $("#saveTask").attr("data-task-id", activeTask.data("task-id"));
-    modal.style.display = "flex";
-});
+            data: JSON.stringify({ 
+                crewID: crewID, 
+                title: title, 
+                description: description, 
+                dueDate: dueDate 
+            }),
+            beforeSend: function(xhr) {
+            	var token = $("meta[name='_csrf']").attr("content");
+            	var header = $("meta[name='_csrf_header']").attr("content");
+            	if (token && header) {
+            	    xhr.setRequestHeader(header, token);
+            	}
 
-// Combined save handler for both add and edit
-  
+            },
+            success: function(response) {
+                alert("Task created successfully");
+                console.log(response);
+                location.reload();
+            },
+            error: function(xhr, status, error) {
+                console.error("Error creating task:", error);
+                alert("Failed to create task. Please try again.");
+            }
+        });
+        	}
+        // Here you would typically send this data to your server
+        console.log("Saving task:", { title, description, dueDate, crewID });
+
+        // Clear form and close modal
+        document.getElementById("taskForm").reset();
+        modal.style.display = "none";
+    });
+
+    // Close modal when clicking outside
+    window.addEventListener("click", function(event) {
+        if (event.target === modal) {
+            modal.style.display = "none";
+        }
+    });
  // Handle delete button click
  $(".delete-button").click(function() {
     const activeTask = $("#task-list .task-item.active");
@@ -556,7 +594,6 @@ function clearTaskDetails() {
     $("#task-overdue").text("-");
 }
 //First, add an edit modal (similar to your add modal)
-// Edit button click handler
 $(".edit-button").click(function() {
     const activeTask = $("#task-list .task-item.active");
     if (!activeTask.length) {
@@ -567,124 +604,84 @@ $(".edit-button").click(function() {
     // Pre-fill the modal with existing values
     $("#taskTitle").val($("#task-title").text());
     $("#taskDescription").val($("#task-description").text());
-    
     // Parse the date properly
-    const dueDateText = $("#task-due-date").text();
-    if (dueDateText && dueDateText !== "N/A") {
-        const dueDate = new Date(dueDateText);
-        $("#taskDueDate").val(dueDate.toISOString().split('T')[0]);
-    }
+    const dueDate = new Date($("#task-due-date").text());
+    $("#taskDueDate").val(dueDate.toISOString().split('T')[0]);
 
-    // Show the modal in edit mode
+    // Show the modal
+    modal.style.display = "flex";
+    
+    // Update the save button to handle edit instead of add
     $("#saveTask").attr("data-mode", "edit");
     $("#saveTask").attr("data-task-id", activeTask.data("task-id"));
-    modal.style.display = "flex";
 });
 
-// Combined save handler for both add and edit
+// Modify your save handler to handle both add and edit
+
 $("#saveTask").click(function() {
-    const title = document.getElementById("taskTitle").value;
-    const description = document.getElementById("taskDescription").value;
-    const dueDate = document.getElementById("taskDueDate").value;
-    const mode = $("#saveTask").attr("data-mode");
+	 const title = document.getElementById("taskTitle").value;
+     const description = document.getElementById("taskDescription").value;
+     const dueDate = document.getElementById("taskDueDate").value;
+     
+     const activeCrew = $("#task-list .task-item.active");
+     
+     const taskID = activeCrew.data("task-id");
     
-    console.log("titke ",title);
-    console.log("description ",description);
-    console.log("dueDate ",dueDate);
-    console.log(title);
-    if (!title) {
-        alert("Task title is required!");
-        return;
-    }
+     console.log("crewId when save",task)
+     if (!title.trim()) {
+         alert("Task title is required!");
+         return;
+     } if(crewID == null)
+     	{
+     	alert("please select crew first!")
+     	}
+     else
+     	{
+     	
+     	
+     const payload= {
+     		title:title,
+     		description:description,
+     		dueDate:dueDate,
+     		taskID: taskID
 
-    if (mode === "add") {
-        // Handle new task creation
-        const activeCrew = $("#applicant-list .applicant-item.active");
-        const crewID = activeCrew.data("crew-id");
-        
-        if (!crewID) {
-            alert("Please select crew first!");
-            return;
-        }
+     }
+     $.ajax({
+         url: "/MIS_TVPSS/adminschool/updateTask",
+         method :"POST",            
+         contentType: 'application/json', // Ensures JSON data is sent
 
-        $.ajax({
-            url: "/MIS_TVPSS/adminschool/createTask",
-            method: "POST",
-            contentType: 'application/json',
-            data: JSON.stringify({ 
-                crewID: crewID, 
-                title: title, 
-                description: description, 
-                dueDate: dueDate 
-            }),
-            beforeSend: function(xhr) {
-                var token = $("meta[name='_csrf']").attr("content");
-                var header = $("meta[name='_csrf_header']").attr("content");
-                if (token && header) {
-                    xhr.setRequestHeader(header, token);
-                }
-            },
-            success: function(response) {
-                alert("Task created successfully");
-                console.log("in geh update task",response);
+         data: JSON.stringify({ 
+             crewID: taskID, 
+             title: title, 
+             description: description, 
+             dueDate: dueDate 
+         }),
+         beforeSend: function(xhr) {
+         	var token = $("meta[name='_csrf']").attr("content");
+         	var header = $("meta[name='_csrf_header']").attr("content");
+         	if (token && header) {
+         	    xhr.setRequestHeader(header, token);
+         	}
 
-                location.reload();
-            },
-            error: function(xhr, status, error) {
-                console.error("Error creating task:", error);
-                alert("Failed to create task. Please try again.");
-            }
-        });
-    } else {
-        const taskId = $("#saveTask").attr("data-task-id");
-        console.log("Task ID for update:", taskId); // Debug taskId
+         },
+         success: function(response) {
+             alert("Task created successfully");
+             console.log(response);
+             location.reload();
+         },
+         error: function(xhr, status, error) {
+             console.error("Error creating task:", error);
+             alert("Failed to create task. Please try again.");
+         }
+     });
+     	}
+     // Here you would typically send this data to your server
+     console.log("Saving task:", { title, description, dueDate, crewID });
 
-        if (!taskId) {
-            alert("No task selected for update!");
-            return;
-        }
-
-        const updateData = {
-            taskID: taskId,
-            title: title,
-            description: description,
-            dueDate: dueDate
-        };
-        
-        console.log("Sending update data:", updateData); // Debug data being sent
-
-        $.ajax({
-            url: "/MIS_TVPSS/adminschool/updateTask",
-            method: "PUT",
-            contentType: 'application/json',
-            data: JSON.stringify(updateData),
-            beforeSend: function(xhr) {
-                var token = $("meta[name='_csrf']").attr("content");
-                var header = $("meta[name='_csrf_header']").attr("content");
-                console.log("CSRF Token:", token); // Debug CSRF token
-                console.log("CSRF Header:", header);
-                if (token && header) {
-                    xhr.setRequestHeader(header, token);
-                }
-            },
-            success: function(response) {
-                console.log("Update response:", response);
-                if (response.success) {
-                    alert("Task updated successfully");
-                    location.reload();
-                } else {
-                    alert(response.message || "Failed to update task");
-                }
-            },
-            error: function(xhr, status, error) {
-                console.error("Error updating task. Status:", status);
-                console.error("Error message:", error);
-                console.error("Response Text:", xhr.responseText);
-                console.error("Status Code:", xhr.status);
-                alert("Failed to update task. Please check console for details.");
-            }
-        });
-    }
+     // Clear form and close modal
+     document.getElementById("taskForm").reset();
+     modal.style.display = "none";
 });
 </script>
 
