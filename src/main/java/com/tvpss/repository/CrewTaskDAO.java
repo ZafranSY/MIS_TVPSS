@@ -86,16 +86,16 @@ public class CrewTaskDAO {
 		                 .setParameter("crewID", crewId)
 		                 .executeUpdate();
 		}
-	  public void updateTask(String taskTitle, String taskDescription, Date taskDueDate, int taskId)
-	  {
-		  String query = "UPDATE crewTask SET TaskTitle =: taskTitle, TaskDescription := taskDescription, TaskDueDate := taskDueDate WHERE tasId := taskId";
-		  entityManager.createNativeQuery(query)
-          .setParameter("title", taskTitle)
-          .setParameter("description", taskDescription)
-          .setParameter("dueDate", taskDueDate)
-          .setParameter("taskId", taskId)
-          .executeUpdate();
-	  }
+	  public void updateTask(String taskTitle, String taskDescription, Date taskDueDate, int taskId) {
+		  String query = "UPDATE crewtask SET TaskTitle = :taskTitle, TaskDescription = :taskDescription, TaskDueDate = :taskDueDate WHERE TaskID = :taskId";
+		    entityManager.createNativeQuery(query)
+		                 .setParameter("taskTitle", taskTitle)
+		                 .setParameter("taskDescription", taskDescription)
+		                 .setParameter("taskDueDate", taskDueDate)
+		                 .setParameter("taskId", taskId)
+		                 .executeUpdate();
+		}
+
 
 }
 
