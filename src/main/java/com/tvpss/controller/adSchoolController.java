@@ -120,15 +120,14 @@ public class adSchoolController {
 	    return response;
 	}
 	@PostMapping("/adminschool/updateApplicationStatus")
-    @Transactional
-    public ResponseEntity<String> updateApplicationStatus(@RequestParam("crewID") int crewID,
-                                                          @RequestParam("status") String status) {
+    public ResponseEntity<String> updateApplicationStatus(@RequestBody Map<String, Object> payload) {
         try {
+            int crewID = (int) payload.get("crewID");
+            String status = (String) payload.get("status");
             crewService.updateApplicationStatus(crewID, status);
             return ResponseEntity.ok("Application status updated successfully.");
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                                 .body("Failed to update application status.");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
 	@GetMapping("/adminschool/crewTask")
