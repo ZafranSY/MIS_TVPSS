@@ -579,17 +579,18 @@ function updateStatus(status) {
         type: "POST",
         contentType: "application/json",
         data: JSON.stringify({
-            crewID: crewID,  // Ensure this is an integer
-            status: status  // Ensure this is a string
+            crewID: crewID,
+            status: status
         }),
         success: function(response) {
         	location.reload();
-            console.log("Status updated successfully", response);
+            console.log("Status updated successfully:", response);
         },
         error: function(xhr, status, error) {
-            console.error("Error updating status: ", xhr, status, error);
+            console.error("Error updating status:", xhr.responseText, status, error);
         }
     });
+
 
 }
 $(".crew-section").on("click", ".delete-button", function() {
