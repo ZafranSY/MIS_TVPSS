@@ -18,4 +18,24 @@ public class SchoolDAO {
     public List<School> getAllSchools() {
         return entityManager.createQuery("SELECT s FROM School s", School.class).getResultList();
     }
+    public List<School> getSchoolByDistricta(Long districtID)
+    {
+    	String query ="SELECT * FROM School s WHERE s.district.districtID := districtID";
+    	return entityManager.createQuery(query,School.class).setParameter("districtID", districtID).getResultList();
+    }
+    public List<School> getSchoolByDistrict(Long districtID) {
+    	 try {
+             if (districtID == null) {
+                 throw new IllegalArgumentException("District ID cannot be null");
+             }
+             
+             String query = "SELECT s FROM School s WHERE s.district.districtID = :districtID";
+             return entityManager.createQuery(query, School.class)
+                 .setParameter("districtID", districtID)
+                 .getResultList();
+         } catch (Exception e) {
+             // Log the error appropriately
+             throw new RuntimeException("Error fetching schools for district: " + districtID, e);
+         }
+    }
 }
