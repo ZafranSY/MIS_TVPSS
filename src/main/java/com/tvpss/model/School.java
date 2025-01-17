@@ -1,27 +1,32 @@
 package com.tvpss.model;
 
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.List;
 
 @Entity
-@Table(name = "School")
+@Table(name = "school")
 public class School {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "schoolID")
+    @Column(name = "SchoolID")
     private Long schoolID;
 
     @Column(name = "name", nullable = false, length = 255)
     private String name;
 
     @ManyToOne
-    @JoinColumn(name = "districtID", referencedColumnName = "districtID", nullable = false)
+    @JoinColumn(name = "DistrictID", referencedColumnName = "districtID", nullable = false)
+    @JsonIgnoreProperties("schools")  // Add this
+
     private District district;  // Assuming you have a District class
 
-    @OneToMany(mappedBy = "school")
-    private List<Program> programs;  // One-to-many relationship with Program
-
+   
+    @Column(name ="address")
+    private String address;
     // Getters and Setters
     public Long getSchoolID() {
         return schoolID;
@@ -47,11 +52,5 @@ public class School {
         this.district = district;
     }
 
-    public List<Program> getPrograms() {
-        return programs;
-    }
-
-    public void setPrograms(List<Program> programs) {
-        this.programs = programs;
-    }
+  
 }
