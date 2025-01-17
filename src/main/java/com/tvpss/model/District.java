@@ -1,6 +1,9 @@
 package com.tvpss.model;
 
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.List;
 
 @Entity
@@ -16,6 +19,7 @@ public class District {
     private String name;
 
     @OneToMany(mappedBy = "district")
+    @JsonIgnoreProperties("district")  // Add this
     private List<School> schools;  // One-to-many relationship with School
 
     // Getters and Setters
