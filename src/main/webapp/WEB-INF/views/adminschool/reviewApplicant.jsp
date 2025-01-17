@@ -576,16 +576,21 @@ function updateStatus(status) {
 
     $.ajax({
         url: "/MIS_TVPSS/adminschool/updateApplicationStatus",
-        method: "POST",
-        data: { crewID: crewID, status: status },
-        success: function (response) {
-            $("#applicationStatus").val(status);
-            location.reload();
+        type: "POST",
+        contentType: "application/json",
+        data: JSON.stringify({
+            crewID: crewID,  // Ensure this is an integer
+            status: status  // Ensure this is a string
+        }),
+        success: function(response) {
+        	location.reload();
+            console.log("Status updated successfully", response);
         },
-        error: function () {
-            alert("Failed to update application status. Please try again.");
-        },
+        error: function(xhr, status, error) {
+            console.error("Error updating status: ", xhr, status, error);
+        }
     });
+
 }
 $(".crew-section").on("click", ".delete-button", function() {
     const activeCrew = $("#crew-list .crew-item.active");

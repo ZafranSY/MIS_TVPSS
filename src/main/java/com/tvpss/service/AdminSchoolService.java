@@ -50,4 +50,8 @@ public class AdminSchoolService {
     public Integer findSchoolAdminIDByUserId(int userId) {
         return adminSchoolDAO.findSchoolAdminIDByUserId(userId);
     }
+    public Integer getAdminBySchoolName(String SchoolName)
+    {
+    	return adminSchoolDAO.getAdminBySchoolName(SchoolName);
+    }
 }

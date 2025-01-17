@@ -75,14 +75,16 @@ public class CrewDAO {
      * @param status New status to set (e.g., Approved, Rejected)
      */
     public void updateApplicationStatus(int crewID, String status) {
-        Crew crew = entityManager.find(Crew.class, crewID);
-        if (crew != null) {
-            crew.setApplicationStatus(status);
-            entityManager.merge(crew); // Update the entity in the database
-        } else {
-            throw new RuntimeException("Crew with ID " + crewID + " not found.");
+        String query = "UPDATE Crew c SET c.applicationStatus = :status WHERE c.crewID = :crewID";
+        int updatedCount = entityManager.createQuery(query)
+                .setParameter("crewID", crewID)
+                .setParameter("status", status)
+                .executeUpdate();
+        if (updatedCount == 0) {
+            throw new RuntimeException("No crew found with ID: " + crewID);
         }
     }
+
     
     
     public List<Crew> findByAdminSchoolID(int adminSchoolID) {

@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.tvpss.service.AdminSchoolService;
 import com.tvpss.service.CrewService;
 import com.tvpss.service.DistrictService;
 import com.tvpss.service.SchoolService;
@@ -42,6 +43,8 @@ public class studentController
 	
 	@Autowired
 	private SchoolService schoolService;
+	
+	@Autowired AdminSchoolService adminSchoolService;
 	
  @GetMapping("/student/dashboard")
  public String showDashboard()
@@ -100,11 +103,22 @@ public class studentController
      crew.getUser().setUserId(userID);
      crew.setApplicationStatus("pending");
      crew.setRole("Student");
-     // Set AdminSchoolID (ensure AdminSchool is not null)
+
+     // Ensure AdminSchool is not null
      if (crew.getAdminSchool() == null) {
          crew.setAdminSchool(new AdminSchool());
      }
-     crew.getAdminSchool().setAdminSchoolID(3);
+
+     // Get AdminSchoolID based on SchoolName
+     String schoolName = crew.getSchoolName();
+     Integer adminID = adminSchoolService.getAdminBySchoolName(schoolName);
+
+     if (adminID == null) {
+         result.rejectValue("schoolName", "error.crew", "Invalid school name. No admin found.");
+         return "student/CrewRegistration";
+     }
+
+     crew.getAdminSchool().setAdminSchoolID(adminID);
 
      // Save the crew registration
      try {
@@ -115,6 +129,7 @@ public class studentController
          return "student/CrewRegistration";
      }
  }
+
  @GetMapping("/student/getSchoolsByDistrict")
  @ResponseBody
  public ResponseEntity<?> getSchoolsByDistrict(@RequestParam(required = true) Long districtID) {
