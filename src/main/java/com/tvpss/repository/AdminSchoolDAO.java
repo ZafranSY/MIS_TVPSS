@@ -81,6 +81,21 @@ public class AdminSchoolDAO {
             return null; // Return null if no result is found
         }
     }
+    public Integer getAdminBySchoolName(String schoolName) {
+        // Using a native SQL query to fetch AdminSchoolID based on SchoolName
+        String query = "SELECT AdminSchoolID FROM schooladmin WHERE SchoolName = :schoolName";
+        try {
+            return (Integer) entityManager.createNativeQuery(query)
+                                          .setParameter("schoolName", schoolName)
+                                          .getSingleResult();
+        } catch (NoResultException e) {
+            // If no result is found, return null
+            return null;
+        }
+    }
+    
+
+
 
 
 
