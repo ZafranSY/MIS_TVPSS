@@ -1,6 +1,9 @@
 package com.tvpss.controller;
 
 import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -8,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,8 +20,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.tvpss.service.CrewService;
+import com.tvpss.service.DistrictService;
+import com.tvpss.service.SchoolService;
 import com.tvpss.model.*;
 import javax.servlet.http.HttpSession;
 
@@ -28,6 +36,12 @@ public class studentController
 {
 	@Autowired
 	private CrewService crewservice;
+	
+	@Autowired
+	private DistrictService districtService;
+	
+	@Autowired
+	private SchoolService schoolService;
 	
  @GetMapping("/student/dashboard")
  public String showDashboard()
@@ -61,6 +75,8 @@ public class studentController
  @GetMapping("/student/crewRegistration")
  public String showRegistrationForm(Model model) {
      model.addAttribute("crew", new Crew());
+     List <District> district = districtService.getAllDistrict();
+     model.addAttribute("district", district);
      return "student/CrewRegistration";
  }
 
@@ -99,7 +115,26 @@ public class studentController
          return "student/CrewRegistration";
      }
  }
-
+ @GetMapping("/student/getSchoolsByDistrict")
+ @ResponseBody
+ public ResponseEntity<?> getSchoolsByDistrict(@RequestParam(required = true) Long districtID) {
+     try {
+         if (districtID == null) {
+             return ResponseEntity.badRequest().body("District ID cannot be null");
+         }
+         
+         List<School> schools = schoolService.getSchoolByDistrict(districtID);
+         
+         if (schools.isEmpty()) {
+             return ResponseEntity.ok(Collections.emptyList());
+         }
+         
+         return ResponseEntity.ok(schools);
+     } catch (Exception e) {
+         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+             .body("Error fetching schools: " + e.getMessage());
+     }
+ }
 
 
 
