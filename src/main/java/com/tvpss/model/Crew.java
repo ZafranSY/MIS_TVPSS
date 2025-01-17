@@ -18,6 +18,7 @@ public class Crew {
 
 	@Column(name = "Role")
 	private String role;
+	
 
 	@Column(name = "ApplicationStatus")
 	private String applicationStatus;
@@ -34,7 +35,18 @@ public class Crew {
 
 	@Column(name = "ICNumber") // New field
 	private String ICNumber;
+	@ManyToOne
+    @JoinColumn(name = "districtID", nullable = false)  // Ensure this column exists in the Crew table
+    private District district;
 
+	    // Getter and Setter
+	    public District getDistrict() {
+	        return district;
+	    }
+
+	    public void setDistrict(District district) {
+	        this.district = district;
+	    }
 	public String getICNumber() {
 		return ICNumber;
 	}
