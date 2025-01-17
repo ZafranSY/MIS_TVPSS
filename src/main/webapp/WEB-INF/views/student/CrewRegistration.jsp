@@ -158,15 +158,13 @@ header h1 {
 						value="${sessionScope.adminSchoolID}" />
 					<div class="form-group">
 						<label for="districtDropdown">District:</label>
-						<form:select path="district.districtID" id="districtDropdown"
-							class="form-control">
-							<form:option value="" label="-- Select District --" />
-							<c:forEach var="dist" items="${district}">
-								<form:option value="${dist.districtID}">
-                ${dist.districtID} - ${dist.name}
-            </form:option>
-							</c:forEach>
-						</form:select>
+						<form:select path="district.districtID" id="districtDropdown" class="form-control">
+    <form:option value="" label="-- Select District --" />
+    <c:forEach var="dist" items="${district}">
+        <form:option value="${dist.districtID}">${dist.districtID} - ${dist.name}</form:option>
+    </c:forEach>
+</form:select>
+
 					</div>
 					<!-- School Selection -->
 					<div class="form-group">
@@ -179,6 +177,9 @@ header h1 {
 								</c:forEach>
 							</c:if>
 						</select>
+						<input type="hidden" name="schoolName" id="schoolName" />
+						<form:input  type="hidden" path="schoolName"  required="true" />
+						
 					</div>
 					<div class="form-group">
 						<label for="address">Address *</label>
@@ -215,7 +216,12 @@ header h1 {
             }
         }); */
         
-        
+        function updateSchoolName(selectElement) {
+            var selectedOption = selectElement.options[selectElement.selectedIndex];
+            document.getElementById('schoolName').value = selectedOption.getAttribute('data-school-name');
+        }
+
+
         	console.log(document.getElementById('districtDropdown'));
         document.addEventListener("DOMContentLoaded", function () {
             const districtDropdown = document.getElementById('districtDropdown');
@@ -236,6 +242,7 @@ header h1 {
                         method: "GET",
                         data: { districtID: selectedValue },
                         success: function(data) {
+                            console.log(data);  // Debug log to check if schools are being returned
                             schoolDropdown.innerHTML = '<option value="">-- Select School --</option>';
                             if (data && data.length > 0) {
                                 data.forEach(school => {
@@ -253,6 +260,7 @@ header h1 {
                             schoolDropdown.innerHTML = '<option value="">Error loading schools</option>';
                         }
                     });
+
                 });
             }
         });

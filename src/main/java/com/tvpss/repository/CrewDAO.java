@@ -116,7 +116,11 @@ public class CrewDAO {
     public void CrewRegistration(Crew crew)
     {
     	entityManager.persist(crew);
+    } 
+    public void saveCrew(Crew crew) {
+        entityManager.persist(crew);  // Use EntityManager to persist the Crew entity.
     }
+
 
 
 }

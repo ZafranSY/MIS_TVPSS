@@ -90,36 +90,23 @@ public class studentController
      if (result.hasErrors()) {
          return "student/CrewRegistration";
      }
-
      // Get userID from session
      int userID = (int) session.getAttribute("userID");
-
      // Initialize User if null
      if (crew.getUser() == null) {
          crew.setUser(new User());
      }
-
      // Set userID in Crew's User object
      crew.getUser().setUserId(userID);
      crew.setApplicationStatus("pending");
      crew.setRole("Student");
-
-     // Ensure AdminSchool is not null
+     // Set AdminSchoolID (ensure AdminSchool is not null)
      if (crew.getAdminSchool() == null) {
          crew.setAdminSchool(new AdminSchool());
      }
+     crew.setSchoolName("Sekolah Menengah Kebangsaan Johor Bahru");  // Set the schoolName to the Crewz
 
-     // Get AdminSchoolID based on SchoolName
-     String schoolName = crew.getSchoolName();
-     Integer adminID = adminSchoolService.getAdminBySchoolName(schoolName);
-
-     if (adminID == null) {
-         result.rejectValue("schoolName", "error.crew", "Invalid school name. No admin found.");
-         return "student/CrewRegistration";
-     }
-
-     crew.getAdminSchool().setAdminSchoolID(adminID);
-
+     crew.getAdminSchool().setAdminSchoolID(4);
      // Save the crew registration
      try {
          crewservice.CrewRegistration(crew);
@@ -129,7 +116,6 @@ public class studentController
          return "student/CrewRegistration";
      }
  }
-
  @GetMapping("/student/getSchoolsByDistrict")
  @ResponseBody
  public ResponseEntity<?> getSchoolsByDistrict(@RequestParam(required = true) Long districtID) {

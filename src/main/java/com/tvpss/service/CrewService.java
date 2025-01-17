@@ -69,5 +69,7 @@ public class CrewService {
     {
     	crewRepository.CrewRegistration(crew);
     }
-
+    public void saveCrew(Crew crew) {
+    	crewRepository.saveCrew(crew); // Calls the saveCrew method in CrewDAO
+    }
 }
