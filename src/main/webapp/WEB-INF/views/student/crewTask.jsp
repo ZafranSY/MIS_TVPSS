@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>UC007 Student Tasks</title>
+    <title>UC007 Student crewTasks</title>
     <link rel="stylesheet" href="/MIS_TVPSS/resources/css/crewTask.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
@@ -67,8 +67,9 @@
 
     // Ensure tasks load dynamically if needed
     $(document).ready(function () {
-        const crewId = "${sessionScope.userID}";
-
+        const crewId = "${sessionScope.crewId}";
+        console.log("crew ID ", crewId);
+        
         $.ajax({
 	        url: "/MIS_TVPSS/adminschool/getTaskDetails",
 	        method: "GET",
