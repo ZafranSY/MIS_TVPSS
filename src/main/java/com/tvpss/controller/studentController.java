@@ -44,7 +44,8 @@ public class studentController
 	@Autowired
 	private SchoolService schoolService;
 	
-	@Autowired AdminSchoolService adminSchoolService;
+	@Autowired
+	private AdminSchoolService adminSchoolService;
 	
  @GetMapping("/student/dashboard")
  public String showDashboard()
@@ -85,29 +86,45 @@ public class studentController
 
  @PostMapping("/student/crewRegistration")
  public String processRegistration(@ModelAttribute("crew") Crew crew,
-                                   BindingResult result,
-                                   HttpSession session) {
+                                 BindingResult result,
+                                 HttpSession session) {
+	 System.out.println("Received registration request"); // Debug log
+	    System.out.println("School Name: " + crew.getSchoolName()); // Debug log
+	    
+	    if (result.hasErrors()) {
+	        System.out.println("Form has errors: " + result.getAllErrors()); // Debug log
+	        return "student/CrewRegistration";
+	    }
      if (result.hasErrors()) {
          return "student/CrewRegistration";
      }
+     
      // Get userID from session
      int userID = (int) session.getAttribute("userID");
+     
      // Initialize User if null
      if (crew.getUser() == null) {
          crew.setUser(new User());
      }
+     
      // Set userID in Crew's User object
      crew.getUser().setUserId(userID);
      crew.setApplicationStatus("pending");
      crew.setRole("Student");
-     // Set AdminSchoolID (ensure AdminSchool is not null)
-     if (crew.getAdminSchool() == null) {
-         crew.setAdminSchool(new AdminSchool());
+     
+     // Get AdminSchool based on school name from the form
+     String selectedSchoolName = crew.getSchoolName(); // This will come from the form
+     AdminSchool adminSchool = adminSchoolService.getAdminSchoolBySchoolName(selectedSchoolName);
+     
+     if (adminSchool != null) {
+         // Set the found AdminSchool to the crew
+         crew.setAdminSchool(adminSchool);
+     } else {
+         // Handle case where AdminSchool is not found
+         result.rejectValue("schoolName", "error.schoolName", "School not found in admin database");
+         return "student/CrewRegistration";
      }
-     crew.setSchoolName("Sekolah Menengah Kebangsaan Johor Bahru");  // Set the schoolName to the Crewz
-
-     crew.getAdminSchool().setAdminSchoolID(4);
-     // Save the crew registration
+     
      try {
          crewservice.CrewRegistration(crew);
          return "redirect:/student/crewTask";
