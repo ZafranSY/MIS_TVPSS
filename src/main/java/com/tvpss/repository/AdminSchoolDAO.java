@@ -32,10 +32,10 @@ public class AdminSchoolDAO {
      */
     public AdminSchool findBySchoolName(String schoolName) {
         try {
-            String query = "SELECT a FROM schooladmin a WHERE a.schoolName = :schoolName";
+            String query = "SELECT a FROM AdminSchool a WHERE a.schoolName = :schoolName";
             return entityManager.createQuery(query, AdminSchool.class)
-                    .setParameter("schoolName", schoolName)
-                    .getSingleResult();
+                .setParameter("schoolName", schoolName)
+                .getSingleResult();
         } catch (NoResultException e) {
             return null; // No AdminSchool found
         }
