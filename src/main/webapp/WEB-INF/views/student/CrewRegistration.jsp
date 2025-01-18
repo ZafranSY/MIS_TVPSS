@@ -7,7 +7,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <title>Crew Registration</title>
 <style>
@@ -19,6 +20,7 @@ body {
 	margin: 0;
 	padding: 0;
 }
+
 .container {
 	display: flex;
 	min-height: 100vh;
@@ -31,42 +33,51 @@ header {
 	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
 	margin-bottom: 30px;
 }
+
 header h1 {
 	font-size: 24px;
 	color: #1a237e;
 	margin: 0;
 }
+
 .sidebar {
 	width: 300px;
 	background-color: white;
 	box-shadow: 2px 0 8px rgba(0, 0, 0, 0.05);
 	padding: 20px;
 }
+
 .sidebar h2 {
 	font-size: 20px;
 	color: #1a237e;
 	margin-bottom: 20px;
 }
+
 .sidebar nav ul {
 	list-style: none;
 	padding: 0;
 	margin: 0;
 }
+
 .sidebar nav ul li {
 	margin-bottom: 15px;
 }
+
 .sidebar nav ul li a {
 	text-decoration: none;
 	color: #2c3e50;
 	font-size: 16px;
 	transition: all 0.3s ease;
 }
+
 .menu-item:hover .icon {
 	transform: scale(1.2);
 }
+
 .sidebar nav ul li a:hover {
 	color: #4caf50;
 }
+
 .content {
 	flex: 1;
 	margin-left: 280px;
@@ -84,15 +95,18 @@ header h1 {
 	max-width: 800px;
 	margin: 0 auto;
 }
+
 .form-group {
 	margin-bottom: 20px;
 }
+
 .form-group label {
 	display: block;
 	font-weight: 600;
 	color: #1a237e;
 	margin-bottom: 8px;
 }
+
 .form-group input, .form-group select, .form-group textarea {
 	width: 100%;
 	padding: 12px;
@@ -103,19 +117,23 @@ header h1 {
 	background-color: white;
 	box-sizing: border-box;
 }
+
 .form-group input:focus, .form-group select:focus, .form-group textarea:focus
 	{
 	border-color: #4caf50;
 	outline: none;
 	box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.1);
 }
+
 .form-group textarea {
 	min-height: 120px;
 	resize: vertical;
 }
+
 .file-upload {
 	margin-top: 8px;
 }
+
 .btn-submit {
 	background-color: #4caf50;
 	color: white;
@@ -127,6 +145,7 @@ header h1 {
 	cursor: pointer;
 	transition: all 0.3s ease;
 }
+
 .btn-submit:hover {
 	transform: translateY(-2px);
 	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -152,34 +171,40 @@ header h1 {
 
 			<div class="registration-form">
 				<form:form method="post" modelAttribute="crew"
-					action="/MIS_TVPSS/student/crewRegistration">
+					action="/MIS_TVPSS/student/crewRegistration"
+					onsubmit="return validateForm()">					action="/MIS_TVPSS/student/crewRegistration">
 					<input type="hidden" name="userID" value="${sessionScope.userID}" />
 					<input type="hidden" name="adminSchoolID"
 						value="${sessionScope.adminSchoolID}" />
 					<div class="form-group">
 						<label for="districtDropdown">District:</label>
-						<form:select path="district.districtID" id="districtDropdown" class="form-control">
-    <form:option value="" label="-- Select District --" />
-    <c:forEach var="dist" items="${district}">
-        <form:option value="${dist.districtID}">${dist.districtID} - ${dist.name}</form:option>
-    </c:forEach>
-</form:select>
+						<form:select path="district.districtID" id="districtDropdown"
+							class="form-control">
+							<form:option value="" label="-- Select District --" />
+							<c:forEach var="dist" items="${district}">
+								<form:option value="${dist.districtID}">${dist.districtID} - ${dist.name}</form:option>
+							</c:forEach>
+						</form:select>
 
 					</div>
 					<!-- School Selection -->
 					<div class="form-group">
 						<label for="schoolDropdown">School:</label> <select
-							name="school.schoolID" id="schoolDropdown">
+							name="school.schoolID" id="schoolDropdown"
+							onchange="updateHiddenFields(this)">
 							<option value="">-- Select School --</option>
 							<c:if test="${not empty schools}">
 								<c:forEach var="school" items="${schools}">
-									<option value="${school.schoolID}">${school.name}</option>
+									<option value="${school.schoolID}"
+										data-school-name="${school.name}"
+										data-admin-school-id="${school.adminSchool.adminSchoolID}">
+										${school.name}</option>
 								</c:forEach>
 							</c:if>
 						</select>
-						<input type="hidden" name="schoolName" id="schoolName" />
-						<form:input  type="hidden" path="schoolName"  required="true" />
-						
+						<form:input type="hidden" path="schoolName" id="schoolNameInput" />
+						<form:input type="hidden" path="adminSchool.adminSchoolID"
+							id="adminSchoolIDInput" />
 					</div>
 					<div class="form-group">
 						<label for="address">Address *</label>
@@ -197,8 +222,9 @@ header h1 {
 						<form:errors path="ReasonToJoin" cssClass="error" />
 					</div>
 					<div class="form-group">
-						<button type="submit" class="btn-submit">Submit
-							Application</button>
+						<button type="submit" class="btn-submit"
+							style="background-color: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer;">
+							Submit Registration</button>
 					</div>
 				</form:form>
 			</div>
@@ -215,7 +241,33 @@ header h1 {
                 }
             }
         }); */
-        
+        function validateForm() {
+            console.log("Form submission triggered"); // Debug log
+            
+            // Get the school name value
+            const schoolName = document.getElementById('schoolNameInput').value;
+            console.log("School Name:", schoolName); // Debug log
+            
+            if (!schoolName) {
+                alert("Please select a school");
+                return false;
+            }
+            
+            return true;
+        }
+
+        // Update school name when school is selected
+        document.getElementById('schoolDropdown').addEventListener('change', function() {
+            const selectedOption = this.options[this.selectedIndex];
+            const schoolName = selectedOption.text;
+            document.getElementById('schoolNameInput').value = schoolName;
+            console.log("School name updated:", schoolName); // Debug log
+        });
+        function updateHiddenFields(selectElement) {
+            const selectedOption = selectElement.options[selectElement.selectedIndex];
+            document.getElementById('schoolNameInput').value = selectedOption.getAttribute('data-school-name');
+            document.getElementById('adminSchoolIDInput').value = selectedOption.getAttribute('data-admin-school-id');
+        }
         function updateSchoolName(selectElement) {
             var selectedOption = selectElement.options[selectElement.selectedIndex];
             document.getElementById('schoolName').value = selectedOption.getAttribute('data-school-name');
