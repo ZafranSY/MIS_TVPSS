@@ -2,8 +2,10 @@ package com.tvpss.controller;
 
 import com.tvpss.model.AdminSchool;
 import com.tvpss.model.User;
+import com.tvpss.model.Crew;
 import com.tvpss.model.UserRoles;
 import com.tvpss.service.AdminSchoolService;
+import com.tvpss.service.CrewService;
 import com.tvpss.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,6 +23,9 @@ public class LoginController {
     
     @Autowired 
     private AdminSchoolService adminSchoolService;
+    
+    @Autowired
+    private CrewService crewService;
 
     @RequestMapping("/login")
     public String loginPage() {
@@ -64,8 +69,15 @@ public class LoginController {
                 return "redirect:/teacher/dashboard";
             }else
             {
-            	redirectAttributes.addFlashAttribute("message", "Welcome State Admin!");
-                return "redirect:/student/dashboard";
+            	  Crew crew = crewService.findCrewbyUserID(user.getUserId());
+            	    if (crew != null) {
+            	        session.setAttribute("crewId", crew.getCrewID());
+            	        redirectAttributes.addFlashAttribute("message", "Welcome, Student!");
+            	        return "redirect:/student/dashboard";
+            	    } else {
+            	        redirectAttributes.addFlashAttribute("error", "Crew ID not found for the student!");
+            	        return "redirect:/student/dashboard";
+            	    }
             }
         }
 
