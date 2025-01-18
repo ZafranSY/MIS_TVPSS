@@ -45,6 +45,10 @@ public class CrewService {
     {
     	return crewRepository.findCrewbyUserID(userID);
     }
+    public Crew findCrewbyUserID(int userID)
+    {
+    	return crewRepository.findCrewbyUserID(userID);
+    }
     @Transactional
     public void updateApplicationStatus(int crewID, String status) {
     	crewRepository.updateApplicationStatus(crewID, status);
