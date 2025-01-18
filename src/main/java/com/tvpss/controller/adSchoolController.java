@@ -29,11 +29,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import com.tvpss.model.Crew;
-import com.tvpss.model.Program;
 import com.tvpss.model.crewTask;
 import com.tvpss.service.CrewService;
 import com.tvpss.service.crewTaskService;
-import com.tvpss.service.ProgramService;
 
 @Controller
 public class adSchoolController {
@@ -43,9 +41,6 @@ public class adSchoolController {
 	
 	@Autowired
 	private crewTaskService crewTaskService;
-	
-	@Autowired
-	private ProgramService programService;
 
 	@GetMapping("/adminschool/dashboard")
 	public String showDashboard(Model model) {
@@ -340,20 +335,5 @@ public class adSchoolController {
 	     }
 	 }
 	 */
-	    @GetMapping("/adminschool/program")
-	    public String listPrograms(Model model) {
-	        try {
-	            List<Program> programs = programService.getAllPrograms();
-	            if (programs == null || programs.isEmpty()) {
-	                model.addAttribute("errorMessage", "No programs available.");
-	            } else {
-	                model.addAttribute("programs", programs);
-	            }
-	            return "adminschool/program";
-	        } catch (Exception e) {
-	            model.addAttribute("errorMessage", "Error fetching programs: " + e.getMessage());
-	            return "errorPage";
-	        }
-	    }
 
 }

@@ -36,7 +36,7 @@
             </a>
             <div class="menu-bottom">
                 <a href="#" class="menu-item help">Help</a>
-                <a href="/MIS_TVPSS/login" class="menu-item logout">Log Out</a>
+                <a href="#" class="menu-item logout">Log Out</a>
             </div>
         </nav>
     </div>
