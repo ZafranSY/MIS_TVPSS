@@ -131,7 +131,27 @@
             </div>
         </div>
 
-    
+        <!-- Quick Actions -->
+        <div class="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4">
+            <button class="p-4 bg-blue-500 text-white rounded-lg hover:bg-blue-600 flex items-center justify-center">
+                <i class="fas fa-user-plus mr-2"></i>
+                Add Student
+            </button>
+            <button class="p-4 bg-green-500 text-white rounded-lg hover:bg-green-600 flex items-center justify-center">
+                <i class="fas fa-user-tie mr-2"></i>
+                Add Teacher
+            </button>
+            <button class="p-4 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 flex items-center justify-center">
+                <i class="fas fa-bullhorn mr-2"></i>
+                Announcements
+            </button>
+            <button class="p-4 bg-purple-500 text-white rounded-lg hover:bg-purple-600 flex items-center justify-center">
+                <i class="fas fa-cog mr-2"></i>
+                Settings
+            </button>
+        </div>
+    </div>
+</div>
 
 </body>
 </html>
