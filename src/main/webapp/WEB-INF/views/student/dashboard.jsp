@@ -4,8 +4,15 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-    <link rel="stylesheet" href="/MIS_TVPSS/resources/css/adSchoolDashboard.css">
+  <meta charset="UTF-8">
+    <title>Student Dashboard</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .main-content {
+            margin-left: 250px;
+        }
+    </style>    <link rel="stylesheet" href="/MIS_TVPSS/resources/css/adSchoolDashboard.css">
 
 </head>
 <body>
