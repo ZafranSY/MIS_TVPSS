@@ -111,6 +111,27 @@
                 </div>
             </div>
 
+            <!-- Important Notices -->
+            <div class="bg-white rounded-lg shadow">
+                <div class="p-6 border-b border-gray-200">
+                    <h2 class="text-xl font-bold">Important Notices</h2>
+                </div>
+                <div class="p-6">
+                    <div class="space-y-4">
+                        <div class="p-4 bg-red-50 rounded border border-red-200">
+                            <p class="font-semibold text-red-700">Staff Meeting</p>
+                            <p class="text-sm text-red-600">Tomorrow at 9:00 AM</p>
+                        </div>
+                        <div class="p-4 bg-yellow-50 rounded border border-yellow-200">
+                            <p class="font-semibold text-yellow-700">Term End Examinations</p>
+                            <p class="text-sm text-yellow-600">Starting next week</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    
 
 </body>
 </html>
