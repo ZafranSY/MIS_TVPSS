@@ -22,48 +22,95 @@
 
     <!-- Main Content -->
   
-    <main class="main-content">
-        <!-- Header -->
+    <div class="main-content p-8">
+        <!-- Welcome Section -->
+        <div class="mb-8">
+            <h1 class="text-3xl font-bold text-gray-800">School Administration Portal</h1>
+            <p class="text-gray-600">Manage your school efficiently</p>
+        </div>
 
-        <!-- Dashboard Cards -->
-        <section class="stats-cards">
-            <div class="card">
-                <div class="card-icon"><img src="<c:url value='/resources/images/numOfStudent.png' />" alt="Profile"></div>
-                <div class="card-info">
-                    <span>Number of Students</span>
-                    <h2>${studentCount}</h2>  <h1>${{pendingApplicants}}</h1>
-    <h1>${{pageTitle}}</h1>
+        <!-- Quick Stats -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+            <!-- Total Students -->
+            <div class="bg-white rounded-lg shadow p-6">
+                <div class="flex items-center">
+                    <div class="p-3 rounded-full bg-blue-100 text-blue-500">
+                        <i class="fas fa-user-graduate text-2xl"></i>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-gray-500">Total Students</p>
+                        <h3 class="text-2xl font-bold">1,234</h3>
+                    </div>
                 </div>
             </div>
-            <div class="card">
-                <div class="card-icon"><img src="<c:url value='/resources/images/totalAchievement.png' />" alt="Profile"></div>
-                <div class="card-info">
-                    <span>Total Achievement</span>
-                    <h2>${{userID}}</h2>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-icon"><img src="<c:url value='/resources/images/numOfCrew.png' />" alt="Profile"></div>
-                <div class="card-info">
-                    <span>Number of Crew</span>
-                    <h2>${{crewId}}</h2>
-                </div>
-            </div>
-        </section>
 
-        <!-- Charts Section -->
-        <section class="charts">
-            <div class="bar-chart">
-                <h3>Crew Overview</h3>
-                <canvas id="crewBarChart" width="400" height="300"></canvas>
+            <!-- Total Teachers -->
+            <div class="bg-white rounded-lg shadow p-6">
+                <div class="flex items-center">
+                    <div class="p-3 rounded-full bg-green-100 text-green-500">
+                        <i class="fas fa-chalkboard-teacher text-2xl"></i>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-gray-500">Total Teachers</p>
+                        <h3 class="text-2xl font-bold">78</h3>
+                    </div>
+                </div>
             </div>
-            <div class="pie-chart">
-                <h3>Division of Crew by Gender</h3>
-                <canvas id="genderPieChart" width="300" height="300"></canvas>
+
+            <!-- Total Classes -->
+            <div class="bg-white rounded-lg shadow p-6">
+                <div class="flex items-center">
+                    <div class="p-3 rounded-full bg-yellow-100 text-yellow-500">
+                        <i class="fas fa-school text-2xl"></i>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-gray-500">Total Classes</p>
+                        <h3 class="text-2xl font-bold">45</h3>
+                    </div>
+                </div>
             </div>
-        </section>
-    </main>
-</div>
+
+            <!-- Revenue -->
+            <div class="bg-white rounded-lg shadow p-6">
+                <div class="flex items-center">
+                    <div class="p-3 rounded-full bg-purple-100 text-purple-500">
+                        <i class="fas fa-dollar-sign text-2xl"></i>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-gray-500">Monthly Revenue</p>
+                        <h3 class="text-2xl font-bold">$125K</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Recent Applications -->
+            <div class="bg-white rounded-lg shadow">
+                <div class="p-6 border-b border-gray-200">
+                    <h2 class="text-xl font-bold">Recent Applications</h2>
+                </div>
+                <div class="p-6">
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between p-4 bg-gray-50 rounded">
+                            <div>
+                                <p class="font-semibold">John Doe - Grade 10</p>
+                                <p class="text-sm text-gray-500">Applied: 2 days ago</p>
+                            </div>
+                            <button class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">Review</button>
+                        </div>
+                        <div class="flex items-center justify-between p-4 bg-gray-50 rounded">
+                            <div>
+                                <p class="font-semibold">Jane Smith - Grade 8</p>
+                                <p class="text-sm text-gray-500">Applied: 3 days ago</p>
+                            </div>
+                            <button class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">Review</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
 
 </body>
 </html>
